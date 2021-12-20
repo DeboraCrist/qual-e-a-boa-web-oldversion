@@ -40,13 +40,14 @@
 
         <div class="form">
           <h2>Login</h2>
-          <input type="email" name="email" placeholder="Digite seu email" />
-          <input type="password" name="" placeholder="Digite a sua senha" />
-          <button class="btnn"><a href="#">Entrar</a></button>
-
+          <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Digite seu email" required/>
+            <input type="password" name="senha" placeholder="Digite a sua senha" required/>
+            <button class="btnn"><a href="#">Entrar</a></button>
+          </form>
           <p class="link">
             Não tem uma conta?<br />
-            <a href="#">Cadastre-se</a>
+            <a href="/registrarEstabelecimento">Cadastre-se</a>
           </p>
         </div>
       </div>

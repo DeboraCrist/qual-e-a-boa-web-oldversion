@@ -4,8 +4,9 @@ const port = 3000;
 const router = require("./routes");
 const path = require("path");
 
-server.use(express.static(path.join(__dirname, "styles")));
-server.use(express.static(path.join(__dirname, "images")));
+//responsavel por entregar os arquivos estaticos
+server.use(express.static(path.join(__dirname, "styles"))); //local dos styles
+server.use(express.static(path.join(__dirname, "images"))); //local das imgs
 
 server.use(router);
 
