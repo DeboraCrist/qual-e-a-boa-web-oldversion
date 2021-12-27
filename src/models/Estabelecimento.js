@@ -1,5 +1,8 @@
 const db = require("./db");
 
+const criptografia = require("../scripts/criptografia");
+const {criptografar} = require("../scripts/criptografia");
+
 const Estabelecimento = db.sequelize.define("estabelecimentos", {
     nomeDono: {
         type: db.Sequelize.STRING(100),
@@ -49,4 +52,28 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
 //Estabelecimento.sync({force: true});
 //Se a tabela a cima ja existir dentro do seu DB mantenha o comando a cima comentado
 
-module.exports = Estabelecimento;
+const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento) => {
+    Estabelecimento.create({
+        nomeDono: dadosEstabelecimento.nomeDono,
+        nomeEstabelecimento: dadosEstabelecimento.nomeEstabelecimento,
+        email: dadosEstabelecimento.email,
+        senha: criptografia.criptografar(dadosEstabelecimento.senha),
+        bio: dadosEstabelecimento.bio,
+        url_imagem: dadosEstabelecimento.url_imagem,
+        rua: dadosEstabelecimento.rua,
+        bairro: dadosEstabelecimento.bairro,
+        numero: dadosEstabelecimento.numero,
+        cidade: dadosEstabelecimento.cidade,
+        tipoDeConta: dadosEstabelecimento.tipoDeConta //Define 1 pois é um user de estabelecimento
+    }).then(() => {
+        console.log("Registrado");
+    }).catch((error) => {
+        console.log("Erro: "+ error);
+    });
+}
+
+
+module.exports = {
+    Estabelecimento : Estabelecimento,
+    RegistraEstabelecimentoNaTabela : RegistraEstabelecimentoNaTabela,
+}
