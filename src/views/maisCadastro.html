@@ -55,9 +55,9 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container">
-        <img src="img/sem_foto_usuario.png" class="img-thumbnail rounded mx-auto d-block" alt="Foto do Usuário">
+        <img src="/sem_foto_usuario.png" class="img-thumbnail rounded mx-auto d-block" alt="Foto do Usuário">
         <p style="margin-top: 20 px"></p>
-        <h1 class="display-5 text-center">Seja Bem-vindo, [Endereço de Email]</h1>
+        <h1 class="display-5 text-center">Seja Bem-vindo, <%= email%></h1>
         <p class="lead text-center">Continue o Cadastro da Sua Conta:</p>
         <hr>
     </div>
@@ -79,6 +79,7 @@
             </div>
         </div>
         <hr>
+        <div id="formulario-pessoal">
         <p class="lead text-left">Conta Pessoal:</p>
         <form>
             <div class="mb-3">
@@ -159,92 +160,94 @@
 
             <p style="margin-top: 30px"></p>
             <hr>
-
-            <p class="lead text-left">Conta Comercial:</p>
-
-            <div class="mb-3">
-                <form>
-                    <div class="row">
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label">Digite o nome completo do
-                                Proprietário</label>
-                            <input type="text" class="form-control" placeholder="Nome completo" disabled>
-                        </div>
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label">Digite o nome do
-                                Estabelecimento</label>
-                            <input type="text" class="form-control" placeholder="Nome Estabelecimento" disabled>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mb-3">
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="exampleFormControlInput1" class="form-label">Digite a Cidade</label>
-                            <input type="text" class="form-control" placeholder="Cidade" disabled>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="exampleFormControlInput1" class="form-label">Digite o Estado</label>
-                            <input type="text" class="form-control" placeholder="Estado" disabled>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="exampleFormControlInput1" class="form-label">Digite o CEP</label>
-                            <input type="text" class="form-control" placeholder="CEP" disabled>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mb-3">
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="exampleFormControlInput1" class="form-label">Digite o nome da rua do
-                                Estabelecimento</label>
-                            <input type="text" class="form-control" placeholder="Rua" disabled>
-                        </div>
-                        <div class="col-md-1">
-                            <label for="exampleFormControlInput1" class="form-label">Numero</label>
-                            <input type="text" class="form-control" placeholder="00" disabled>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="exampleFormControlInput1" class="form-label">Bairro</label>
-                            <input type="text" class="form-control" placeholder="Bairro" disabled>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Lotação Máxima</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1"
-                    placeholder="Digite a quantidade máxima de pessoas que seu local pode receber" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Informações Complementares</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1"
-                    placeholder="Digite as informações Complementares do Estabelecimento" rows="3" disabled></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Selecione uma foto para seu perfil comercial</label>
-                <input class="form-control" type="file" id="formFile" disabled>
-            </div>
-
-            <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Adicione algumas fotos do Local</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple disabled>
-            </div>
-        </form>
-        <div class="mb-3">
-            <div class="d-grid d-md-flex justify-content-md-end">
-                <button class="btn btn-primary" type="button" disabled>Cadastrar</button>
-            </div>
         </div>
+            <div id="formulario_comercial" style="display: none;">
+                <p class="lead text-left">Conta Comercial:</p>
+
+                <div class="mb-3">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label">Digite o nome completo do
+                                    Proprietário</label>
+                                <input type="text" class="form-control" placeholder="Nome completo" enable>
+                            </div>
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label">Digite o nome do
+                                    Estabelecimento</label>
+                                <input type="text" class="form-control" placeholder="Nome Estabelecimento" enable>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-3">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="exampleFormControlInput1" class="form-label">Digite a Cidade</label>
+                                <input type="text" class="form-control" placeholder="Cidade" enable>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="exampleFormControlInput1" class="form-label">Digite o Estado</label>
+                                <input type="text" class="form-control" placeholder="Estado" enable>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="exampleFormControlInput1" class="form-label">Digite o CEP</label>
+                                <input type="text" class="form-control" placeholder="CEP" enable>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-3">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="exampleFormControlInput1" class="form-label">Digite o nome da rua do
+                                    Estabelecimento</label>
+                                <input type="text" class="form-control" placeholder="Rua" enable>
+                            </div>
+                            <div class="col-md-1">
+                                <label for="exampleFormControlInput1" class="form-label">Numero</label>
+                                <input type="text" class="form-control" placeholder="00" enable>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="exampleFormControlInput1" class="form-label">Bairro</label>
+                                <input type="text" class="form-control" placeholder="Bairro" enable>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Lotação Máxima</label>
+                    <input type="number" class="form-control" id="exampleFormControlInput1"
+                        placeholder="Digite a quantidade máxima de pessoas que seu local pode receber" enable>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Informações Complementares</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                        placeholder="Digite as informações Complementares do Estabelecimento" rows="3" enable></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Selecione uma foto para seu perfil comercial</label>
+                    <input class="form-control" type="file" id="formFile" enable>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Adicione algumas fotos do Local</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple enable>
+                </div>
+            </form>
+            <div class="mb-3">
+                <div class="d-grid d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary" type="button" enable>Cadastrar</button>
+                </div>
+            </div>
+            </div>
 
     </div>
 
@@ -264,6 +267,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+    <script src="/mudaTipoDeRegistro.js"></script>
 </footer>
 
 <footer class="bg-light text-center text-lg-start">

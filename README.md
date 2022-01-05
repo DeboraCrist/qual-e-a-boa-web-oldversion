@@ -8,4 +8,5 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install body-parser
 * npm install --save sequelize
 * npm install --save mysql2
+* npm install ejs
 * npm start

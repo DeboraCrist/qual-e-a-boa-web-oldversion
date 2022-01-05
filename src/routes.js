@@ -13,11 +13,15 @@ router.use(bodyParser.json());
 
 //Rotas
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views", "index.html"));
+    res.render("cadastro.html");
 });
 
 router.get("/registrarEstabelecimento", (req, res) => {
     res.sendFile(path.join(__dirname, "/views", "registro_estabelecimento.html"));
+});
+
+router.get("/registro", (req, res) => {
+    res.render("maisCadastro");
 });
 
 //sistema de login em desenvolvimento
