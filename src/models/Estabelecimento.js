@@ -20,10 +20,13 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
         type: db.Sequelize.STRING,
         allowNull: false
     },
-    bio: {
+    informacaoComplementar: {
         type: db.Sequelize.TEXT
     },
-    url_imagem: {
+    urlImagemPerfil: {
+        type: db.Sequelize.STRING
+    },
+    urlImagemLocal: {
         type: db.Sequelize.STRING
     },
     rua: {
@@ -42,6 +45,18 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
         type: db.Sequelize.STRING(100),
         allowNull: false
     },
+    estado: {
+        type: db.Sequelize.STRING(100),
+        allowNull: false
+    },
+    cep: {
+        type: db.Sequelize.STRING(100),
+        allowNull: false
+    },
+    lotacaoMax: {
+        type: db.Sequelize.INTEGER,
+        allowNull: true
+    },
     tipoDeConta: {
         type: db.Sequelize.INTEGER,
         allowNull: false
@@ -58,12 +73,16 @@ const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento) => {
         nomeEstabelecimento: dadosEstabelecimento.nomeEstabelecimento,
         email: dadosEstabelecimento.email,
         senha: criptografia.criptografar(dadosEstabelecimento.senha),
-        bio: dadosEstabelecimento.bio,
-        url_imagem: dadosEstabelecimento.url_imagem,
+        informacaoComplementar: dadosEstabelecimento.informacaoComplementar,
+        urlImagemPerfil: dadosEstabelecimento.urlImagemPerfil,
+        urlImagemLocal: dadosEstabelecimento.urlImagemLocal,
         rua: dadosEstabelecimento.rua,
         bairro: dadosEstabelecimento.bairro,
         numero: dadosEstabelecimento.numero,
         cidade: dadosEstabelecimento.cidade,
+        estado: dadosEstabelecimento.estado,
+        cep: dadosEstabelecimento.cep,
+        lotacaoMax: dadosEstabelecimento.lotacaoMax,
         tipoDeConta: dadosEstabelecimento.tipoDeConta //Define 1 pois é um user de estabelecimento
     }).then(() => {
         console.log("Registrado");
