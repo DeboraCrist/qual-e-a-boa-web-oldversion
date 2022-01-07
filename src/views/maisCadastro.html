@@ -80,86 +80,80 @@
         </div>
         <hr>
         <div id="formulario-pessoal">
-        <p class="lead text-left">Conta Pessoal:</p>
-        <form>
-            <div class="mb-3">
-                <form>
+            <p class="lead text-left">Conta Pessoal:</p>
+            <form action="/adicionarPessoa" method="post">
+                <div class="mb-3">
                     <div class="row">
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu nome</label>
-                            <input type="text" class="form-control" placeholder="Nome">
+                            <input type="text" name = "nomePessoa" class="form-control" placeholder="Nome" enable required>
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu sobrenome</label>
-                            <input type="text" class="form-control" placeholder="Sobrenome">
+                            <input type="text" name = "sobreNome" class="form-control" placeholder="Sobrenome" enable required>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="mb-3">
-                <form>
+                </div>
+                <div class="mb-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
-                            <input type="number" class="form-control" placeholder="Idade">
+                             <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
+                            <input type="number" name = "idadePessoa" class="form-control" placeholder="Idade" enable required>
                         </div>
                         <div class="col-md-6">
-                            <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
-                                nascimento</label>
-                            <input type="data" class="form-control" placeholder="00/00/0000">
+                             <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
+                              nascimento</label>
+                             <input type="data" name = "dataNasc" class="form-control" placeholder="00/00/0000" enable required>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
 
-            <div class="mb-3">
-                <form>
+                <div class="mb-3">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Digite sua Cidade</label>
-                            <input type="text" class="form-control" placeholder="Cidade">
+                            <input type="text" name = "cidadePessoa" class="form-control" placeholder="Cidade" enable required>
                         </div>
                         <div class="col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu Estado</label>
-                            <input type="text" class="form-control" placeholder="Estado">
+                            <input type="text" name = "estadoPessoa" class="form-control" placeholder="Estado" enable required>
                         </div>
                         <div class="col-md-2">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu CEP</label>
-                            <input type="text" class="form-control" placeholder="CEP">
+                            <input type="text" name = "cepPessoa" class="form-control" placeholder="CEP" enable required>
                         </div>
                     </div>
-                </form>
-            </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
-                <input class="form-control" type="file" id="formFile">
-            </div>
-
-            <div class="mb-3 form-group">
-                <label for="exampleFormControlSelect2">Vacinação</label>
-                <select multiple class="form-control" id="Vacinacao">
-                    <option>dose única</option>
-                    <option>1 dose de 2</option>
-                    <option>2 dose de 2 sem dose de reforço</option>
-                    <option>2 dose de 2 com dose de reforço</option>
-                    <option>Antivax</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
-                <input class="form-control" type="file" id="formFile">
-            </div>
-
-            <div class="mb-3">
-                <div class="d-grid d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Cadastrar</button>
                 </div>
-            </div>
 
-            <p style="margin-top: 30px"></p>
-            <hr>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
+                    <input name="urlImagem" class="form-control" type="url" id="formFile" enable>
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="exampleFormControlSelect2">Vacinação</label>
+                    <select multiple class="form-control" id="Vacinacao">
+                        <option>dose única</option>
+                        <option>1 dose de 2</option>
+                        <option>2 dose de 2 sem dose de reforço</option>
+                        <option>2 dose de 2 com dose de reforço</option>
+                        <option>Antivax</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
+                    <input name="passaPorte" class="form-control" type="url" id="formFile" enable>
+                </div>
+                <div class="mb-3">
+                    <div class="d-grid d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit" enable>Cadastrar</button>
+                    </div>
+                </div>
+
+            </form>
+
+                <p style="margin-top: 30px"></p>
+                <hr>
         </div>
             <div id="formulario_comercial" style="display: none;">
                 <p class="lead text-left">Conta Comercial:</p>
