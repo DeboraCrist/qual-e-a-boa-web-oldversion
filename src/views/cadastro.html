@@ -22,7 +22,9 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="text-right">
-				<button type="button" class="btn btn-dark">Login</button>
+				<a href="/login">
+					<button type="button" class="btn btn-dark">Login</button>
+				</a>			
 			</div>
 		</div>
 	</nav>
@@ -30,19 +32,26 @@
 	<p style="margin-top: 70px">
 
 	<div class="container">
+		<% if(typeof error != 'undefined') { %>
+			<%if (error == true) { %>
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					<strong>EMAIL INVALIDO</strong> Sintaxe do email esta incorreta
+				</div>
+			<%}%>
+		<% } %>
 		<h1 class="display-5 text-center">
 			Crie sua Conta
 		</h1>
 		<p class="lead text-center">Seja Bem-vindo</p>
 		<hr>
-		<form action="/registro" method="post">
+		<form action="/" method="post">
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">Endereço de Email</label>
 				<input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="exemplo@email.com" required>
 			</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlInput2" class="form-label">Senha</label>
-				<input type="password" name="senha" class="form-control" id="exampleFormControlInput2" placeholder="Digite sua senha desejada" required>
+				<input type="password" minlength="6" name="senha" class="form-control" id="exampleFormControlInput2" placeholder="Digite sua senha desejada" required>
 			</div>
 			<div class="mb-3">
 				<div class="form-check">
@@ -54,7 +63,7 @@
 				</div>
 			</div>
 			<div class="mb-3">
-				<a href="/registro">
+				<a href="/">
 					<button id="botaoCadastrar" class="btn btn-primary" type="submit">Cadastre-se</button>
 				</a>	
 			</div>
