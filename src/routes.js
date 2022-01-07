@@ -5,9 +5,6 @@ const criptografia = require("./scripts/criptografia");
 
 const { Estabelecimento } = require("./models/Estabelecimento");
 const { RegistraEstabelecimentoNaTabela } = require("./models/Estabelecimento");
-const { Pessoa } = require("./models/Pessoa");
-const { RegistraPessoaNaTabela } = require("./models/Pessoa");
-const validaSintaxeEmail = require("./scripts/validaSintaxeEmail");
 
 /*Responsavel por pegar os dados vindo do client*/
 const bodyParser = require("body-parser");
@@ -22,26 +19,14 @@ router.get("/", (req, res) => {
     res.render("cadastro.html");
 });
 
-router.post("/registro", async (req, res) => {
+router.get("/registrarEstabelecimento", (req, res) => {
+    res.sendFile(path.join(__dirname, "/views", "registro_estabelecimento.html"));
+});
+
+router.post("/registro", (req, res) => {
     tempEmail = req.body.email;
     tempSenha = req.body.senha;
-
-    if (validaSintaxeEmail(tempEmail)) {
-        //verifica se esse email existe dentro da tabela de estabelecimentos
-        const disponibilidadeEmailEstabelecimento = await Estabelecimento.findOne({where: {email: tempEmail}});
-        //verifica se esse email existe dentro da tabela do cliente comuns
-        const disponibilidateEmailCliente = await Pessoa.findOne({where: {email: tempEmail}});
-        
-        if (disponibilidadeEmailEstabelecimento != null || disponibilidateEmailCliente != null) {
-            console.log("Email ja esta em uso ou a senha e muito curta");
-            res.redirect("/");
-        } else {
-            res.render("maisCadastro.html", {email: tempEmail});
-        }
-    } else {
-        console.log("Sintaxe de email invalida");
-        res.redirect("/");
-    }
+    res.render("maisCadastro.html", {email: tempEmail});
 });
 
 //sistema de login em desenvolvimento
@@ -86,41 +71,49 @@ router.post("/adicionarEstabelecimento", async (req, res) => {
         tipoDeConta: 1
     }
 
-    //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-    RegistraEstabelecimentoNaTabela(dadosEstabelecimento);
-    tempEmail = "";
-    tempSenha = "";
-    res.redirect("/");
-
-});
-
-
-router.post("/adicionarPessoa", async (req, res) => {
-    //quarda os dados de registro de pessoa em um objeto
-    console.log(tempEmail);
-    dadosPessoa = {
-        nomePessoa: req.body.nomePessoa,
-        sobreNome: req.body.sobreNome,
-        email: tempEmail,
-        senha: tempSenha,
-        urlImagem: req.body.urlImagem,
-        passaPorte: req.body.passaPorte,
-        idadePessoa: req.body.idadePessoa,
-        dataNasc: req.body.dataNasc,
-        cidadePessoa: req.body.cidade,
-        estadoPessoa: req.body.estado,
-        cepPessoa: req.body.cep,
-        tipoDeConta: 0
+    const disponibilidadeEmail = await Estabelecimento.findOne({where: {email: tempEmail}});
+    if (disponibilidadeEmail === null) {
+        //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
+        RegistraEstabelecimentoNaTabela(dadosEstabelecimento);
+        tempEmail = "";
+        tempSenha = "";
+        res.redirect("/");
+    } else {
+        console.log("Email ja esta em uso ou a senha e muito curta");
+        res.redirect("/registro");
     }
-
-    console.log(req.body.cidade);
-    console.log(req.body.estado);
-
-    //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-    RegistraPessoaNaTabela(dadosPessoa);
-    tempEmail = "";
-    tempSenha = "";
-    res.redirect("/");
 });
+
+
+router.get("/paginaInicialUsuario", async ), (req, res) =>{
+    const dadosLogin =  await dadosUser.findOne({
+            attributes: ['email'] ['senha'],
+            where:{
+                email: "teste@Editargmail.com"
+            }
+    });
+    res.render("paginaInicialUsuario.html", {dadosLogin: dadosLogin})
+
+    }
+router.post("/atualizarPerfilUser",(req,res) => {
+    dadoUser.update(
+        {
+            urlImagemUserPerfil: req.body.urlImagemUserPerfil,
+            nomeUsuario: req.body.nomeUsuario,
+            sobreNomeUser:req.body.sobreNomeUser,
+            email: req.body.email,
+            senha: req.body.senha,
+            cidade:req.body.cidade,
+            estado:req.body.estado,
+            dataDeAniversario:req.body.dataDeAniversario,
+            urlImagemVacinaçao:req.body.urlImagemVacinaçao,
+            nomeUsuario: req.body.nomeUsuario, 
+        },{
+            where: email = "teste@Editargmail.com"
+        }
+    )
+});    
+ 
 
 module.exports = router;
+

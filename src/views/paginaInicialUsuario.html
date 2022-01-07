@@ -15,6 +15,7 @@
 </head>
 
 <body>
+<form action="/paginaInicialUsuario" method="POST">
 
     <nav class="navbar navbar-expand-lg fixed-top bg-danger navbar-dark">
         <div class="container-fluid">
@@ -63,21 +64,51 @@
         <hr>
 
         <div class="text-center">
-            <img src="img/sem_foto_usuario.png" class="img-thumbnail" alt="Foto do Usuário selecionada no 2° Cadastro">
+            <div class="mb-3">
+                <label for="btn btn-primary" class="form-label" alt="Foto do Usuário selecionada no 2° Cadastro"> </label>Atualize Foto De Perfil</label>
+                <input class="form-control" type="url" id="formFile">
+            </div>
         </div>
 
         <p style="margin-top: 50px"></p>
 
         <div class="card">
+
             <h5 class="card-header">[Nome e Sobrenome do Usuário]</h5>
+            
             <div class="card-body">
-                <p class="card-text">Idade: [00 anos]</p>
-                <p class="card-text">Data de Aniversário: [dd/mm/aaaa]</p>
-                <p class="card-text">Cidade: [Cidade]</p>
-                <p class="card-text">Estado: [estado]</p>
-                <p class="card-text">Passaporte Sanitário: [2 dose de 2 sem dose de reforço]</p>
-                <a href="#" class="btn btn-primary">Visualizar Passaporte Sanitário</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+
+            <label for ="Idade">Idade::</label>
+                <input idade ="Idade" id="Idade" type="number">
+            <br><br>        
+              
+            <label for ="cidade">Cidade::</label>
+                <input cidade ="cidade" id="cidade" type="text">
+                <br><br>
+
+            <label for ="estado">Estado::</label>
+                <input estado ="estado" id="Estado" type="text">
+                <br><br>
+            <label for ="data">Data de Aniversário::</label>
+                <input data = "DataDeAniversário" id="DataDeAniversário" type="date">
+
+                <div class="mb-3 form-group">
+                    <label for="exampleFormControlSelect2">Vacinação</label>
+                    <select multiple class="form-control" id="Vacinacao">
+                        <option>dose única</option>
+                        <option>1 dose de 2</option>
+                        <option>2 dose de 2 sem dose de reforço</option>
+                        <option>2 dose de 2 com dose de reforço</option>
+                        <option>Antivax</option>
+                    </select>
+                </div>
+                
+  
+                <div class="mb-3">
+                    <label for="btn btn-primary" class="form-label">Visualizar Passaporte Sanitário</label>
+                    <input class="form-control" type="url" id="formFile">
+                </div>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#">
                     Editar Perfil
                 </button>
 
@@ -87,7 +118,7 @@
         <hr>
 
     </div>
-
+</form>
 </body>
 
 <footer class="bg-light fixed-bottom text center text-lg-start">

@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-danger navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Qual é a boa</a>
+            <a class="navbar-brand" href="#">Qual é a boa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -80,80 +80,86 @@
         </div>
         <hr>
         <div id="formulario-pessoal">
-            <p class="lead text-left">Conta Pessoal:</p>
-            <form action="/adicionarPessoa" method="post">
-                <div class="mb-3">
+        <p class="lead text-left">Conta Pessoal:</p>
+        <form>
+            <div class="mb-3">
+                <form>
                     <div class="row">
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu nome</label>
-                            <input type="text" name = "nomePessoa" class="form-control" placeholder="Nome" enable required>
+                            <input type="text" class="form-control" placeholder="Nome">
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu sobrenome</label>
-                            <input type="text" name = "sobreNome" class="form-control" placeholder="Sobrenome" enable required>
+                            <input type="text" class="form-control" placeholder="Sobrenome">
                         </div>
                     </div>
-                </div>
-                <div class="mb-3">
+                </form>
+            </div>
+            <div class="mb-3">
+                <form>
                     <div class="row">
                         <div class="col-md-6">
-                             <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
-                            <input type="number" name = "idadePessoa" class="form-control" placeholder="Idade" enable required>
+                            <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
+                            <input type="number" class="form-control" placeholder="Idade">
                         </div>
                         <div class="col-md-6">
-                             <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
-                              nascimento</label>
-                             <input type="date" name = "dataNasc" class="form-control" placeholder="00/00/0000" min="1921-01-01" max="2021-01-01" enable required>
+                            <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
+                                nascimento</label>
+                            <input type="data" class="form-control" placeholder="00/00/0000">
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
 
-                <div class="mb-3">
+            <div class="mb-3">
+                <form>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Digite sua Cidade</label>
-                            <input type="text" name = "cidade" class="form-control" placeholder="Cidade" required>
+                            <input type="text" class="form-control" placeholder="Cidade">
                         </div>
                         <div class="col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu Estado</label>
-                            <input type="text" name = "estado" class="form-control" placeholder="Estado" required>
+                            <input type="text" class="form-control" placeholder="Estado">
                         </div>
                         <div class="col-md-2">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu CEP</label>
-                            <input type="text" name = "cep" class="form-control" placeholder="CEP" maxlength="8" onblur="consultarCEP(this.value)" enable required>
+                            <input type="text" class="form-control" placeholder="CEP">
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
 
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
-                    <input name="urlImagem" class="form-control" type="url" id="formFile" enable>
-                </div>
-                <div class="mb-3 form-group">
-                    <label for="exampleFormControlSelect2">Vacinação</label>
-                    <select multiple class="form-control" id="Vacinacao">
-                        <option>dose única</option>
-                        <option>1 dose de 2</option>
-                        <option>2 dose de 2 sem dose de reforço</option>
-                        <option>2 dose de 2 com dose de reforço</option>
-                        <option>Antivax</option>
-                    </select>
-                </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
 
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
-                    <input name="passaPorte" class="form-control" type="url" id="formFile" enable>
-                </div>
-                <div class="mb-3">
-                    <div class="d-grid d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="submit" enable>Cadastrar</button>
-                    </div>
-                </div>
+            <div class="mb-3 form-group">
+                <label for="exampleFormControlSelect2">Vacinação</label>
+                <select multiple class="form-control" id="Vacinacao">
+                    <option>dose única</option>
+                    <option>1 dose de 2</option>
+                    <option>2 dose de 2 sem dose de reforço</option>
+                    <option>2 dose de 2 com dose de reforço</option>
+                    <option>Antivax</option>
+                </select>
+            </div>
 
-            </form>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
+                <input class="form-control" type="" id="formFile">
+            </div>
 
-                <p style="margin-top: 30px"></p>
-                <hr>
+            <div class="mb-3">
+                <div class="d-grid d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary" type="button">Cadastrar</button>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px"></p>
+            <hr>
         </div>
             <div id="formulario_comercial" style="display: none;">
                 <p class="lead text-left">Conta Comercial:</p>
@@ -180,15 +186,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label">Digite a Cidade</label>
-                                    <input type="text" name="cidade" class="form-control" placeholder="Cidade" required>
+                                    <input type="text" name="cidade" class="form-control" placeholder="Cidade" enable required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="exampleFormControlInput1" class="form-label">Digite o Estado</label>
-                                    <input type="text" name="estado" class="form-control" placeholder="Estado" required>
+                                    <input type="text" name="estado" class="form-control" placeholder="Estado" enable required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="exampleFormControlInput1" class="form-label">Digite o CEP</label>
-                                    <input type="text" name="cep" class="form-control" placeholder="CEP" maxlength="8" onblur="consultarCEP(this.value)" enable required>
+                                    <input type="text" name="cep" class="form-control" placeholder="CEP" enable required>
                                 </div>
                             </div>
                     
@@ -262,7 +268,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script src="/mudaTipoDeRegistro.js"></script>
-    <script src="/consultaCEP.js"></script>
 </footer>
 
 <footer class="bg-light text-center text-lg-start">

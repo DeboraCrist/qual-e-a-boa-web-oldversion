@@ -63,6 +63,7 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
     }
 });
 
+
 //descomente a linha a seguir para criar a tabela no seu DB caso ela ainda não exista
 //Estabelecimento.sync({force: true});
 //Se a tabela a cima ja existir dentro do seu DB mantenha o comando a cima comentado
@@ -90,9 +91,26 @@ const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento) => {
         console.log("Erro: "+ error);
     });
 }
-
-
+const AtualizarDadosUser = (dadoUser)=> {
+    PerfilUser.update({
+            urlImagemUserPerfil: dadoUser.urlImagemUserPerfil,
+            nomeUsuario: dadoUser.nomeUsuario,
+            sobreNomeUser:dadoUser.sobreNomeUser,
+            email: dadoUser.email,
+            senha: dadoUser.senha,
+            cidade:dadoUser.cidade,
+            estado:dadoUser.estado,
+            dataDeAniversario:dadoUser.dataDeAniversario,
+            urlImagemVacinaçao:dadoUser.urlImagemVacinaçao,
+            nomeUsuario: dadoUser.nomeUsuario, 
+        }).then(() => {
+            console.log("Atualizado");
+        }).catch((error) => {
+            console.log("Erro: "+ error);
+        });
+}    
 module.exports = {
     Estabelecimento : Estabelecimento,
     RegistraEstabelecimentoNaTabela : RegistraEstabelecimentoNaTabela,
+    AtualizarDadosUser : AtualizarDadosUser,
 }
