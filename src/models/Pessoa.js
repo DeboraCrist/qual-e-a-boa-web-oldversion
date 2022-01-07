@@ -31,7 +31,7 @@ const Pessoa = db.sequelize.define("pessoas", {
         allowNull: false
     },
     dataNasc: {
-        type: db.Sequelize.STRING(100),
+        type: db.Sequelize.DATE,
         allowNull: false
     },
     cidadePessoa: {

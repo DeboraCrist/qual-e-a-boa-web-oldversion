@@ -7,6 +7,7 @@ const { Estabelecimento } = require("./models/Estabelecimento");
 const { RegistraEstabelecimentoNaTabela } = require("./models/Estabelecimento");
 const { Pessoa } = require("./models/Pessoa");
 const { RegistraPessoaNaTabela } = require("./models/Pessoa");
+const validaSintaxeEmail = require("./scripts/validaSintaxeEmail");
 
 /*Responsavel por pegar os dados vindo do client*/
 const bodyParser = require("body-parser");
@@ -21,10 +22,26 @@ router.get("/", (req, res) => {
     res.render("cadastro.html");
 });
 
-router.post("/registro", (req, res) => {
+router.post("/registro", async (req, res) => {
     tempEmail = req.body.email;
     tempSenha = req.body.senha;
-    res.render("maisCadastro.html", {email: tempEmail});
+
+    if (validaSintaxeEmail(tempEmail)) {
+        //verifica se esse email existe dentro da tabela de estabelecimentos
+        const disponibilidadeEmailEstabelecimento = await Estabelecimento.findOne({where: {email: tempEmail}});
+        //verifica se esse email existe dentro da tabela do cliente comuns
+        const disponibilidateEmailCliente = await Pessoa.findOne({where: {email: tempEmail}});
+        
+        if (disponibilidadeEmailEstabelecimento != null || disponibilidateEmailCliente != null) {
+            console.log("Email ja esta em uso ou a senha e muito curta");
+            res.redirect("/");
+        } else {
+            res.render("maisCadastro.html", {email: tempEmail});
+        }
+    } else {
+        console.log("Sintaxe de email invalida");
+        res.redirect("/");
+    }
 });
 
 //sistema de login em desenvolvimento
@@ -69,17 +86,12 @@ router.post("/adicionarEstabelecimento", async (req, res) => {
         tipoDeConta: 1
     }
 
-    const disponibilidadeEmail = await Estabelecimento.findOne({where: {email: tempEmail}});
-    if (disponibilidadeEmail === null) {
-        //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-        RegistraEstabelecimentoNaTabela(dadosEstabelecimento);
-        tempEmail = "";
-        tempSenha = "";
-        res.redirect("/");
-    } else {
-        console.log("Email ja esta em uso ou a senha e muito curta");
-        res.redirect("/registro");
-    }
+    //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
+    RegistraEstabelecimentoNaTabela(dadosEstabelecimento);
+    tempEmail = "";
+    tempSenha = "";
+    res.redirect("/");
+
 });
 
 
@@ -95,23 +107,20 @@ router.post("/adicionarPessoa", async (req, res) => {
         passaPorte: req.body.passaPorte,
         idadePessoa: req.body.idadePessoa,
         dataNasc: req.body.dataNasc,
-        cidadePessoa: req.body.cidadePessoa,
-        estadoPessoa: req.body.estadoPessoa,
-        cepPessoa: req.body.cepPessoa,
+        cidadePessoa: req.body.cidade,
+        estadoPessoa: req.body.estado,
+        cepPessoa: req.body.cep,
         tipoDeConta: 0
     }
 
-    const disponibilidadeEmail = await Pessoa.findOne({where: {email: tempEmail}});
-    if (disponibilidadeEmail === null) {
-        //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-        RegistraPessoaNaTabela(dadosPessoa);
-        tempEmail = "";
-        tempSenha = "";
-        res.redirect("/");
-    } else {
-        console.log("Email ja esta em uso ou a senha e muito curta");
-        res.redirect("/registro");
-    }
+    console.log(req.body.cidade);
+    console.log(req.body.estado);
+
+    //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
+    RegistraPessoaNaTabela(dadosPessoa);
+    tempEmail = "";
+    tempSenha = "";
+    res.redirect("/");
 });
 
 module.exports = router;
