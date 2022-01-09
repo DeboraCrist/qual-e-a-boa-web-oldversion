@@ -50,7 +50,7 @@
                         </ul>
                     </li>
                 </ul>
-                <a href="/login">
+                <a href="/logout">
                     <button type="button" class="btn btn-dark">Sair</button>
                 </a>
             </div>
@@ -65,23 +65,24 @@
         <hr>
 
         <div class="text-center">
-            <img src="sem_foto_usuario.png" class="img-thumbnail" alt="Foto do Usuário selecionada no 2° Cadastro">
+            <img src="<%= dadosLogin.urlImagemPerfil %>" class="img-thumbnail" alt="Foto do Usuário selecionada no 2° Cadastro">
         </div>
 
         <p style="margin-top: 50px"></p>
 
         <div class="card">
-            <h5 class="card-header">[Nome e Sobrenome do Usuário dono Do Estabelecimento]</h5>
+            <h5 class="card-header"><%= dadosLogin.nomeDono %></h5>
             <div class="card-body">
-                <p class="card-text">Nome do Estabelecimento: [Nome]</p>
-                <p class="card-text">Lotação Máxima: [00000]</p>
-                <p class="card-text">Endereço: [Rua, Numero e Bairro]</p>
-                <p class="card-text">Cidade: [Cidade]</p>
-                <p class="card-text">Estado: [estado]</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
-                    Editar Perfil
-                </button>
-
+                <p class="card-text">Nome do Estabelecimento: <%= dadosLogin.nomeEstabelecimento %></p>
+                <p class="card-text">Lotação Máxima: <%= dadosLogin.lotacaoMax %></p>
+                <p class="card-text">Endereço: <%= dadosLogin.rua %>, <%= dadosLogin.bairro %>, <%= dadosLogin.numero %></p>
+                <p class="card-text">Cidade: <%= dadosLogin.cidade %></p>
+                <p class="card-text">Estado: <%= dadosLogin.estado %></p>
+                <a href="/editarEstabelecimento">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+                        Editar Perfil
+                    </button>
+                </a>
             </div>
         </div>
 

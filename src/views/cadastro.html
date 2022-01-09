@@ -32,12 +32,12 @@
 	<p style="margin-top: 70px">
 
 	<div class="container">
-		<% if(typeof error != 'undefined') { %>
-			<%if (error == true) { %>
+		<% if(typeof erros != 'undefined') { %>
+			<% erros.forEach(function(erro){ %>
 				<div class="alert alert-warning alert-dismissible fade show" role="alert">
-					<strong>EMAIL INVALIDO</strong> Sintaxe do email esta incorreta
+					<%= erro.msg %>
 				</div>
-			<%}%>
+			<% }) %>
 		<% } %>
 		<h1 class="display-5 text-center">
 			Crie sua Conta
