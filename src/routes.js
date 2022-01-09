@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
 
 //sistema de login em desenvolvimento
 router.post("/login", async (req, res) => {
-    dadosLogin = await Estabelecimento.findOne({
+    const dadosLogin = await Estabelecimento.findOne({
         where: {
             email: req.body.email
         }
@@ -70,17 +70,17 @@ router.post("/login", async (req, res) => {
     });
 
     if (dadosLogin != null) {
-        let senhaDescriptografada = criptografia.descriptografar(dadosLogin.senha);
+        var senhaDescriptografada = criptografia.descriptografar(dadosLogin.senha);
         if (senhaDescriptografada == req.body.senha) {
             req.session.dadosLogin = dadosLogin;
             res.redirect("/usuarioEstabelecimento");
         }
-    } else if(dadosLoginCliente != null) {
-        let senhaDescriptografada2 = criptografia.descriptografar(dadosLoginCliente.senha);
+    } else if (dadosLoginCliente != null) {
+        var senhaDescriptografada2 = criptografia.descriptografar(dadosLoginCliente.senha);
 
         if (senhaDescriptografada2 == req.body.senha) {
             req.session.dadosLogin = dadosLoginCliente;
-            res.render('paginaInicialUsuario.html', {dadosLogin: dadosLoginCliente});
+            res.redirect("/usuarioCliente");
         }
     } else {
         console.log("Senha ou Email incorretos");
@@ -89,11 +89,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-    if (req.session.dadosLogin) {
-        res.redirect("/usuarioEstabelecimento");
-    } else {
-        res.render("index.html");
-    }
+    res.render("index.html");
 })
 
 //rota post responsavel por registrar os dados que forma coletados do front usando o body-parser no banco de dados (tabela de estabelecimento)
@@ -185,7 +181,7 @@ router.post("/atualizarPerfilUser",(req,res) => {
 });
 
 router.get("/usuarioCliente", (req, res) => {
-    if (req.session.dadoLogin) {
+    if (req.session.dadosLogin) {
         res.render("paginaInicialUsuario.html", {dadosLogin: req.session.dadosLogin});
     } else {
         res.redirect("/login");
@@ -193,7 +189,6 @@ router.get("/usuarioCliente", (req, res) => {
 })
 
 router.get("/usuarioEstabelecimento", (req, res) => {
-    console.log(req.session.dadosLogin);
     if (req.session.dadosLogin) {
         res.render('paginaInicialComercial.html', {dadosLogin: req.session.dadosLogin});
     } else {
