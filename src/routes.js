@@ -31,6 +31,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+    let erros = [];
+
     tempEmail = req.body.email;
     tempSenha = req.body.senha;
 
@@ -41,22 +43,19 @@ router.post("/", async (req, res) => {
         const disponibilidateEmailCliente = await Pessoa.findOne({where: {email: tempEmail}});
         
         if (disponibilidadeEmailEstabelecimento != null || disponibilidateEmailCliente != null) {
+            erros.push({msg: "O email informado ja esta em uso"});
             console.log("Email ja esta em uso ou a senha e muito curta");
-            //res.render("cadastro.html", {error: true});
+            res.render("cadastro.html", {erros: erros});
         } else {
             res.render("maisCadastro.html", {email: tempEmail});
         }
     } else {
-        console.log("Sintaxe de email invalida");
-        res.render("cadastro.html", {error: true});
+        erros.push({msg: "Email invalido"})
+        res.render("cadastro.html", {erros});
     }
 });
 
 //sistema de login em desenvolvimento
-router.get("/login", (req, res) => {
-    res.render("index.html");
-})
-
 router.post("/login", async (req, res) => {
     dadosLogin = await Estabelecimento.findOne({
         where: {
@@ -73,17 +72,14 @@ router.post("/login", async (req, res) => {
     if (dadosLogin != null) {
         let senhaDescriptografada = criptografia.descriptografar(dadosLogin.senha);
         if (senhaDescriptografada == req.body.senha) {
-            req.session.email = req.body.email;
-            //res.sendFile(path.join(__dirname, "/views", "menuPrincipal.html"));
-            res.render('paginaInicialComercial.html', {dadosLogin: dadosLogin});
+            req.session.dadosLogin = dadosLogin;
+            res.redirect("/usuarioEstabelecimento");
         }
     } else if(dadosLoginCliente != null) {
         let senhaDescriptografada2 = criptografia.descriptografar(dadosLoginCliente.senha);
 
         if (senhaDescriptografada2 == req.body.senha) {
-            req.session.email = req.body.email;
-            //res.sendFile(path.join(__dirname, "/views", "menuPrincipal.html"));
-            infoLogin = dadosLoginCliente;
+            req.session.dadosLogin = dadosLoginCliente;
             res.render('paginaInicialUsuario.html', {dadosLogin: dadosLoginCliente});
         }
     } else {
@@ -91,6 +87,14 @@ router.post("/login", async (req, res) => {
         res.redirect("/login");
     }
 });
+
+router.get("/login", (req, res) => {
+    if (req.session.dadosLogin) {
+        res.redirect("/usuarioEstabelecimento");
+    } else {
+        res.render("index.html");
+    }
+})
 
 //rota post responsavel por registrar os dados que forma coletados do front usando o body-parser no banco de dados (tabela de estabelecimento)
 router.post("/adicionarEstabelecimento", async (req, res) => {
@@ -178,6 +182,40 @@ router.post("/atualizarPerfilUser",(req,res) => {
             where: email = "teste@Editargmail.com"
         }
     )
-});    
+});
+
+router.get("/usuarioCliente", (req, res) => {
+    if (req.session.dadoLogin) {
+        res.render("paginaInicialUsuario.html", {dadosLogin: req.session.dadosLogin});
+    } else {
+        res.redirect("/login");
+    }
+})
+
+router.get("/usuarioEstabelecimento", (req, res) => {
+    console.log(req.session.dadosLogin);
+    if (req.session.dadosLogin) {
+        res.render('paginaInicialComercial.html', {dadosLogin: req.session.dadosLogin});
+    } else {
+        res.redirect("/login");
+    }
+});
+
+router.get("/editarEstabelecimento", (req, res) => {
+    if (req.session.dadosLogin) {
+        res.render('editaEstabelecimento.html', {dadosLogin: req.session.dadosLogin});
+    } else {
+        res.redirect("/login");
+    }
+});
+
+router.post("/editarEstabelecimento", (req, res) => {
+
+});
+
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/login");
+});
 
 module.exports = router;
