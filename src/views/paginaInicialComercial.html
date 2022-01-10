@@ -16,7 +16,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-danger navbar-dark">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: rgb(255, 185, 80);">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Qual é a boa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -60,24 +60,33 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container">
-        <h1 class="display-5 text-center">Olá, <%= dadosLogin.nomeEstabelecimento %></h1>
+        <h1 class="display-5 text-center">Olá, <%= dadosLogin.nomeEstabelecimento %>
+        </h1>
         <p class="lead text-center">Bem-vindo ao seu perfil Comercial:</p>
         <hr>
 
         <div class="text-center">
-            <img src="<%= dadosLogin.urlImagemPerfil %>" class="img-thumbnail" alt="Foto do Usuário selecionada no 2° Cadastro">
+            <img src="<%= dadosLogin.urlImagemPerfil %>" class="img-thumbnail"
+                alt="Foto do Usuário selecionada no 2° Cadastro">
         </div>
 
         <p style="margin-top: 50px"></p>
 
         <div class="card">
-            <h5 class="card-header"><%= dadosLogin.nomeDono %></h5>
+            <h5 class="card-header">
+                <%= dadosLogin.nomeDono %>
+            </h5>
             <div class="card-body">
-                <p class="card-text">Nome do Estabelecimento: <%= dadosLogin.nomeEstabelecimento %></p>
-                <p class="card-text">Lotação Máxima: <%= dadosLogin.lotacaoMax %></p>
-                <p class="card-text">Endereço: <%= dadosLogin.rua %>, <%= dadosLogin.bairro %>, <%= dadosLogin.numero %></p>
-                <p class="card-text">Cidade: <%= dadosLogin.cidade %></p>
-                <p class="card-text">Estado: <%= dadosLogin.estado %></p>
+                <p class="card-text">Nome do Estabelecimento: <%= dadosLogin.nomeEstabelecimento %>
+                </p>
+                <p class="card-text">Lotação Máxima: <%= dadosLogin.lotacaoMax %>
+                </p>
+                <p class="card-text">Endereço: <%= dadosLogin.rua %>, <%= dadosLogin.bairro %>, <%= dadosLogin.numero %>
+                </p>
+                <p class="card-text">Cidade: <%= dadosLogin.cidade %>
+                </p>
+                <p class="card-text">Estado: <%= dadosLogin.estado %>
+                </p>
                 <a href="/editarEstabelecimento">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
                         Editar Perfil

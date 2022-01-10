@@ -13,7 +13,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-danger navbar-dark">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: rgb(255, 185, 80);">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Qual é a boa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -57,7 +57,8 @@
     <div class="container">
         <img src="/sem_foto_usuario.png" class="img-thumbnail rounded mx-auto d-block" alt="Foto do Usuário">
         <p style="margin-top: 20 px"></p>
-        <h1 class="display-5 text-center">Seja Bem-vindo, <%= email %></h1>
+        <h1 class="display-5 text-center">Seja Bem-vindo, <%= email %>
+        </h1>
         <p class="lead text-center">Continue o Cadastro da Sua Conta:</p>
         <hr>
     </div>
@@ -86,24 +87,28 @@
                     <div class="row">
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu nome</label>
-                            <input type="text" name = "nomePessoa" class="form-control" placeholder="Nome" enable required>
+                            <input type="text" name="nomePessoa" class="form-control" placeholder="Nome" enable
+                                required>
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu sobrenome</label>
-                            <input type="text" name = "sobreNome" class="form-control" placeholder="Sobrenome" enable required>
+                            <input type="text" name="sobreNome" class="form-control" placeholder="Sobrenome" enable
+                                required>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-6">
-                             <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
-                            <input type="number" name = "idadePessoa" class="form-control" placeholder="Idade" enable required>
+                            <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
+                            <input type="number" name="idadePessoa" class="form-control" placeholder="Idade" enable
+                                required>
                         </div>
                         <div class="col-md-6">
-                             <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
-                              nascimento</label>
-                             <input type="date" name = "dataNasc" class="form-control" placeholder="00/00/0000" min="1921-01-01" max="2021-01-01" enable required>
+                            <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
+                                nascimento</label>
+                            <input type="date" name="dataNasc" class="form-control" placeholder="00/00/0000"
+                                min="1921-01-01" max="2021-01-01" enable required>
                         </div>
                     </div>
                 </div>
@@ -112,15 +117,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Digite sua Cidade</label>
-                            <input type="text" name = "cidade" class="form-control" placeholder="Cidade" required>
+                            <input type="text" name="cidade" class="form-control" placeholder="Cidade" required>
                         </div>
                         <div class="col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu Estado</label>
-                            <input type="text" name = "estado" class="form-control" placeholder="Estado" required>
+                            <input type="text" name="estado" class="form-control" placeholder="Estado" required>
                         </div>
                         <div class="col-md-2">
                             <label for="exampleFormControlInput1" class="form-label">Digite seu CEP</label>
-                            <input type="text" name = "cep" class="form-control" placeholder="CEP" maxlength="8" onblur="consultarCEP(this.value)" enable required>
+                            <input type="text" name="cep" class="form-control" placeholder="CEP" maxlength="8"
+                                onblur="consultarCEP(this.value)" enable required>
                         </div>
                     </div>
                 </div>
@@ -152,97 +158,101 @@
 
             </form>
 
-                <p style="margin-top: 30px"></p>
-                <hr>
+            <p style="margin-top: 30px"></p>
+            <hr>
         </div>
-            <div id="formulario_comercial" style="display: none;">
-                <p class="lead text-left">Conta Comercial:</p>
-                <form action="/adicionarEstabelecimento" method="post">
-                    <div class="mb-3">
-                    
-                        <div class="row">
-                            <div class="col">
-                                <label for="exampleFormControlInput1" class="form-label">Digite o nome completo do
-                                    Proprietário</label>
-                                <input type="text" name="nomeDono" class="form-control" placeholder="Nome completo" enable required>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1" class="form-label">Digite o nome do
-                                    Estabelecimento</label>
-                                <input type="text" name="nomeEstabelecimento" class="form-control" placeholder="Nome Estabelecimento" enable required>
-                            </div>
+        <div id="formulario_comercial" style="display: none;">
+            <p class="lead text-left">Conta Comercial:</p>
+            <form action="/adicionarEstabelecimento" method="post">
+                <div class="mb-3">
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="exampleFormControlInput1" class="form-label">Digite o nome completo do
+                                Proprietário</label>
+                            <input type="text" name="nomeDono" class="form-control" placeholder="Nome completo" enable
+                                required>
                         </div>
-                
-                    </div>
-
-                    <div class="mb-3">
-                        
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label">Digite a Cidade</label>
-                                    <input type="text" name="cidade" class="form-control" placeholder="Cidade" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="exampleFormControlInput1" class="form-label">Digite o Estado</label>
-                                    <input type="text" name="estado" class="form-control" placeholder="Estado" required>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Digite o CEP</label>
-                                    <input type="text" name="cep" class="form-control" placeholder="CEP" maxlength="8" onblur="consultarCEP(this.value)" enable required>
-                                </div>
-                            </div>
-                    
-                    </div>
-
-                    <div class="mb-3">
-                        
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label">Digite o nome da rua do
-                                        Estabelecimento</label>
-                                    <input type="text" name="rua" class="form-control" placeholder="Rua" enable required>
-                                </div>
-                                <div class="col-md-1">
-                                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
-                                    <input type="text" name="numero" class="form-control" placeholder="00" enable required>
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="exampleFormControlInput1" class="form-label">Bairro</label>
-                                    <input type="text" name="bairro" class="form-control" placeholder="Bairro" enable required>
-                                </div>
-
-                            </div>
-                    
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Lotação Máxima</label>
-                        <input type="number" name="lotacaoMaxima" class="form-control" id="exampleFormControlInput1"
-                            placeholder="Digite a quantidade máxima de pessoas que seu local pode receber" enable>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Informações Complementares</label>
-                        <textarea class="form-control" name="infoComplementar" id="exampleFormControlTextarea1"
-                            placeholder="Digite as informações Complementares do Estabelecimento" rows="3" enable></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Url de uma foto para seu perfil comercial</label>
-                        <input name="urlImagemPerfil" class="form-control" type="url" id="formFile" enable>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">Url alguma foto do Local</label>
-                        <input name="urlImagemLocal" class="form-control" type="url" id="formFileMultiple" multiple enable>
-                    </div>
-            
-                    <div class="mb-3">
-                        <div class="d-grid d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary" type="submit" enable>Cadastrar</button>
+                        <div class="col">
+                            <label for="exampleFormControlInput1" class="form-label">Digite o nome do
+                                Estabelecimento</label>
+                            <input type="text" name="nomeEstabelecimento" class="form-control"
+                                placeholder="Nome Estabelecimento" enable required>
                         </div>
                     </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Digite a Cidade</label>
+                            <input type="text" name="cidade" class="form-control" placeholder="Cidade" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="exampleFormControlInput1" class="form-label">Digite o Estado</label>
+                            <input type="text" name="estado" class="form-control" placeholder="Estado" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="exampleFormControlInput1" class="form-label">Digite o CEP</label>
+                            <input type="text" name="cep" class="form-control" placeholder="CEP" maxlength="8"
+                                onblur="consultarCEP(this.value)" enable required>
+                        </div>
                     </div>
-                </form>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Digite o nome da rua do
+                                Estabelecimento</label>
+                            <input type="text" name="rua" class="form-control" placeholder="Rua" enable required>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="exampleFormControlInput1" class="form-label">Numero</label>
+                            <input type="text" name="numero" class="form-control" placeholder="00" enable required>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="exampleFormControlInput1" class="form-label">Bairro</label>
+                            <input type="text" name="bairro" class="form-control" placeholder="Bairro" enable required>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Lotação Máxima</label>
+                    <input type="number" name="lotacaoMaxima" class="form-control" id="exampleFormControlInput1"
+                        placeholder="Digite a quantidade máxima de pessoas que seu local pode receber" enable>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Informações Complementares</label>
+                    <textarea class="form-control" name="infoComplementar" id="exampleFormControlTextarea1"
+                        placeholder="Digite as informações Complementares do Estabelecimento" rows="3"
+                        enable></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Url de uma foto para seu perfil comercial</label>
+                    <input name="urlImagemPerfil" class="form-control" type="url" id="formFile" enable>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Url alguma foto do Local</label>
+                    <input name="urlImagemLocal" class="form-control" type="url" id="formFileMultiple" multiple enable>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-grid d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit" enable>Cadastrar</button>
+                    </div>
+                </div>
+        </div>
+        </form>
     </div>
 
 
