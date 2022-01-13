@@ -1,8 +1,19 @@
 const express = require("express");
 const server = express();
 const port = 3000;
-const router = require("./routes");
 const path = require("path");
+const session = require("express-session");
+
+const registroRota = require("./routes/rotaRegistro");
+const pessoaRota = require("./routes/rotaPessoa");
+const estabelecimentoRota = require("./routes/rotaEstabelecimento");
+const loginRota = require("./routes/rotaLogin");
+
+server.use(session({
+    secret: "wkndawdnwouidnawdnawonds", //é uma chave que cria uma sessão
+    resave: true,
+    saveUninitialized: true,
+}));
 
 server.engine('html', require('ejs').renderFile);
 server.set('view engine', 'html');
@@ -14,6 +25,9 @@ server.use(express.static(path.join(__dirname, "images"))); //local das imgs
 server.use(express.static(path.join(__dirname, "controllers"))); //local dos controllers
 server.use(express.static(path.join(__dirname, "models")));
 
-server.use(router);
+server.use(registroRota);
+server.use(pessoaRota);
+server.use(estabelecimentoRota);
+server.use(loginRota);
 
 server.listen(port, () => console.log("Servidor rodando na porta "+ port));
