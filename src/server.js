@@ -1,6 +1,6 @@
 const express = require("express");
 const server = express();
-const port = 3000;
+const port = 3001;
 const path = require("path");
 const session = require("express-session");
 
