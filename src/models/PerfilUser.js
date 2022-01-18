@@ -35,7 +35,7 @@ const db = require("./db");
       fazPost(url, body)
   }
   const AtualizarDadosUser = (dadoUser)=> {
-    dadoUser.update({
+    dadoUser.AtualizarDadosUser({
             urlImagemUserPerfil: dadoUser.urlImagemUserPerfil,
             nomeUsuario: dadoUser.nomeUsuario,
             sobreNomeUser:dadoUser.sobreNomeUser,
