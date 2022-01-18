@@ -3,9 +3,8 @@ const db = require("./db");
       //utilizado para não recarregar a pagina 
       event.preventDefault()
   
-    
+
       //captura um elemento html e as entradas 
-      
       let nome = document.getElementById("name")
       let sobrenome = document.getElementById("name")
 

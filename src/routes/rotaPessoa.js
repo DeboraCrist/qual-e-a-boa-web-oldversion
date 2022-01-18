@@ -24,7 +24,7 @@ router.get("/paginaInicialUsuario"),async (req, res) =>{
 }
 
 router.post("/atualizarPerfilUser",(req,res) => {
-    dadoUser.update(
+    dadoUser.AtualizarDadosUser(
         {
             urlImagemUserPerfil: req.body.urlImagemUserPerfil,
             nomeUsuario: req.body.nomeUsuario,
@@ -43,7 +43,7 @@ router.post("/atualizarPerfilUser",(req,res) => {
 });
 
 router.post("/atualizarPerfilUser",(req,res) => {
-    dadoUser.update(
+    dadoUser.AtualizarDadosUser(
         {
             urlImagemUserPerfil: req.body.urlImagemUserPerfil,
             nomeUsuario: req.body.nomeUsuario,
