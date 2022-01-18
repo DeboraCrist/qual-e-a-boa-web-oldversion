@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-router.get("/usuarioCliente", (req, res) => {
+router.get("/usuario", (req, res) => {
     if (req.session.dadosLogin) {
         res.render("paginaInicialUsuario.html", {dadosLogin: req.session.dadosLogin});
     } else {
