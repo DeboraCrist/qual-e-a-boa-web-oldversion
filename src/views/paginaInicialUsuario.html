@@ -65,13 +65,13 @@
         <p style="margin-top: 50px"></p>
 
         <div class="card">
-            <h5 class="card-header"><%= dadosLogin.nomePessoa %><%= dadosLogin.sobreNome%></h5>
+            <h5 class="card-header"><%= dadosLogin.nomePessoa%><%= dadosLogin.sobreNome%></h5>
             <div class="card-body">
                 <p class="card-text">Idade: <%= dadosLogin.idadePessoa %></p>
-                <p class="card-text">Data de Aniversário: <%= dadosLogin.dataNasc %></p>
-                <p class="card-text">Cidade: <%= dadosLogin.cidadePessoa %></p>
-                <p class="card-text">Estado: <%= dadosLogin.estadoPessoa %></p>
-                <p class="card-text">Passaporte Sanitário:<%= dadosLogin.urlImagem %> </p>
+                <p class="card-text">Data de Aniversário: [dd/mm/aaaa]</p>
+                <p class="card-text">Cidade:<%= dadosLogin.cidadePessoa %></p>
+                <p class="card-text">Estado: [estado]</p>
+                <p class="card-text">Passaporte Sanitário: [2 dose de 2 sem dose de reforço]</p>
                 <a href="#" class="btn btn-primary">Visualizar Passaporte Sanitário</a>
                 <a href="">
                     <a href="/atualizarPerfilUser">
