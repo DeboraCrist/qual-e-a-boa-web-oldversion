@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | <%= dadosEventos.titulo %></title>
+</head>
+<body>
+    <img src="<%= dadosEventos.urlImagem %>" alt="" width="100%">
+    <h1><%= dadosEventos.titulo %></h1>
+    <p>Rua <%= dadosEventos.rua %>, <%= dadosEventos.bairro %>, <%= dadosEventos.cidade %>, <%= dadosEventos.estado %></p>
+    <p> Valor da Entrada: R$ <%= dadosEventos.valorEntrada %></p>
+    <p>Confirmações <%=dadosEventos.confirmacoes%>/<%=dadosEventos.capacidade%></p>
+    <p>Data: <%=dadosEventos.dataDoEvento%></p>
+    <p>Hora: <%=dadosEventos.horaDoEvento%></p>
+</body>
+</html>
