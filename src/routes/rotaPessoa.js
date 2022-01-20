@@ -35,7 +35,7 @@ router.get("/paginaInicialUsuario"),async (req, res) =>{
 }
 
 
-/*router.post("/atualizarPerfilUser",(req,res) => {
+router.post("/atualizarPerfilUser",(req,res) => {
     dadoUser.AtualizarDadosUser(
         {
             urlImagemUserPerfil: req.body.urlImagemUserPerfil,
@@ -52,7 +52,7 @@ router.get("/paginaInicialUsuario"),async (req, res) =>{
             where: email = "testeEditar@gmail.com"
         }
     )
-});*/
+});
 
 
 module.exports = router;
