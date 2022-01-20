@@ -30,7 +30,7 @@
                         <a class="nav-link" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Agenda</a>
+                        <a class="nav-link" aria-current="page" href="/agenda">Agenda</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -113,50 +113,22 @@
 
         <h5 class="display-5 text-center">Meus Eventos</h5>
         <div class="row">
-            <div class="col-3">
-                <div class="card border border-danger bg-light">
-                    <img src="fiesta.jfif" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Meu Evento</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                        <a href="#" class="btn btn-primary">Saiba mais</a>
+            <% if (dadosEventos.length == 0) { %>
+                <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
+            <% } else { %>
+                <% for (var i = 0; i < dadosEventos.length; i++) { %>
+                    <div class="col-3">
+                        <div class="card border border-danger bg-light" style="margin-top: 30px;">
+                            <img src="<%= dadosEventos[i].urlImagem%>" class="card-img-top" style="height: 150px;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= dadosEventos[i].titulo %></h5>
+                                <p class="card-text">Confirmações <%=dadosEventos[i].confirmacoes%>/<%=dadosEventos[i].capacidade%></p>
+                                <a href="#" class="btn btn-primary">Saiba mais</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card border border-danger bg-light">
-                    <img src="fiesta.jfif" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Meu Evento</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                        <a href="#" class="btn btn-primary">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card border border-danger bg-light">
-                    <img src="fiesta.jfif" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Meu Evento</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                        <a href="#" class="btn btn-primary">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card border border-danger bg-light">
-                    <img src="fiesta.jfif" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Meu Evento</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                        <a href="#" class="btn btn-primary">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
+                <% } %>
+            <% } %>
         </div>
 
     </div>

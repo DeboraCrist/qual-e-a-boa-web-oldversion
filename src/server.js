@@ -8,6 +8,8 @@ const registroRota = require("./routes/rotaRegistro");
 const pessoaRota = require("./routes/rotaPessoa");
 const estabelecimentoRota = require("./routes/rotaEstabelecimento");
 const loginRota = require("./routes/rotaLogin");
+const eventoRota = require("./routes/rotaEvento");
+const agendaRota = require("./routes/rotaAgenda");
 
 server.use(session({
     secret: "wkndawdnwouidnawdnawonds", //é uma chave que cria uma sessão
@@ -29,5 +31,7 @@ server.use(registroRota);
 server.use(pessoaRota);
 server.use(estabelecimentoRota);
 server.use(loginRota);
+server.use(eventoRota);
+server.use(agendaRota);
 
 server.listen(port, () => console.log("Servidor rodando na porta "+ port));
