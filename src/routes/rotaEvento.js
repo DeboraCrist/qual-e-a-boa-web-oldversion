@@ -70,4 +70,37 @@ router.get("/eventos/detalhes/:id/:titulo", verificaUsuarioLogado,async (req, re
     res.render("detalhesEvento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: detalheEvento});
 });
 
+router.post("/registraEvento", async (req, res) => {
+    const dadosLoginId = await Estabelecimento.findOne({
+        where: {
+            id: req.session.dadosLogin.id
+        }
+    });
+
+    Evento.create({
+        idEstabelecimento: dadosLoginId.id,
+        titulo: req.body.titulo, 
+        urlImagem:req.body.urlImagem, 
+        rua:req.body.rua, 
+        bairro:req.body.bairro, 
+        numero:req.body.numero, 
+        cidade:req.body.cidade, 
+        estado:req.body.estado, 
+        cep:req.body.cep, 
+        tipoDeEvento:req.body.tipoDeEvento, 
+        valorEntrada:req.body.valorEntrada, 
+        capacidade:req.body.capacidade, 
+        dataDoEvento:req.body.dataDoEvento, 
+        horaDoEvento:req.body.horaDoEvento,
+        
+    }).then(() => {
+            console.log("criado");
+    }).catch((error) => {
+            console.log("Erro: "+ error);
+    });
+
+})
+//Evento.sync({force: true});
+
+module.exports = Evento;
 module.exports = router;
