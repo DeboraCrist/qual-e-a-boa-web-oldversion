@@ -34,8 +34,8 @@ router.get("/paginaInicialUsuario"),async (req, res) =>{
     res.render("paginaInicialUsuario.html", {dadosLogin: dadosLogin})
 }
 
-<<<<<<< HEAD
-router.post("/atualizarPerfilUser",(req,res) => {
+
+/*router.post("/atualizarPerfilUser",(req,res) => {
     dadoUser.AtualizarDadosUser(
         {
             urlImagemUserPerfil: req.body.urlImagemUserPerfil,
@@ -52,8 +52,8 @@ router.post("/atualizarPerfilUser",(req,res) => {
             where: email = "testeEditar@gmail.com"
         }
     )
-});
+});*/
 
-=======
+
 module.exports = router;
->>>>>>> 2c331f566cc4411305b3d1d9353396fea9e97341
+
