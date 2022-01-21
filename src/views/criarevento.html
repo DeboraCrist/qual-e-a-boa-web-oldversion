@@ -50,7 +50,9 @@
           </ul>
         </div>
         <div class="text-right">
-          <button type="button" class="btn btn-dark">Sair</button>
+          <a href="/logout">
+            <button type="button" class="btn btn-dark">Sair</button>
+          </a>
         </div>
       </div>
     </nav>
@@ -58,11 +60,7 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container-fluid">
-      <% if (dadosLogin.tipoDeConta == 0) { %>
-      <h1 class="display-6">Olá, <%= dadosLogin.nomePessoa %></h1>
-      <% } else if (dadosLogin.tipoDeConta == 1) { %>
-      <h1 class="display-6">Olá, <%= dadosLogin.nome %></h1>
-      <% } %>
+      <h1 class="display-6">Olá, <%= dadosLogin.nomeDono %></h1>
       <p class="lead">Bem-vindo ao seus eventos:</p>
       <hr />
       <button
@@ -90,83 +88,32 @@
               <h1>Eventos criados</h1>
             </div>
             <div class="row">
-              <div class="col-sm-3">
-                <div class="card border-warning">
-                  <img
-                    src="https://source.unsplash.com/200x100/?show"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">[nome do evento]</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                      data: [00/00/0000]
-                    </h6>
-                    <p class="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="card border-warning">
-                  <img
-                    src="https://source.unsplash.com/200x100/?show"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">[nome do evento]</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                      data: [00/00/0000]
-                    </h6>
-                    <p class="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="card border-warning">
-                  <img
-                    src="https://source.unsplash.com/200x100/?show"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">[nome do evento]</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                      data: [00/00/0000]
-                    </h6>
-                    <p class="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="card border-warning">
-                  <img
-                    src="https://source.unsplash.com/200x100/?show"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">[nome do evento]</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                      data: [00/00/0000]
-                    </h6>
-                    <p class="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <% if (dadosEventos.length == 0) { %>
+                <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
+              <% } else { %>
+                  <% for (var i = 0; i < dadosEventos.length; i++) { %>
+                    <div class="col-sm-3">
+                      <div class="card border-warning">
+                        <img
+                          src="<%= dadosEventos[i].urlImagem %>"
+                          class="card-img-top"
+                          alt="..."
+                          style="height: 150px;"
+                        />
+                        <div class="card-body">
+                          <h5 class="card-title"><%= dadosEventos[i].titulo%></h5>
+                          <h6 class="card-subtitle mb-2 text-muted">
+                            data: <%= dadosEventos[i].dataDoEvento %>
+                          </h6>
+                          <p class="card-text">Confirmações <%=dadosEventos[i].confirmacoes%>/<%=dadosEventos[i].capacidade%></p>
+                          <p class="card-text"><%= dadosEventos[i].cidade %>, <%= dadosEventos[i].estado %></p>
+                        </div>
+                      </div>
+                    </div>
+                  <% } %>
+              <% } %>
             </div>
+            <p style="margin-top: 30px;"></p>
           </div>
         </div>
       </section>
@@ -194,7 +141,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form action="/registraEvento" method="post">
               <div class="mb-3">
                 <div class="row">
                   <div class="col">
@@ -232,7 +179,7 @@
                       >Horário</label
                     >
                     <input
-                      type="text"
+                      type="time"
                       name="Horario"
                       class="form-control"
                       placeholder="Horario do evento"
@@ -242,17 +189,33 @@
                   </div>
                   <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label"
-                      >Comporta quantas pessoas</label
+                      >Data do evento</label
                     >
                     <input
-                      type="number"
-                      name="capacidadePessoa"
+                      type="date"
+                      name="dataEvento"
                       class="form-control"
                       placeholder="quantidade de pessoas"
                       enable
                       required
                     />
                   </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Comporta quantas pessoas</label
+                  >
+                  <input
+                    type="number"
+                    name="capacidadePessoa"
+                    class="form-control"
+                    placeholder="quantidade de pessoas"
+                    enable
+                    required
+                  />
                 </div>
               </div>
 
@@ -327,17 +290,17 @@
                   required
                 />
               </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Salvar Evento</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-primary">Salvar Evento</button>
           </div>
         </div>
       </div>
@@ -369,9 +332,9 @@
                 >
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Selecionar</option>
-                  <option value="1">Evento 1</option>
-                  <option value="2">Evento 2</option>
-                  <option value="3">Evento 3</option>
+                  <% for (var c = 0; c < dadosEventos.length; c++) { %>
+                    <option value="1"><%=dadosEventos[c].titulo%></option>
+                  <% } %>
                 </select>
               </div>
             </form>

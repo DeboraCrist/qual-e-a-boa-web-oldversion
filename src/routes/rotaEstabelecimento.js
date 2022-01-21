@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Evento = require("../models/Evento");
+const {Evento} = require("../models/Evento");
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));

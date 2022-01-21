@@ -8,7 +8,8 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const Evento = require("../models/Evento");
+const {Evento} = require("../models/Evento");
+const {Estabelecimento} = require("../models/Estabelecimento");
 
 //meus middlewares
 function verificaUsuarioLogado(req, res, next) {
@@ -31,13 +32,25 @@ function verificaPessoaLogada (req, res, next) {
     return next();
 }
 
+//verifica que tipo de usuario esta logado
+function verificaEstabelecimentoLogado (req, res, next) {
+    if (!req.session.dadosLogin) {
+        return res.redirect("/login");
+    } else if (req.session.dadosLogin != "undefined" && req.session.dadosLogin.tipoDeConta == 0) {
+        //a conta de estabelecimento não pode ter acesso a rota então quando tenta entrar ela é redirecionada pro perfil
+        return res.redirect("/usuarioCliente");
+    }
+
+    return next();
+}
+
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
         const todosEventos = await Evento.findAll({});
 
         res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos});
 });
 
-/**Quando o usuario usa filtro ele e redirecionado para essa rota*/
+/*Quando o usuario usa filtro ele e redirecionado para essa rota*/
 router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) => {
     const estado = req.params.estado;
     const cidade = req.params.cidade;
@@ -69,9 +82,18 @@ router.get("/eventos/detalhes/:id/:titulo", verificaUsuarioLogado,async (req, re
 
     res.render("detalhesEvento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: detalheEvento});
 });
-//Evento.sync({force: true});
 
-router.post("/registraEvento", async (req, res) => {
+router.get("/eventos/ativos", verificaEstabelecimentoLogado, async (req, res) => {
+    const eventosDoEstabelecimento = await Evento.findAll({
+        where: {
+            idEstabelecimento: req.session.dadosLogin.id,
+        }
+    });
+
+    res.render("criarevento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosDoEstabelecimento});
+});
+
+router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) => {
     const dadosLoginId = await Estabelecimento.findOne({
         where: {
             id: req.session.dadosLogin.id
@@ -80,29 +102,25 @@ router.post("/registraEvento", async (req, res) => {
 
     Evento.create({
         idEstabelecimento: dadosLoginId.id,
-        titulo: req.body.titulo, 
-        urlImagem:req.body.urlImagem, 
-        rua:req.body.rua, 
-        bairro:req.body.bairro, 
-        numero:req.body.numero, 
+        titulo: req.body.nomeEvento, 
+        urlImagem:req.body.urlImagemLocal, 
         cidade:req.body.cidade, 
         estado:req.body.estado, 
         cep:req.body.cep, 
-        tipoDeEvento:req.body.tipoDeEvento, 
-        valorEntrada:req.body.valorEntrada, 
-        capacidade:req.body.capacidade, 
-        dataDoEvento:req.body.dataDoEvento, 
-        horaDoEvento:req.body.horaDoEvento,
-        
+        tipoDeEvento:req.body.tipoEvento, 
+        valorEntrada:req.body.valor,
+        confirmacoes: 0,
+        capacidade:req.body.capacidadePessoa, 
+        dataDoEvento:req.body.dataEvento, 
+        horaDoEvento:req.body.Horario,
     }).then(() => {
             console.log("criado");
+            res.redirect("/eventos/ativos");
     }).catch((error) => {
             console.log("Erro: "+ error);
+            res.redirect("/eventos/ativos");
     });
 
 })
 
-
-module.exports = Evento;
 module.exports = router;
-
