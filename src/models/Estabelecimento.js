@@ -65,6 +65,7 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
 
 
 //descomente a linha a seguir para criar a tabela no seu DB caso ela ainda não exista
+
 //Estabelecimento.sync({force: true});
 //Se a tabela a cima ja existir dentro do seu DB mantenha o comando a cima comentado
 

@@ -1,6 +1,7 @@
+
 const express = require("express");
 const server = express();
-const port = 3000;
+const port = 3001;
 const path = require("path");
 const session = require("express-session");
 
@@ -33,5 +34,6 @@ server.use(estabelecimentoRota);
 server.use(loginRota);
 server.use(eventoRota);
 server.use(agendaRota);
+
 
 server.listen(port, () => console.log("Servidor rodando na porta "+ port));
