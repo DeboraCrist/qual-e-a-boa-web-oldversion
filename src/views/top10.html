@@ -68,8 +68,8 @@
           <div class="row">
             <% if (top10Eventos.length == 0) { %>
               <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
-            <% } else { %>
-                <% for (var i = 0; i < 10; i++) { %>
+            <% } else if (top10Eventos.length < 10) { %>
+                <% for (var i = 0; i < top10Eventos.length; i++) { %>
                     <div class="col-3">
                         <div class="card border border-danger bg-light" style="margin-top: 30px;">
                             <img src="<%= top10Eventos[i].urlImagem%>" class="card-img-top" style="height: 150px;">
@@ -82,6 +82,20 @@
                         </div>
                     </div>
                 <% } %>
+            <% } else { %>
+              <% for (var c = 0; c < top10Eventos.length; c++) { %>
+                <div class="col-3">
+                    <div class="card border border-danger bg-light" style="margin-top: 30px;">
+                        <img src="<%= top10Eventos[c].urlImagem%>" class="card-img-top" style="height: 150px;">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= top10Eventos[c].titulo %></h5>
+                            <p class="card-text">Confirmações <%=top10Eventos[c].confirmacoes%>/<%=top10Eventos[c].capacidade%></p>
+                            <p class="card-text"><%= top10Eventos[c].cidade %>, <%= top10Eventos[c].estado %></p>
+                            <a href="#" class="btn btn-primary">Saiba mais</a>
+                        </div>
+                    </div>
+                </div>
+              <% } %>
             <% } %>
           </div>
         </div>

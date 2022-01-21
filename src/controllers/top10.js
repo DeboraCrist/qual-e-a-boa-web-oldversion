@@ -22,7 +22,7 @@ const top10Eventos = (todosEventos) => {
     }
 
     listaTop10 = listaTop10.reverse();
-
+    
     return listaTop10;
 };
 
