@@ -34,7 +34,7 @@
                         <a class="nav-link" aria-current="page" href="/usuarioCliente">Meu perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/eventos">Eventos</a>
+                        <a class="nav-link" href="/eventos">Evento</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/agenda">Agenda</a>
@@ -65,13 +65,13 @@
         <p style="margin-top: 50px"></p>
 
         <div class="card">
-            <h5 class="card-header"><%= dadosLogin.nomePessoa%><%= dadosLogin.sobreNome%></h5>
+            <h5 class="card-header"><%= dadosLogin.nomePessoa%> <%= dadosLogin.sobreNome%></h5>
             <div class="card-body">
                 <p class="card-text">Idade: <%= dadosLogin.idadePessoa %></p>
-                <p class="card-text">Data de Aniversário: [dd/mm/aaaa]</p>
+                <p class="card-text">Data de Aniversário: <%= dadosLogin.dataNasc%></p>
                 <p class="card-text">Cidade:<%= dadosLogin.cidadePessoa %></p>
-                <p class="card-text">Estado: [estado]</p>
-                <p class="card-text">Passaporte Sanitário: [2 dose de 2 sem dose de reforço]</p>
+                <p class="card-text">Estado: <%= dadosLogin.estadoPessoa%></p>
+                <p class="card-text">Passaporte Sanitário: <%= dadosLogin.urlImagem%></p>
                 <a href="#" class="btn btn-primary">Visualizar Passaporte Sanitário</a>
                 <a href="">
                     <a href="/atualizarPerfilUser">
@@ -104,5 +104,5 @@
         crossorigin="anonymous"></script>
 </footer>
 
->>>>>>> 2c331f566cc4411305b3d1d9353396fea9e97341
+
 </html>

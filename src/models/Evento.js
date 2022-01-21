@@ -75,4 +75,32 @@ Estabelecimento.associate = (models) => {
         foreignKey: "idEstabelecimento",
     });
 }
+const RegistraEventoNaTabela = (dadosPessoa) => {
+    Evento.create({
+        idEstabelecimento: dadosLoginId.id,
+        titulo: dadosPessoa.titulo, 
+        urlImagem:dadosPessoa.urlImagem, 
+        rua:dadosPessoa.rua, 
+        bairro:dadosPessoa.bairro, 
+        numero:dadosPessoa.numero, 
+        cidade:dadosPessoa.cidade, 
+        estado:dadosPessoa.estado, 
+        cep:dadosPessoa.cep, 
+        tipoDeEvento:dadosPessoa.tipoDeEvento, 
+        valorEntrada:dadosPessoa.valorEntrada, 
+        capacidade:dadosPessoa.capacidade, 
+        dataDoEvento:dadosPessoa.dataDoEvento, 
+        horaDoEvento:dadosPessoa.horaDoEvento,
+    }).then(() => {
+        console.log("Criado");
+    }).catch((error) => {
+        console.log("Erro: "+ error);
+    });
+}
 
+
+module.exports = {
+    Evento : Evento,
+    RegistraEventoTabela : RegistraEventoNaTabela,
+
+}

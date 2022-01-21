@@ -69,6 +69,7 @@ router.get("/eventos/detalhes/:id/:titulo", verificaUsuarioLogado,async (req, re
 
     res.render("detalhesEvento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: detalheEvento});
 });
+//Evento.sync({force: true});
 
 router.post("/registraEvento", async (req, res) => {
     const dadosLoginId = await Estabelecimento.findOne({
@@ -100,7 +101,8 @@ router.post("/registraEvento", async (req, res) => {
     });
 
 })
-//Evento.sync({force: true});
+
 
 module.exports = Evento;
 module.exports = router;
+
