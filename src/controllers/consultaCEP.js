@@ -20,7 +20,7 @@ const retornadadosCEP = (conteudo) => {
 
 const consultarCEP = (cep) => {
     if (cep != "" || cep != null) {
-        if (cep.length == 9) {
+        if (cep.length == 9 || cep.length == 8) {
             for (index = 0; index < estado.length; index++) {
                 estado[index].value=("...");
                 cidade[index].value=("...");   
