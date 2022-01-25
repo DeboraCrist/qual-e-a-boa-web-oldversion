@@ -77,29 +77,57 @@
             <% if (dadosEventos.length==0) { %>
               <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
               <% } else { %>
-                <% for (var i=0; i < dadosEventos.length; i++) { %>
-                  <div class="col-sm-3">
-                    <div class="card border-warning">
-                      <img src="<%= dadosEventos[i].urlImagem %>" class="card-img-top" alt="..."
-                        style="height: 150px;" />
-                      <div class="card-body">
-                        <h5 class="card-title">
-                          <%= dadosEventos[i].titulo%>
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                          data: <%= dadosEventos[i].dataDoEvento %>
-                        </h6>
-                        <p class="card-text">Confirmações <%=dadosEventos[i].confirmacoes%>/
-                            <%=dadosEventos[i].capacidade%>
-                        </p>
-                        <p class="card-text">
-                          <%= dadosEventos[i].cidade %>, <%= dadosEventos[i].estado %>
-                        </p>
+                    <% dadosEventos.forEach((evento) => {%>
+                      <div class="col-sm-3">
+                        <div class="card border-warning">
+                          <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                            style="height: 150px;" />
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              <%= evento.titulo%>
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                              data: <%= evento.dataDoEvento %>
+                            </h6>
+                            <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                <%=evento.capacidade%>
+                            </p>
+                            <p class="card-text">
+                              <%= evento.cidade %>, <%= evento.estado %>
+                            </p>
+                            <button id="editaEvento" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalFormEditEvento<%= evento.id %>">
+                                Editar Evento
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <% } %>
-                    <% } %>
+
+                      <!-- Modal- Edita Evento -->
+                      <div class="modal fade" id="modalFormEditEvento<%= evento.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Editar Evento: <%= evento.titulo %></h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form>
+                                          <div class="mb-3">
+                                              <label for="recipient-name" class="col-form-label">Nova Data:</label>
+                                              <input type="date" class="form-control" id="recipient-name">
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                      <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                                  </div>
+                              </div>
+                            </div>
+                      </div>
+                    <% }) %>
+              <% } %>
           </div>
           <p style="margin-top: 30px;"></p>
         </div>

@@ -121,6 +121,10 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
             res.redirect("/eventos/ativos");
     });
 
-})
+});
+
+router.put("/editaEvento", (req, res) => {
+
+});
 
 module.exports = router;
