@@ -120,11 +120,26 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
             console.log("Erro: "+ error);
             res.redirect("/eventos/ativos");
     });
-
 });
 
-router.put("/editaEvento", (req, res) => {
+router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) => {
+    const idEvento = req.params.idEvento;
 
+    console.log(typeof req.body.novaData)
+
+    Evento.update(
+        { dataDoEvento: req.body.novaData},
+        {where: {id: idEvento}}
+    ).then(() => {
+        res.redirect("/eventos/ativos");
+    }).catch((error) => {
+        console.log(error);
+        res.redirect("/eventos/ativos");
+    });
+});
+
+router.get("/eventos/encerrados", verificaEstabelecimentoLogado, (req, res) => {
+    res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin});
 });
 
 module.exports = router;

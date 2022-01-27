@@ -42,7 +42,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Eventos Encerrados</a></li>
+                            <li><a class="dropdown-item" href="/eventos/encerrados">Eventos Encerrados</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -117,18 +117,68 @@
             <% if (dadosEventos.length == 0) { %>
                 <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
             <% } else { %>
-                <% for (var i = 0; i < dadosEventos.length; i++) { %>
-                    <div class="col-3">
-                        <div class="card border border-danger bg-light" style="margin-top: 30px;">
-                            <img src="<%= dadosEventos[i].urlImagem%>" class="card-img-top" style="height: 150px;">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= dadosEventos[i].titulo %></h5>
-                                <p class="card-text">Confirmações <%=dadosEventos[i].confirmacoes%>/<%=dadosEventos[i].capacidade%></p>
-                                <a href="#" class="btn btn-primary">Saiba mais</a>
+                <% dadosEventos.forEach((evento) => {%>
+                    <div class="col-sm-3">
+                      <div class="card border-warning">
+                        <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                          style="height: 150px;" />
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <%= evento.titulo%>
+                          </h5>
+                          <h6 class="card-subtitle mb-2 text-muted">
+                            data: <%= evento.dataDoEvento %>
+                          </h6>
+                          <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                              <%=evento.capacidade%>
+                          </p>
+                          <p class="card-text">
+                            <%= evento.cidade %>, <%= evento.estado %>
+                          </p>
+                          <button id="editaEvento" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                              data-bs-target="#modalDadosDoEvento<%= evento.id %>">
+                              Saiba mais
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Modal- Dados do Evento -->
+                    <div class="modal fade" id="modalDadosDoEvento<%= evento.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Titulo: <%= evento.titulo %></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..." />
+                                    </div>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
+                                    </h6>
+                                    <p class="card-text">
+                                        <%= evento.cidade %>, <%= evento.estado %>
+                                    </p>
+                                    <p class="card-text">
+                                        Tipo de Evento: <%= evento.tipoDeEvento %>
+                                    </p>
+                                    <p class="card-text">
+                                        Valor da Entrada: <%= evento.valorEntrada %>R$
+                                    </p>
+                                    <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                        <%=evento.capacidade%>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                <% } %>
+                  <% }) %>
             <% } %>
         </div>
     </div>

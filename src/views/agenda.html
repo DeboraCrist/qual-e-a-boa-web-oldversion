@@ -99,11 +99,13 @@
                     <form action="/criaEvento" method="post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome do evento:</label>
-                            <input name="nome" type="text" class="form-control" id="recipient-name">
+                            <input name="nome" type="text" class="form-control" id="recipient-name" required>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Data:</label>
-                            <input name="data" type="date" class="form-control" id="recipient-name">
+                            <input name="data" type="date" class="form-control" id="recipient-name"
+                            min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>"
+                            required>
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Bio:</label>

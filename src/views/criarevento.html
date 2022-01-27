@@ -35,11 +35,11 @@
               Meus Eventos
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/eventos">Eventos Ativos</a></li>
+              <li><a class="dropdown-item" href="/eventos/ativos">Eventos Ativos</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Eventos Encerrados</a></li>
+              <li><a class="dropdown-item" href="/eventos/encerrados">Eventos Encerrados</a></li>
             </ul>
           </li>
         </ul>
@@ -112,16 +112,16 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                      <form>
+                                      <form action="/editaEvento/<%= evento.id %>" method="post">
                                           <div class="mb-3">
-                                              <label for="recipient-name" class="col-form-label">Nova Data:</label>
-                                              <input type="date" class="form-control" id="recipient-name">
+                                              <label for="campodata" class="col-form-label">Nova Data:</label>
+                                              <input type="date" name="novaData" class="form-control" min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>" id="campodata" required>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                  <button type="submit" id="salvarMudanca" class="btn btn-primary">Salvar Alterações</button>
+                                              </div>
                                           </div>
                                       </form>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                      <button type="button" class="btn btn-primary">Salvar Alterações</button>
                                   </div>
                               </div>
                             </div>
@@ -171,6 +171,7 @@
                 <div class="col-md-6">
                   <label for="exampleFormControlInput1" class="form-label">Data do evento</label>
                   <input type="date" name="dataEvento" class="form-control" placeholder="quantidade de pessoas" enable
+                    min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>"
                     required />
                 </div>
               </div>
@@ -273,6 +274,7 @@
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>
   <script src="/consultaCEP.js"></script>
+  <script src="/validaData.js"></script>
 </footer>
 
 </html>

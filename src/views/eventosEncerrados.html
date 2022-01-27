@@ -30,26 +30,28 @@
                         <a class="nav-link" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Meu Perfil</a>
+                        <a class="nav-link" aria-current="page" href="/usuarioEstabelecimento">Meu Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Agenda</a>
+                        <a class="nav-link" href="/agenda">Agenda</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Meus Eventos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Eventos Ativos</a></li>
+                            <li><a class="dropdown-item" href="/eventos/ativos">Eventos Ativos</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Eventos Encerrados</a></li>
+                            <li><a class="dropdown-item" href="/eventos/encerrados">Eventos Encerrados</a></li>
                         </ul>
                     </li>
                 </ul>
-                <button type="button" class="btn btn-dark">Sair</button>
+                <a href="/logout">
+                    <button type="button" class="btn btn-dark">Sair</button>
+                </a>
             </div>
         </div>
     </nav>
@@ -57,7 +59,7 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container-fluid">
-        <h1 class="display-6">Olá, [Nome do Usuário]</h1>
+        <h1 class="display-6">Olá, <%= dadosLogin.nomeDono %></h1>
         <p class="lead">Qual é a boa de hoje?<br>Procurar eventos encerrados:</p>
         <hr>
         <div class="row">
@@ -94,7 +96,7 @@
     <div class="row">
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -106,7 +108,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -118,7 +120,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -130,7 +132,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -145,7 +147,7 @@
 
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -157,7 +159,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -169,7 +171,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -181,7 +183,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light" style="border-color:rgb(255, 185, 80)">
-                <img src="/images/fiesta.jfif" class="card-img-top">
+                <img src="/fiesta.jfif" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">Meu Evento</h5>
                     <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
