@@ -115,7 +115,8 @@
                                       <form action="/editaEvento/<%= evento.id %>" method="post">
                                           <div class="mb-3">
                                               <label for="campodata" class="col-form-label">Nova Data:</label>
-                                              <input type="date" name="novaData" class="form-control" min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>" id="campodata" required>
+                                              <input type="date" value="<%= evento.dataDoEvento %>" name="novaData" class="form-control" min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>" id="campodata" required>
+                                              <input type="number" name="novoValor" class="form-control" value="<%= evento.valorEntrada %>" required>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                   <button type="submit" id="salvarMudanca" class="btn btn-primary">Salvar Alterações</button>

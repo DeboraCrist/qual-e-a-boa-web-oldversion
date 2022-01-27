@@ -125,10 +125,10 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
 router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) => {
     const idEvento = req.params.idEvento;
 
-    console.log(typeof req.body.novaData)
+    const {novoValor, novaData} = req.body
 
     Evento.update(
-        { dataDoEvento: req.body.novaData},
+        { dataDoEvento: novaData, valorEntrada: novoValor},
         {where: {id: idEvento}}
     ).then(() => {
         res.redirect("/eventos/ativos");
