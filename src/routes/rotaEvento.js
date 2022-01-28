@@ -125,10 +125,22 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
 router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) => {
     const idEvento = req.params.idEvento;
 
-    const {novoValor, novaData} = req.body
+    const {
+        nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, urlImagemLocal, novoValor, novaData} = req.body
 
     Evento.update(
-        { dataDoEvento: novaData, valorEntrada: novoValor},
+        {   
+            titulo: nomeEvento,
+            urlImagem: urlImagemLocal,
+            cidade: cidade,
+            estado: estado,
+            cep: cep,
+            tipoDeEvento: tipoEvento,
+            horaDoEvento: horario,
+            capacidade: capacidadePessoa,
+            dataDoEvento: novaData,
+            valorEntrada: novoValor
+        },
         {where: {id: idEvento}}
     ).then(() => {
         res.redirect("/eventos/ativos");
