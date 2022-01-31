@@ -102,12 +102,13 @@
                           <p class="card-text">
                             <%= evento.cidade %>, <%= evento.estado %>
                           </p>
-                          <button id="editaEvento" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                          <button id="saibaMais" type="submit" class="btn btn-primary" data-bs-toggle="modal"
                               data-bs-target="#modalDadosDoEvento<%= evento.id %>">
                               Saiba mais
                           </button>
                         </div>
                       </div>
+                      <p class="mt-3"></p>
                     </div>
 
                     <!-- Modal- Dados do Evento -->
@@ -148,8 +149,6 @@
                   <% }) %>
             <% } %>
         </div>
-
-        <p style="margin-top: 30px;"></p>
 
     </div>
 

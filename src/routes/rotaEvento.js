@@ -11,14 +11,9 @@ router.use(bodyParser.json());
 const {Evento} = require("../models/Evento");
 const {Estabelecimento} = require("../models/Estabelecimento");
 
-//meus middlewares
-function verificaUsuarioLogado(req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    }
+const verificaValidadeEvento = require("../controllers/verificaValidadeDoEvento");
 
-    return next()
-}
+//meus middlewares
 
 //verifica que tipo de usuario esta logado
 function verificaPessoaLogada (req, res, next) {
@@ -45,13 +40,19 @@ function verificaEstabelecimentoLogado (req, res, next) {
 }
 
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
-        const todosEventos = await Evento.findAll({});
+    verificaValidadeEvento(req.session.dadosLogin.id);
 
-        res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos});
+    const todosEventos = await Evento.findAll({
+        where: {statusEvento: true}
+    });
+
+    res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos});
 });
 
 /*Quando o usuario usa filtro ele e redirecionado para essa rota*/
 router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) => {
+    verificaValidadeEvento(req.session.dadosLogin.id);
+
     const estado = req.params.estado;
     const cidade = req.params.cidade;
 
@@ -59,6 +60,7 @@ router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) =>
         where: {
             estado: estado,
             cidade: cidade,
+            statusEvento: true,
         }
     })
 
@@ -66,27 +68,22 @@ router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) =>
 });
 
 router.get("/eventos/top10", verificaPessoaLogada, async (req, res) => {
-    const todosEventos = await Evento.findAll({});
+    const todosEventos = await Evento.findAll({
+        where: {statusEvento: true}
+    });
 
     var top10 = top10Eventos(todosEventos);
 
     res.render("top10.html", {dadosLogin: req.session.dadosLogin, top10Eventos: top10});
 });
 
-router.get("/eventos/detalhes/:id/:titulo", verificaUsuarioLogado,async (req, res) => {
-    const idEvento = req.params.id;
-
-    const detalheEvento = await Evento.findOne({
-        where: {id: idEvento}
-    });
-
-    res.render("detalhesEvento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: detalheEvento});
-});
-
 router.get("/eventos/ativos", verificaEstabelecimentoLogado, async (req, res) => {
+    verificaValidadeEvento(req.session.dadosLogin.id);
+
     const eventosDoEstabelecimento = await Evento.findAll({
         where: {
             idEstabelecimento: req.session.dadosLogin.id,
+            statusEvento: true,
         }
     });
 
@@ -113,6 +110,7 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
         capacidade:req.body.capacidadePessoa, 
         dataDoEvento:req.body.dataEvento, 
         horaDoEvento:req.body.Horario,
+        statusEvento:true
     }).then(() => {
             console.log("criado");
             res.redirect("/eventos/ativos");
@@ -150,8 +148,15 @@ router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) 
     });
 });
 
-router.get("/eventos/encerrados", verificaEstabelecimentoLogado, (req, res) => {
-    res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin});
+router.get("/eventos/encerrados", verificaEstabelecimentoLogado, async (req, res) => {
+    const eventosEncerrados = await Evento.findAll({
+        where: {
+            idEstabelecimento: req.session.dadosLogin.id,
+            statusEvento: false,
+        }
+    });
+
+    res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosEncerrados});
 });
 
 module.exports = router;

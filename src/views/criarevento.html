@@ -114,262 +114,263 @@
             <div class="row">
               <% if (dadosEventos.length==0) { %>
               <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
-              <% } else { %> <% dadosEventos.forEach((evento) => {%>
-              <div class="col-sm-3">
-                <div class="card border-warning">
-                  <img
-                    src="<%= evento.urlImagem %>"
-                    class="card-img-top"
-                    alt="..."
-                    style="height: 150px"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title"><%= evento.titulo%></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                      data: <%= evento.dataDoEvento %>
-                    </h6>
-                    <p class="card-text">
-                      Confirmações <%=evento.confirmacoes%>/
-                      <%=evento.capacidade%>
-                    </p>
-                    <p class="card-text">
-                      <%= evento.cidade %>, <%= evento.estado %>
-                    </p>
-                    <button
-                      id="editaEvento"
-                      type="submit"
-                      class="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modalFormEditEvento<%= evento.id %>"
-                    >
-                      Editar Evento
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal- Edita Evento -->
-              <div
-                class="modal fade"
-                id="modalFormEditEvento<%= evento.id %>"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        Editar Evento: <%= evento.titulo %>
-                      </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
+              <% } else { %> <% dadosEventos.forEach((evento) => {%>    
+                  <div class="col-sm-3">
+                    <div class="card border-warning">
+                      <img
+                        src="<%= evento.urlImagem %>"
+                        class="card-img-top"
+                        alt="..."
+                        style="height: 150px"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title"><%= evento.titulo%></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                          data: <%= evento.dataDoEvento %>
+                        </h6>
+                        <p class="card-text">
+                          Confirmações <%=evento.confirmacoes%>/
+                          <%=evento.capacidade%>
+                        </p>
+                        <p class="card-text">
+                          <%= evento.cidade %>, <%= evento.estado %>
+                        </p>
+                        <button
+                          id="editaEvento"
+                          type="submit"
+                          class="btn btn-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalFormEditEvento<%= evento.id %>"
+                        >
+                          Editar Evento
+                        </button>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                      <form
-                        action="/editaEvento/<%= evento.id %>"
-                        method="post"
-                      >
-                        <div class="mb-3">
-                          <div class="row">
-                            <div class="col">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Novo nome</label
-                              >
-                              <input
-                                type="text"
-                                name="nomeEvento"
-                                class="form-control"
-                                placeholder="Nome do Evento"
-                                value="<%= evento.titulo %>"
-                                enable
-                                required
-                              />
-                            </div>
-                            <div class="col">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Novo tipo de evento</label
-                              >
-                              <input
-                                type="text"
-                                name="tipoEvento"
-                                value="<%= evento.tipoDeEvento %>"
-                                class="form-control"
-                                placeholder="Tipo de Evento"
-                                enable
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="mb-3">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Novo Horário</label
-                              >
-                              <input
-                                type="time"
-                                name="horario"
-                                value="<%= evento.horaDoEvento %>"
-                                class="form-control"
-                                placeholder="Horario do evento"
-                                enable
-                                required
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <label for="campodata" class="col-form-label"
-                                >Nova Data</label
-                              >
-                              <input
-                                type="date"
-                                value="<%= evento.dataDoEvento %>"
-                                name="novaData"
-                                class="form-control"
-                                min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>"
-                                id="campodata"
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="mb-3">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Nova Cidade
-                              </label>
-                              <input
-                                type="text"
-                                name="cidade"
-                                value="<%= evento.cidade %>"
-                                class="form-control"
-                                placeholder="Cidade"
-                                required
-                              />
-                            </div>
-                            <div class="col-md-3">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Novo Estado</label
-                              >
-                              <input
-                                type="text"
-                                name="estado"
-                                value="<%= evento.estado %>"
-                                class="form-control"
-                                placeholder="Estado"
-                                required
-                              />
-                            </div>
-                            <div class="col-md-3">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Novo CEP</label
-                              >
-                              <input
-                                type="text"
-                                name="cep"
-                                value="<%= evento.cep %>"
-                                class="form-control"
-                                placeholder="CEP"
-                                maxlength="9"
-                                onblur="consultarCEP(this.value)"
-                                enable
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="mb-3">
-                          <div class="col">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Comporta quantas pessoas</label
-                            >
-                            <input
-                              type="number"
-                              name="capacidadePessoa"
-                              value="<%= evento.capacidade %>"
-                              class="form-control"
-                              placeholder="Quantidade de pessoas"
-                              enable
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="formFileMultiple" class="form-label"
-                            >Nova url alguma foto do Evento</label
-                          >
-                          <input
-                            name="urlImagemLocal"
-                            class="form-control"
-                            value="<%= evento.urlImagem %>"
-                            type="url"
-                            id="formFileMultiple"
-                            placeholder="Url"
-                            multiple
-                            required
-                            enable
-                          />
-                        </div>
-                        <div class="col">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Novo valor da entrada</label
-                          >
-                          <input
-                            type="text"
-                            name="novoValor"
-                            value="<%= evento.valorEntrada %>"
-                            class="form-control"
-                            placeholder="Valor"
-                            enable
-                            required
-                          />
-                        </div>
-
-                        <div class="modal-footer">
+                    <p class="mt-3"></p>
+                  </div>
+    
+                  <!-- Modal- Edita Evento -->
+                  <div
+                    class="modal fade"
+                    id="modalFormEditEvento<%= evento.id %>"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Editar Evento: <%= evento.titulo %>
+                          </h5>
                           <button
                             type="button"
-                            class="btn btn-secondary"
+                            class="btn-close"
                             data-bs-dismiss="modal"
-                          >
-                            Cancelar
-                          </button>
-                          <button
-                            type="submit"
-                            id="salvarMudanca"
-                            class="btn btn-primary"
-                          >
-                            Salvar Alterações
-                          </button>
+                            aria-label="Close"
+                          ></button>
                         </div>
-                      </form>
+                        <div class="modal-body">
+                          <form
+                            action="/editaEvento/<%= evento.id %>"
+                            method="post"
+                          >
+                            <div class="mb-3">
+                              <div class="row">
+                                <div class="col">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Novo nome</label
+                                  >
+                                  <input
+                                    type="text"
+                                    name="nomeEvento"
+                                    class="form-control"
+                                    placeholder="Nome do Evento"
+                                    value="<%= evento.titulo %>"
+                                    enable
+                                    required
+                                  />
+                                </div>
+                                <div class="col">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Novo tipo de evento</label
+                                  >
+                                  <input
+                                    type="text"
+                                    name="tipoEvento"
+                                    value="<%= evento.tipoDeEvento %>"
+                                    class="form-control"
+                                    placeholder="Tipo de Evento"
+                                    enable
+                                    required
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Novo Horário</label
+                                  >
+                                  <input
+                                    type="time"
+                                    name="horario"
+                                    value="<%= evento.horaDoEvento %>"
+                                    class="form-control"
+                                    placeholder="Horario do evento"
+                                    enable
+                                    required
+                                  />
+                                </div>
+                                <div class="col-md-6">
+                                  <label for="campodata" class="col-form-label"
+                                    >Nova Data</label
+                                  >
+                                  <input
+                                    type="date"
+                                    value="<%= evento.dataDoEvento %>"
+                                    name="novaData"
+                                    class="form-control"
+                                    min="<%= new Date().getFullYear() %>-0<%= new Date().getMonth()+1 %>-<%= new Date().getDate() %>"
+                                    id="campodata"
+                                    required
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Nova Cidade
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="cidade"
+                                    value="<%= evento.cidade %>"
+                                    class="form-control"
+                                    placeholder="Cidade"
+                                    required
+                                  />
+                                </div>
+                                <div class="col-md-3">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Novo Estado</label
+                                  >
+                                  <input
+                                    type="text"
+                                    name="estado"
+                                    value="<%= evento.estado %>"
+                                    class="form-control"
+                                    placeholder="Estado"
+                                    required
+                                  />
+                                </div>
+                                <div class="col-md-3">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                    >Novo CEP</label
+                                  >
+                                  <input
+                                    type="text"
+                                    name="cep"
+                                    value="<%= evento.cep %>"
+                                    class="form-control"
+                                    placeholder="CEP"
+                                    maxlength="9"
+                                    onblur="consultarCEP(this.value)"
+                                    enable
+                                    required
+                                  />
+                                </div>
+                              </div>
+                            </div>
+    
+                            <div class="mb-3">
+                              <div class="col">
+                                <label
+                                  for="exampleFormControlInput1"
+                                  class="form-label"
+                                  >Comporta quantas pessoas</label
+                                >
+                                <input
+                                  type="number"
+                                  name="capacidadePessoa"
+                                  value="<%= evento.capacidade %>"
+                                  class="form-control"
+                                  placeholder="Quantidade de pessoas"
+                                  enable
+                                  required
+                                />
+                              </div>
+                            </div>
+    
+                            <div class="mb-3">
+                              <label for="formFileMultiple" class="form-label"
+                                >Nova url alguma foto do Evento</label
+                              >
+                              <input
+                                name="urlImagemLocal"
+                                class="form-control"
+                                value="<%= evento.urlImagem %>"
+                                type="url"
+                                id="formFileMultiple"
+                                placeholder="Url"
+                                multiple
+                                required
+                                enable
+                              />
+                            </div>
+                            <div class="col">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                                >Novo valor da entrada</label
+                              >
+                              <input
+                                type="text"
+                                name="novoValor"
+                                value="<%= evento.valorEntrada %>"
+                                class="form-control"
+                                placeholder="Valor"
+                                enable
+                                required
+                              />
+                            </div>
+    
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                              >
+                                Cancelar
+                              </button>
+                              <button
+                                type="submit"
+                                id="salvarMudanca"
+                                class="btn btn-primary"
+                              >
+                                Salvar Alterações
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
               <% }) %> <% } %>
             </div>
             <p style="margin-top: 30px"></p>

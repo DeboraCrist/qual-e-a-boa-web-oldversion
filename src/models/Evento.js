@@ -43,6 +43,10 @@ const Evento = db.sequelize.define("eventos", {
     confirmacoes: {
         type: db.Sequelize.INTEGER,
     },
+    statusEvento: {
+        type: db.Sequelize.BOOLEAN,
+        defaultValue: true,
+    },
     idEstabelecimento: {
         type: db.Sequelize.INTEGER,
         references : {
