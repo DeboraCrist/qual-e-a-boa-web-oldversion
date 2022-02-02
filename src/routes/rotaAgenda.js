@@ -12,13 +12,7 @@ const {registraNaAgendaEstabelecimento} = require("../models/Agenda");
 const {Estabelecimento} = require("../models/Estabelecimento");
 
 //meus middlewares
-function verificaUsuarioLogado(req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    }
-
-    return next()
-}
+const verificaUsuarioLogado = require("../middlewares/confirmaClienteLogado");
 
 router.get("/agenda", verificaUsuarioLogado, async (req, res) => {
     if (req.session.dadosLogin.tipoDeConta == 1) {

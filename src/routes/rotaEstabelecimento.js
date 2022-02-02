@@ -8,29 +8,12 @@ router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
 //meus middlewares
-function verificaUsuarioLogado(req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    }
-
-    return next()
-}
-
-//verifica que tipo de usuario esta logado
-function verificaEstabelecimentoLogado (req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    } else if (req.session.dadosLogin != "undefined" && req.session.dadosLogin.tipoDeConta == 0) {
-        //a conta de estabelecimento não pode ter acesso a rota então quando tenta entrar ela é redirecionada pro perfil
-        return res.redirect("/usuarioCliente");
-    }
-
-    return next();
-}
+const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
 
 router.get("/usuarioEstabelecimento", verificaEstabelecimentoLogado, async (req, res) => {
     const eventosDoEstabelecimento = await Evento.findAll({
         where: {
+            statusEvento: true,
             idEstabelecimento: req.session.dadosLogin.id,
         }
     });

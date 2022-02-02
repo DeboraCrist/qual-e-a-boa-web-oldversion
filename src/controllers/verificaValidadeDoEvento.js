@@ -15,7 +15,10 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
     }
     if (dia < 10) {
         hoje = ano + "-" + mes + "-0" + dia;
-    }
+    } 
+    if (dia < 10 && mes < 10) {
+        hoje = ano + "-0" + mes + "-0" + dia;
+    } 
 
     if (hora < 11) {
         horaAtual = "0"+ hora + ":" + minuto + ":" + segundos;

@@ -13,31 +13,10 @@ const {Estabelecimento} = require("../models/Estabelecimento");
 
 const verificaValidadeEvento = require("../controllers/verificaValidadeDoEvento");
 
+
 //meus middlewares
-
-//verifica que tipo de usuario esta logado
-function verificaPessoaLogada (req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    } else if (req.session.dadosLogin != "undefined" && req.session.dadosLogin.tipoDeConta == 1) {
-        //a conta de estabelecimento não pode ter acesso a rota então quando tenta entrar ela é redirecionada pro perfil
-        return res.redirect("/usuarioEstabelecimento");
-    }
-
-    return next();
-}
-
-//verifica que tipo de usuario esta logado
-function verificaEstabelecimentoLogado (req, res, next) {
-    if (!req.session.dadosLogin) {
-        return res.redirect("/login");
-    } else if (req.session.dadosLogin != "undefined" && req.session.dadosLogin.tipoDeConta == 0) {
-        //a conta de estabelecimento não pode ter acesso a rota então quando tenta entrar ela é redirecionada pro perfil
-        return res.redirect("/usuarioCliente");
-    }
-
-    return next();
-}
+const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
+const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
 
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
     verificaValidadeEvento(req.session.dadosLogin.id);
@@ -157,6 +136,34 @@ router.get("/eventos/encerrados", verificaEstabelecimentoLogado, async (req, res
     });
 
     res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosEncerrados});
+});
+
+router.get("/eventos/encerrados/busca/:estado", verificaEstabelecimentoLogado, async (req, res) => {
+    const estado = req.params.estado;
+    
+    const eventos = await Evento.findAll({
+        where: {
+            idEstabelecimento: req.session.dadosLogin.id,
+            estado: estado,
+            statusEvento: false,
+        }
+    });
+    res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventos});
+});
+
+router.get("/eventos/encerrados/buscaNome/:nome", verificaEstabelecimentoLogado, async (req, res) => {
+    const nome = req.params.nome;
+    const idEstabelecimento = req.session.dadosLogin.id;
+
+    const eventos = await Evento.findAll({
+        where: {
+            idEstabelecimento: idEstabelecimento,
+            titulo: nome,
+            statusEvento: false,
+        }
+    });
+
+    res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventos});
 });
 
 module.exports = router;

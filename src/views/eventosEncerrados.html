@@ -66,9 +66,11 @@
             <div class="col-4">
                 <label for="exampleFormControlSelect1">Digite o nome do evento:</label>
                 <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Procurar" aria-label="Search"
+                    <input type="search" id="nome" class="form-control rounded" placeholder="Procurar" aria-label="Search"
                         aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-outline-primary">buscar</button>
+                    <a href="#" id="link-busca-nome">
+                        <button type="button" class="btn btn-outline-primary" id="botaoBusca">buscar</button>
+                    </a>
                 </div>
             </div>
             <div class="col-1">
@@ -84,7 +86,9 @@
                         <option>BA</option>
                         <option>RN</option>
                     </select>
-                    <button type="button" class="btn btn-outline-primary">buscar</button>
+                    <a href="#" id="link-estado">
+                        <button id="buscarbtn" type="button" class="btn btn-outline-primary">buscar</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -208,6 +212,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
         crossorigin="anonymous"></script>
+    <script src="/busca.js"></script>
 </footer>
 
 </html>
