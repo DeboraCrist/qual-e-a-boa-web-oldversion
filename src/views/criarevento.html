@@ -591,10 +591,10 @@
                 <label for="recipient-name" class="col-form-label"
                   >Selecione um evento para excluir:</label
                 >
-                <select class="form-select" aria-label="Default select example">
+                <select id="selecionaEvento" class="form-select" aria-label="Default select example">
                   <option selected>Selecionar</option>
                   <% for (var c=0; c < dadosEventos.length; c++) { %>
-                  <option value="1"><%=dadosEventos[c].titulo%></option>
+                    <option value="<%= dadosEventos[c].id %>"><%=dadosEventos[c].titulo%></option>
                   <% } %>
                 </select>
               </div>
@@ -608,7 +608,9 @@
             >
               Cancelar
             </button>
-            <button type="button" class="btn btn-primary">Confirmar</button>
+            <a href="#" id="deletarEvento">
+              <button type="button" id="botaoDeletar" class="btn btn-primary">Confirmar</button>
+            </a>
           </div>
         </div>
       </div>
@@ -635,6 +637,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="/consultaCEP.js"></script>
-    <script src="/validaData.js"></script>
+  
+    <script src="/deletaEvento.js"></script>
   </footer>
 </html>

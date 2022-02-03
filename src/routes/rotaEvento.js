@@ -166,4 +166,18 @@ router.get("/eventos/encerrados/buscaNome/:nome", verificaEstabelecimentoLogado,
     res.render("eventosEncerrados.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventos});
 });
 
+router.get("/deletarEvento/:idEvento", verificaEstabelecimentoLogado, async (req, res) => {
+    const idEvento = req.params.idEvento;
+
+    Evento.destroy({
+        where: {
+            id: idEvento,
+            idEstabelecimento: req.session.dadosLogin.id,
+        }
+    }).then(() => {
+        res.redirect("/eventos/ativos");
+    }).catch((error) => {
+        res.redirect("/eventos/ativos");
+    });
+});
 module.exports = router;

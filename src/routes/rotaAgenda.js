@@ -71,5 +71,34 @@ router.post("/criaEvento", async (req, res) => {
     }
     res.redirect("/agenda")
 });
+/////////
+router.get("/deletarLembrete/:idLembrete", verificaUsuarioLogado, async (req, res) => {
+    const idLembrete = req.params.idLembrete;
+    const tipoDeConta = req.session.dadosLogin.tipoDeConta;
+
+    if (tipoDeConta == 1) {
+        Agenda.destroy({
+            where: {
+                id: idLembrete,
+                idEstabelecimento: req.session.dadosLogin.id,
+            }
+        }).then(() => {
+            res.redirect("/agenda");
+        }).catch((error) => {
+            res.redirect("/agenda");
+        });
+    } else {
+        Agenda.destroy({
+            where: {
+                id: idLembrete,
+                idPessoa: req.session.dadosLogin.id,
+            }
+        }).then(() => {
+            res.redirect("/agenda");
+        }).catch((error) => {
+            res.redirect("/agenda");
+        });
+    }
+});
 
 module.exports = router;
