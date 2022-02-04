@@ -4,6 +4,12 @@ const {Estabelecimento} = require("./Estabelecimento");
 const {Pessoa} = require("./Pessoa");
 
 const Agenda = db.sequelize.define("agendas", {
+    id: {
+        type: db.Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     nome: {
         type: db.Sequelize.STRING(50),
         allowNull: false,
@@ -60,7 +66,7 @@ Pessoa.associate = (models) => {
 
 //Agenda.sync({force: true});
 
-const registraNaAgendaPessoa = (dadosEvento, idCriador) => {
+/*const registraNaAgendaPessoa = (dadosEvento, idCriador) => {
     Agenda.create({
         nome: dadosEvento.nome,
         data: dadosEvento.data,
@@ -84,10 +90,8 @@ const registraNaAgendaEstabelecimento = (dadosEvento, idCriador) => {
     }).catch((error) => {
         console.log("Erro: "+ error);
     })
-}
+}*/
 
 module.exports = {
     Agenda: Agenda,
-    registraNaAgendaPessoa: registraNaAgendaPessoa,
-    registraNaAgendaEstabelecimento: registraNaAgendaEstabelecimento
 }

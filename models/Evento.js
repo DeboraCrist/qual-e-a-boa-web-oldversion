@@ -2,6 +2,12 @@ const db = require("./db");
 const {Estabelecimento} = require("./Estabelecimento");
 
 const Evento = db.sequelize.define("eventos", {
+    id: {
+        type: db.Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     titulo: {
         type: db.Sequelize.STRING(50),
         allowNull: false,

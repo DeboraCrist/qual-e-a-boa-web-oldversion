@@ -1,9 +1,12 @@
 const db = require("./db");
 
-const criptografia = require("../scripts/criptografia");
-const {criptografar} = require("../scripts/criptografia");
-
 const Pessoa = db.sequelize.define("pessoas", {
+    id: {
+        type: db.Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     nomePessoa: {
         type: db.Sequelize.STRING(100),
         allowNull: false
@@ -31,7 +34,7 @@ const Pessoa = db.sequelize.define("pessoas", {
         allowNull: false
     },
     dataNasc: {
-        type: db.Sequelize.DATE,
+        type: db.Sequelize.DATEONLY,
         allowNull: false
     },
     cidadePessoa: {
@@ -56,7 +59,7 @@ const Pessoa = db.sequelize.define("pessoas", {
 //Pessoa.sync({force: true});
 //Se a tabela a cima ja existir dentro do seu DB mantenha o comando a cima comentado
 
-const RegistraPessoaNaTabela = (dadosPessoa) => {
+/*const RegistraPessoaNaTabela = (dadosPessoa) => {
     Pessoa.create({
         nomePessoa: dadosPessoa.nomePessoa,
         sobreNome: dadosPessoa.sobreNome,
@@ -76,9 +79,8 @@ const RegistraPessoaNaTabela = (dadosPessoa) => {
         console.log("Erro: "+ error);
     });
 }
-
+*/
 
 module.exports = {
     Pessoa : Pessoa,
-    RegistraPessoaNaTabela : RegistraPessoaNaTabela,
 }
