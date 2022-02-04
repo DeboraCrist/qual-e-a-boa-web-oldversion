@@ -8,8 +8,8 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const {Evento} = require("../models/Evento");
-const {Estabelecimento} = require("../models/Estabelecimento");
+const {Evento} = require("../../models/Evento");
+const {Estabelecimento} = require("../../models/Estabelecimento");
 
 const verificaValidadeEvento = require("../controllers/verificaValidadeDoEvento");
 

@@ -3,8 +3,8 @@ const router = express.Router();
 const criptografia = require("../scripts/criptografia");
 const session = require("express-session");
 
-const {Pessoa} = require("../models/Pessoa.js")
-const {Estabelecimento} = require("../models/Estabelecimento.js");
+const {Pessoa} = require("../../models/Pessoa")
+const {Estabelecimento} = require("../../models/Estabelecimento");
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));

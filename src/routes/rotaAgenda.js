@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const bodyParser = require("body-parser");
-const {Pessoa} = require("../models/Pessoa");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const {Agenda} = require("../models/Agenda");
-const {registraNaAgendaPessoa} = require("../models/Agenda");
-const {registraNaAgendaEstabelecimento} = require("../models/Agenda");
-const {Estabelecimento} = require("../models/Estabelecimento");
+const {Pessoa} = require("../../models/Pessoa");
+const {Estabelecimento} = require("../../models/Estabelecimento");
+const {Agenda} = require("../../models/Agenda");
+const {registraNaAgendaPessoa} = require("../controllers/registraNaAgendaPessoa");
+const {registraNaAgendaEstabelecimento} = require("../controllers/registraNaAgendaEstabelecimento");
 
 //meus middlewares
 const verificaUsuarioLogado = require("../middlewares/confirmaClienteLogado");

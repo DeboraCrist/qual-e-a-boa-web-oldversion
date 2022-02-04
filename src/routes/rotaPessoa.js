@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const bodyParser = require("body-parser");
-const {Pessoa} = require("../models/Pessoa");
+const {Pessoa} = require("../../models/Pessoa");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 

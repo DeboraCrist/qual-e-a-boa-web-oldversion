@@ -2,11 +2,11 @@
 const express = require("express");
 const router = express.Router();
 
-const {Pessoa} = require("../models/Pessoa.js")
-const {RegistraPessoaNaTabela} = require("../models/Pessoa.js");
+const {Pessoa} = require("../../models/Pessoa")
+const {RegistraPessoaNaTabela} = require("../controllers/registraPessoaNaTabela");
 
-const {Estabelecimento} = require("../models/Estabelecimento.js");
-const {RegistraEstabelecimentoNaTabela} = require("../models/Estabelecimento.js")
+const {Estabelecimento} = require("../../models/Estabelecimento");
+const {RegistraEstabelecimentoNaTabela} = require("../controllers/registraEstabelecimento")
 
 const validaSintaxeEmail = require("../scripts/validaSintaxeEmail.js");
 
