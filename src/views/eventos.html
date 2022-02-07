@@ -141,7 +141,25 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                    <% if (pessoaEvento.length != 0) { %>
+                                        <% pessoaEvento.forEach((pessoaEvento) => {%>
+                                            <% if (dadosLogin.id == pessoaEvento.idPessoa && evento.id == pessoaEvento.idEventos) { %>
+                                                <a href="/desmarcapresenca/<%= evento.id %>">
+                                                    <button type="button" class="btn btn-primary">Remover presença</button>
+                                                </a>
+                                            <% } else {%>
+                                                <a href="/marcapresenca/<%= evento.id %>">
+                                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                                </a>
+                                            <% } %>
+                                        <% }) %>
+                                    <% } else if (evento.confirmacoes == evento.capacidade) { %>
+                                            <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
+                                    <% } else { %>
+                                        <a href="/marcapresenca/<%= evento.id %>">
+                                            <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                        </a>
+                                    <% } %>
                                 </div>
                             </div>
                           </div>

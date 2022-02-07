@@ -9,28 +9,45 @@ router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
 const {Evento} = require("../../models/Evento");
+const {Pessoa} = require("../../models/Pessoa")
 const {Estabelecimento} = require("../../models/Estabelecimento");
+const {PessoaEvento} = require("../../models/pessoaEvento")
 
 const verificaValidadeEvento = require("../controllers/verificaValidadeDoEvento");
+const marcaPresencaEvento = require("../controllers/marcaPresencaEvento");
+const desmarcapresenca = require("../controllers/desmarcaPresencaEvento");
 
 
 //meus middlewares
 const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
+const atualizaEvento = require("../controllers/atualizaEvento");
 
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
     verificaValidadeEvento(req.session.dadosLogin.id);
+
+    const pessoaEvento = await PessoaEvento.findAll({
+        where: {
+            idPessoa: req.session.dadosLogin.id,
+        }
+    });
 
     const todosEventos = await Evento.findAll({
         where: {statusEvento: true}
     });
 
-    res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos});
+    res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos, pessoaEvento: pessoaEvento});
 });
 
 /*Quando o usuario usa filtro ele e redirecionado para essa rota*/
 router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) => {
     verificaValidadeEvento(req.session.dadosLogin.id);
+
+    const pessoaEvento = await PessoaEvento.findAll({
+        where: {
+            idPessoa: req.session.dadosLogin.id,
+        }
+    });
 
     const estado = req.params.estado;
     const cidade = req.params.cidade;
@@ -43,7 +60,7 @@ router.get("/eventos/:estado/:cidade", verificaPessoaLogada, async (req, res) =>
         }
     })
 
-    res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: dadosFiltradosEventos})
+    res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: dadosFiltradosEventos, pessoaEvento: pessoaEvento})
 });
 
 router.get("/eventos/top10", verificaPessoaLogada, async (req, res) => {
@@ -51,9 +68,15 @@ router.get("/eventos/top10", verificaPessoaLogada, async (req, res) => {
         where: {statusEvento: true}
     });
 
+    const pessoaEvento = await PessoaEvento.findAll({
+        where: {
+            idPessoa: req.session.dadosLogin.id,
+        }
+    });
+
     var top10 = top10Eventos(todosEventos);
 
-    res.render("top10.html", {dadosLogin: req.session.dadosLogin, top10Eventos: top10});
+    res.render("top10.html", {dadosLogin: req.session.dadosLogin, top10Eventos: top10, pessoaEvento: pessoaEvento});
 });
 
 router.get("/eventos/ativos", verificaEstabelecimentoLogado, async (req, res) => {
@@ -102,29 +125,10 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
 router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) => {
     const idEvento = req.params.idEvento;
 
-    const {
-        nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, urlImagemLocal, novoValor, novaData} = req.body
+    const novosDadosEvento = {nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, urlImagemLocal, novoValor, novaData} = req.body
 
-    Evento.update(
-        {   
-            titulo: nomeEvento,
-            urlImagem: urlImagemLocal,
-            cidade: cidade,
-            estado: estado,
-            cep: cep,
-            tipoDeEvento: tipoEvento,
-            horaDoEvento: horario,
-            capacidade: capacidadePessoa,
-            dataDoEvento: novaData,
-            valorEntrada: novoValor
-        },
-        {where: {id: idEvento}}
-    ).then(() => {
-        res.redirect("/eventos/ativos");
-    }).catch((error) => {
-        console.log(error);
-        res.redirect("/eventos/ativos");
-    });
+    atualizaEvento(idEvento, novosDadosEvento);
+    res.redirect("/eventos/ativos");
 });
 
 router.get("/eventos/encerrados", verificaEstabelecimentoLogado, async (req, res) => {
@@ -180,4 +184,26 @@ router.get("/deletarEvento/:idEvento", verificaEstabelecimentoLogado, async (req
         res.redirect("/eventos/ativos");
     });
 });
+
+router.get("/marcapresenca/:idEvento", verificaPessoaLogada,async (req, res) => {
+    const idEvento = req.params.idEvento;
+    const idPessoaLogada = req.session.dadosLogin.id
+
+    marcaPresencaEvento(idEvento, idPessoaLogada).then(() => {
+        res.redirect("/eventos")
+    }).catch((error) => {
+        res.send("ERRO")
+    });;
+});
+
+router.get("/desmarcapresenca/:idEvento", verificaPessoaLogada, async (req, res) => {
+    const idEvento = req.params.idEvento;
+
+    desmarcapresenca(idEvento).then(() => {
+        res.redirect("/eventos")
+    }).catch((error) => {
+        res.send("ERRO")
+    });
+})
+
 module.exports = router;
