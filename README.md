@@ -8,4 +8,18 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install body-parser
 * npm install --save sequelize
 * npm install --save mysql2
+* npm install ejs
+* npm install dotenv
 * npm start
+
+## Usando .env
+* Crie um arquivo .env na raiz do projeto
+* Conteudo do .env
+```bash
+DB_NOME= Nome do DB 
+DB_USER= Usuario
+DB_SENHA= Senha
+DB_HOST= nome da host
+DB_PORT= porta da host (3306) padrão do mysql
+DB_DIALECT= mysql
+```
