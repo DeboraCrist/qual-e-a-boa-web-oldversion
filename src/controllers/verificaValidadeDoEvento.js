@@ -39,22 +39,30 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
 
     const eventos = await Evento.findAll({});
 
-    for (var i = 0; i < eventos.length; i++) {
-        console.log(eventos[i].horaDoEvento + " | " + horaAtual +"||||"+ eventos[i].dataDoEvento + " | " + hoje);
-        if (eventos[i].dataDoEvento == hoje && eventos[i].horaDoEvento <= horaAtual) {
-            //verifica se o evento ja passou da data e atualiza seu status para false indicando que o evento acabou
-            Evento.update(
-                {   
-                    statusEvento: false,
-                },
-                {where: {id: eventos[i].id}}
-            ).then(() => {
-                //att deu certo
+    console.log("ATE AQ OK")
+    if (eventos.length == 0) {
+        console.log("OII")
+        return false;
+    } else {
+        for (var i = 0; i < eventos.length; i++) {
+            console.log(eventos[i].horaDoEvento + " | " + horaAtual +"||||"+ eventos[i].dataDoEvento + " | " + hoje);
+            if (eventos[i].dataDoEvento == hoje && eventos[i].horaDoEvento <= horaAtual) {
+                //verifica se o evento ja passou da data e atualiza seu status para false indicando que o evento acabou
+                Evento.update(
+                    {   
+                        statusEvento: false,
+                    },
+                    {where: {id: eventos[i].id}}
+                ).then(() => {
+                    //att deu certo
+                    return true;
+                }).catch((error) => {
+                    //att deu errado
+                    return false
+                });
+
                 return true;
-            }).catch((error) => {
-                //att deu errado
-                return false
-            });
+            }
         }
     }
 }

@@ -25,6 +25,11 @@ const atualizaEvento = require("../controllers/atualizaEvento");
 
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
     verificaValidadeEvento(req.session.dadosLogin.id);
+    console.log("OK AQ ZZZ")
+
+    const todosEventos = await Evento.findAll({
+        where: {statusEvento: true}
+    });
 
     const pessoaEvento = await PessoaEvento.findAll({
         where: {
@@ -32,10 +37,7 @@ router.get("/eventos", verificaPessoaLogada, async (req, res) => {
         }
     });
 
-    const todosEventos = await Evento.findAll({
-        where: {statusEvento: true}
-    });
-
+    console.log("OI")
     res.render("eventos.html", {dadosLogin: req.session.dadosLogin, dadosEventos: todosEventos, pessoaEvento: pessoaEvento});
 });
 

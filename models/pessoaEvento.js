@@ -2,7 +2,7 @@ const db = require("./db");
 const {Evento} = require("./Evento");
 const {Pessoa} = require("./Pessoa");
 
-const PessoaEvento = db.sequelize.define ("pessoaeventos", {
+const PessoaEvento = db.sequelize.define ("pessoaEventos", {
     id: {
         type: db.Sequelize.INTEGER,
         allowNull: false,
