@@ -62,7 +62,7 @@
         <hr>
 
         <div class="text-center">
-            <img src="<%= dadosLogin.urlImagemPerfil %>" class="img-thumbnail"
+            <img src="data:image/png;base64,<%=dadosLogin.urlImagemPerfil %>" class="img-thumbnail"
                 alt="Foto do Usuário selecionada no 2° Cadastro">
         </div>
 
@@ -259,7 +259,7 @@
                     <form method="POST" enctype="multipart/form-data" action="/adicionarFoto">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Adicionar nova foto a galeria:</label>
-                            <input type="file" name="arquivoFoto" class="form-control-file" id="exampleFormControlFile1">
+                            <input accept="image/*" type="file" name="arquivoFoto" class="form-control-file" id="exampleFormControlFile1">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

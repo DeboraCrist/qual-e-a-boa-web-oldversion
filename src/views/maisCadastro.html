@@ -140,7 +140,7 @@
         </div>
         <div id="formulario_comercial" style="display: none;">
             <p class="lead text-left">Conta Comercial:</p>
-            <form action="/adicionarEstabelecimento" method="post">
+            <form action="/adicionarEstabelecimento" enctype="multipart/form-data" method="post">
                 <div class="mb-3">
 
                     <div class="row">
@@ -214,13 +214,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Url de uma foto para seu perfil comercial</label>
-                    <input name="urlImagemPerfil" class="form-control" type="url" id="formFile" enable>
-                </div>
-
-                <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">Url alguma foto do Local</label>
-                    <input name="urlImagemLocal" class="form-control" type="url" id="formFileMultiple" multiple enable>
+                    <label for="formFile" class="form-label">Foto para seu perfil comercial</label>
+                    <input accept="image/*" name="urlImagemPerfil" class="form-control" type="file" id="formFile" enable>
                 </div>
 
                 <div class="mb-3">

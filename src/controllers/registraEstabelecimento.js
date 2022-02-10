@@ -1,4 +1,4 @@
-const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento) => {
+const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento, image) => {
     const {Estabelecimento} = require("../../models/Estabelecimento");
 
     const criptografia = require("../scripts/criptografia");
@@ -10,7 +10,7 @@ const RegistraEstabelecimentoNaTabela = (dadosEstabelecimento) => {
         email: dadosEstabelecimento.email,
         senha: criptografia.criptografar(dadosEstabelecimento.senha),
         informacaoComplementar: dadosEstabelecimento.informacaoComplementar,
-        urlImagemPerfil: dadosEstabelecimento.urlImagemPerfil,
+        urlImagemPerfil: image,
         urlImagemLocal: dadosEstabelecimento.urlImagemLocal,
         rua: dadosEstabelecimento.rua,
         bairro: dadosEstabelecimento.bairro,

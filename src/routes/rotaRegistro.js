@@ -1,6 +1,7 @@
 /**Rotas que possuem ligação com registro de cliente / estabelecimento */
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 const {Pessoa} = require("../../models/Pessoa")
 const {RegistraPessoaNaTabela} = require("../controllers/registraPessoaNaTabela");
@@ -13,6 +14,8 @@ const validaSintaxeEmail = require("../scripts/validaSintaxeEmail.js");
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
+
+const upload = multer({storage:multer.memoryStorage()});
 
 let tempEmail;
 let tempSenha;
@@ -74,8 +77,10 @@ router.post("/adicionarPessoa", async (req, res) => {
     res.redirect("/login");
 });
 
-router.post("/adicionarEstabelecimento", async (req, res) => {
+router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async (req, res) => {
     //quarda os dados de registro de estabelecimento em um objeto
+    const image = req.file.buffer.toString("base64")
+
     console.log(tempEmail);
     dadosEstabelecimento = {
         nomeDono: req.body.nomeDono,
@@ -83,8 +88,7 @@ router.post("/adicionarEstabelecimento", async (req, res) => {
         email: tempEmail,
         senha: tempSenha,
         informacaoComplementar: req.body.infoComplementar,
-        urlImagemPerfil: req.body.urlImagemPerfil,
-        urlImagemLocal: req.body.urlImagemLocal,
+        urlImagemLocal: "None",
         rua: req.body.rua,
         bairro: req.body.bairro,
         numero: req.body.numero,
@@ -96,7 +100,7 @@ router.post("/adicionarEstabelecimento", async (req, res) => {
     }
 
     //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-    RegistraEstabelecimentoNaTabela(dadosEstabelecimento);
+    RegistraEstabelecimentoNaTabela(dadosEstabelecimento, image);
     tempEmail = "";
     tempSenha = "";
     res.redirect("/login");

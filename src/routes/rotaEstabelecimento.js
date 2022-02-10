@@ -11,6 +11,7 @@ router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
 const upload = multer({storage:multer.memoryStorage()});
+const registraImagem = require("../controllers/adicionaImagemNaGaleria")
 
 //meus middlewares
 const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
@@ -27,9 +28,15 @@ router.get("/usuarioEstabelecimento", verificaEstabelecimentoLogado, async (req,
         where: {
             idEstabelecimento: req.session.dadosLogin.id,
         }
-    })
+    });
 
-    res.render('paginaInicialComercial.html', {dadosLogin: req.session.dadosLogin, dadosEventos: eventosDoEstabelecimento, fotosGaleria: fotosGaleria});
+    const dadosLogin = await Estabelecimento.findAll({
+        where: {
+            id: req.session.dadosLogin.id
+        }
+    });
+
+    res.render('paginaInicialComercial.html', {dadosLogin: dadosLogin[0], dadosEventos: eventosDoEstabelecimento, fotosGaleria: fotosGaleria});
 });
 
 router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) => {
@@ -46,12 +53,11 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
         }
     });
 
-    
     Galeria.create({
         foto: image,
         idEstabelecimento: dadosLoginId.id,
     }).then(() => {
-        res.redirect("/usuarioEstabelecimento");
+        res.redirect("/usuarioEstabelecimento")
     }).catch((erro) => {
         console.log(erro);
     });
