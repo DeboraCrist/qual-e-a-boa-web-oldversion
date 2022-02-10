@@ -10,8 +10,12 @@ router.use(bodyParser.json());
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
 //verifica que tipo de usuario esta logado
 
-router.get("/usuarioCliente", verificaPessoaLogada, (req, res) => {
-    res.render("paginaInicialUsuario.html", {dadosLogin: req.session.dadosLogin});
+router.get("/usuarioCliente", verificaPessoaLogada,async (req, res) => {
+    const dadosLogin = await Pessoa.findAll({
+        where: {id: req.session.dadosLogin.id}
+    });
+
+    res.render("paginaInicialUsuario.html", {dadosLogin: dadosLogin[0]});
 });
 
 router.get("/paginaInicialUsuario"),async (req, res) =>{

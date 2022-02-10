@@ -11,7 +11,6 @@ router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
 const upload = multer({storage:multer.memoryStorage()});
-const registraImagem = require("../controllers/adicionaImagemNaGaleria")
 
 //meus middlewares
 const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");

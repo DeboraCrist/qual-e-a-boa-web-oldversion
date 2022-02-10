@@ -59,7 +59,7 @@
         <hr>
         <div id="formulario-pessoal">
             <p class="lead text-left">Conta Pessoal:</p>
-            <form action="/adicionarPessoa" method="post">
+            <form action="/adicionarPessoa" enctype="multipart/form-data" method="post">
                 <div class="mb-3">
                     <div class="row">
                         <div class="col">
@@ -110,7 +110,7 @@
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
-                    <input name="urlImagem" class="form-control" type="url" id="formFile" enable>
+                    <input accept="image/*" name="urlImagem" class="form-control" type="file" id="formFile" enable>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="exampleFormControlSelect2">Vacinação</label>
@@ -125,7 +125,7 @@
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
-                    <input name="passaPorte" class="form-control" type="url" id="formFile" enable>
+                    <input accept="image/*" name="passaPorte" class="form-control" type="file" id="formFile" enable>
                 </div>
                 <div class="mb-3">
                     <div class="d-grid d-md-flex justify-content-md-end">

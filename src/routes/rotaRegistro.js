@@ -49,7 +49,16 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.post("/adicionarPessoa", async (req, res) => {
+router.post("/adicionarPessoa", upload.fields([
+    {
+        name: "urlImagem", maxCount: 1
+    }, {
+        name: "passaPorte", maxCount: 1
+    }
+]),async (req, res) => {
+    const imagemPerfil = req.files["urlImagem"][0].buffer.toString('base64');
+    const passaporteSanitario = req.files["passaPorte"][0].buffer.toString('base64');
+
     //quarda os dados de registro de pessoa em um objeto
     console.log(tempEmail);
     dadosPessoa = {
@@ -57,8 +66,8 @@ router.post("/adicionarPessoa", async (req, res) => {
         sobreNome: req.body.sobreNome,
         email: tempEmail,
         senha: tempSenha,
-        urlImagem: req.body.urlImagem,
-        passaPorte: req.body.passaPorte,
+        urlImagem: imagemPerfil,
+        passaPorte: passaporteSanitario,
         idadePessoa: req.body.idadePessoa,
         dataNasc: req.body.dataNasc,
         cidadePessoa: req.body.cidade,
