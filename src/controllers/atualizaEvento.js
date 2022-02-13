@@ -1,10 +1,10 @@
-const atualizaEvento = (idEvento, novosDadosEvento) => {
+const atualizaEvento = (idEvento, novosDadosEvento, image) => {
     const {Evento} = require("../../models/Evento");
 
     Evento.update(
         {   
             titulo: novosDadosEvento.nomeEvento,
-            urlImagem: novosDadosEvento.urlImagemLocal,
+            urlImagem: image,
             cidade: novosDadosEvento.cidade,
             estado: novosDadosEvento.estado,
             cep: novosDadosEvento.cep,

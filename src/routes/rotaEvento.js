@@ -1,12 +1,15 @@
 /** Contem as rotas relacionadas a evento */
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 const top10Eventos = require("../controllers/top10");
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
+
+const upload = multer({storage:multer.memoryStorage()});
 
 const {Evento} = require("../../models/Evento");
 const {Pessoa} = require("../../models/Pessoa")
@@ -94,7 +97,9 @@ router.get("/eventos/ativos", verificaEstabelecimentoLogado, async (req, res) =>
     res.render("criarevento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosDoEstabelecimento});
 });
 
-router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) => {
+router.post("/registraEvento", verificaEstabelecimentoLogado, upload.single('urlImagemLocal'), async (req, res) => {
+    const image = req.file.buffer.toString("base64");
+
     const dadosLoginId = await Estabelecimento.findOne({
         where: {
             id: req.session.dadosLogin.id
@@ -104,7 +109,7 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
     Evento.create({
         idEstabelecimento: dadosLoginId.id,
         titulo: req.body.nomeEvento, 
-        urlImagem:req.body.urlImagemLocal, 
+        urlImagem: image, 
         cidade:req.body.cidade, 
         estado:req.body.estado, 
         cep:req.body.cep, 
@@ -124,12 +129,13 @@ router.post("/registraEvento", verificaEstabelecimentoLogado, async (req, res) =
     });
 });
 
-router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, (req, res) => {
+router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, upload.single('urlImagemLocal'), (req, res) => {
     const idEvento = req.params.idEvento;
+    const image = req.file.buffer.toString("base64");
 
-    const novosDadosEvento = {nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, urlImagemLocal, novoValor, novaData} = req.body
+    const novosDadosEvento = {nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, novoValor, novaData} = req.body
 
-    atualizaEvento(idEvento, novosDadosEvento);
+    atualizaEvento(idEvento, novosDadosEvento, image);
     res.redirect("/eventos/ativos");
 });
 

@@ -118,7 +118,7 @@
                   <div class="col-sm-3">
                     <div class="card border-warning">
                       <img
-                        src="<%= evento.urlImagem %>"
+                        src="data:image/png;base64,<%=evento.urlImagem %>"
                         class="card-img-top"
                         alt="..."
                         style="height: 150px"
@@ -172,6 +172,7 @@
                         </div>
                         <div class="modal-body">
                           <form
+                            enctype="multipart/form-data"
                             action="/editaEvento/<%= evento.id %>"
                             method="post"
                           >
@@ -319,17 +320,18 @@
     
                             <div class="mb-3">
                               <label for="formFileMultiple" class="form-label"
-                                >Nova url alguma foto do Evento</label
+                                >Nova foto do Evento </label
                               >
                               <input
+                                value="<%= evento.urlImagem %>"
                                 name="urlImagemLocal"
                                 class="form-control"
-                                value="<%= evento.urlImagem %>"
-                                type="url"
+                                accept="image/*"
+                                type="file"
                                 id="formFileMultiple"
                                 placeholder="Url"
-                                multiple
                                 required
+                                multiple
                                 enable
                               />
                             </div>
@@ -401,7 +403,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form action="/registraEvento" method="post">
+            <form enctype="multipart/form-data" action="/registraEvento" method="post">
               <div class="mb-3">
                 <div class="row">
                   <div class="col">
@@ -524,12 +526,13 @@
               </div>
               <div class="mb-3">
                 <label for="formFileMultiple" class="form-label"
-                  >Url alguma foto do Evento</label
+                  >Foto do Evento</label
                 >
                 <input
                   name="urlImagemLocal"
                   class="form-control"
-                  type="url"
+                  accept="image/*"
+                  type="file"
                   id="formFileMultiple"
                   placeholder="Url"
                   multiple
