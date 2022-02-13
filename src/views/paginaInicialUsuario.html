@@ -161,7 +161,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/atualizarPassaporte"  enctype="multipart/form-data" method="post">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Meu Passaporte Sanitário:</label>
                             <img src="data:image/png;base64,<%= dadosLogin.passaPorte %>"
@@ -170,14 +170,15 @@
                         <hr>
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Alterar Passaporte:</label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <input name="fotoPassaporte" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                </div>
+                
             </div>
         </div>
     </div>

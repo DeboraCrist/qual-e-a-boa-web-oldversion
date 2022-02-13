@@ -60,6 +60,6 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
     }).catch((erro) => {
         console.log(erro);
     });
-})
+});
 
 module.exports = router;
