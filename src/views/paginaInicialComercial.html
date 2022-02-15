@@ -94,90 +94,97 @@
 
         <hr>
         <h5 class="display-5 text-center">Galeria de Fotos</h5>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#modalAdicionarFoto">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdicionarFoto">
             Adicionar Foto
         </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRemoverFoto">
+            Remover Foto
+        </button>
         <hr>
-        <div class="row">  
-                <% fotosGaleria.forEach((fotos) => { %>
-                    <div class="col-3">
-                        <img src="data:image/png;base64,<%= fotos.foto %>" width="90%"  height="90%">
-                    </div>
+        <div class="row">
+            <% fotosGaleria.forEach((fotos)=> { %>
+                <div class="col-3">
+                    <img src="data:image/png;base64,<%= fotos.foto %>" width="90%" height="90%">
+                </div>
                 <% }) %>
-                <p class="mt-3"></p>
+                    <p class="mt-3"></p>
         </div>
 
         <hr>
 
         <h5 class="display-5 text-center">Meus Eventos</h5>
         <div class="row">
-            <% if (dadosEventos.length == 0) { %>
+            <% if (dadosEventos.length==0) { %>
                 <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
-            <% } else { %>
-                <% dadosEventos.forEach((evento) => {%>
-                    <div class="col-sm-3">
-                      <div class="card border-warning">
-                        <img src="data:image/png;base64,<%= evento.urlImagem %>" class="card-img-top" alt="..."
-                          style="height: 150px;" />
-                        <div class="card-body">
-                          <h5 class="card-title">
-                            <%= evento.titulo%>
-                          </h5>
-                          <h6 class="card-subtitle mb-2 text-muted">
-                            data: <%= evento.dataDoEvento %>
-                          </h6>
-                          <p class="card-text">Confirmações <%=evento.confirmacoes%>/
-                              <%=evento.capacidade%>
-                          </p>
-                          <p class="card-text">
-                            <%= evento.cidade %>, <%= evento.estado %>
-                          </p>
-                          <button id="editaEvento" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                              data-bs-target="#modalDadosDoEvento<%= evento.id %>">
-                              Saiba mais
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Modal- Dados do Evento -->
-                    <div class="modal fade" id="modalDadosDoEvento<%= evento.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Titulo: <%= evento.titulo %></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <img src="data:image/png;base64,<%=evento.urlImagem %>" class="card-img-top" alt="..." />
-                                    </div>
+                <% } else { %>
+                    <% dadosEventos.forEach((evento)=> {%>
+                        <div class="col-sm-3">
+                            <div class="card border-warning">
+                                <img src="data:image/png;base64,<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                                    style="height: 150px;" />
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= evento.titulo%>
+                                    </h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
+                                        data: <%= evento.dataDoEvento %>
                                     </h6>
+                                    <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                            <%=evento.capacidade%>
+                                    </p>
                                     <p class="card-text">
                                         <%= evento.cidade %>, <%= evento.estado %>
                                     </p>
-                                    <p class="card-text">
-                                        Tipo de Evento: <%= evento.tipoDeEvento %>
-                                    </p>
-                                    <p class="card-text">
-                                        Valor da Entrada: <%= evento.valorEntrada %>R$
-                                    </p>
-                                    <p class="card-text">Confirmações <%=evento.confirmacoes%>/
-                                        <%=evento.capacidade%>
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                    <button id="editaEvento" type="submit" class="btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#modalDadosDoEvento<%= evento.id %>">
+                                        Saiba mais
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                  <% }) %>
-            <% } %>
+
+                        <!-- Modal- Dados do Evento -->
+                        <div class="modal fade" id="modalDadosDoEvento<%= evento.id %>" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Titulo: <%= evento.titulo %>
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <img src="data:image/png;base64,<%=evento.urlImagem %>" class="card-img-top"
+                                                alt="..." />
+                                        </div>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
+                                        </h6>
+                                        <p class="card-text">
+                                            <%= evento.cidade %>, <%= evento.estado %>
+                                        </p>
+                                        <p class="card-text">
+                                            Tipo de Evento: <%= evento.tipoDeEvento %>
+                                        </p>
+                                        <p class="card-text">
+                                            Valor da Entrada: <%= evento.valorEntrada %>R$
+                                        </p>
+                                        <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                                <%=evento.capacidade%>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } %>
         </div>
     </div>
 
@@ -193,29 +200,28 @@
                     <form>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome Dono:</label>
-                            <input type="text" class="form-control" id="recipient-name" placeholder="<%= dadosLogin.nomeDono %>">
+                            <input type="text" class="form-control" id="recipient-name"
+                                placeholder="<%= dadosLogin.nomeDono %>">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome Estabelecimento:</label>
-                            <input type="text" class="form-control" id="recipient-name" placeholder="<%= dadosLogin.nomeEstabelecimento %>">
+                            <input type="text" class="form-control" id="recipient-name"
+                                placeholder="<%= dadosLogin.nomeEstabelecimento %>">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">CEP:</label>
                             <input type="data" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.cep %>"
-                                onblur="consultarCEP(this.value)">
+                                placeholder="<%= dadosLogin.cep %>" onblur="consultarCEP(this.value)">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Cidade:</label>
                             <input type="data" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.cidade %>"
-                                name="cidade">
+                                placeholder="<%= dadosLogin.cidade %>" name="cidade">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Estado:</label>
                             <input type="data" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.estado%>"
-                                name="estado">
+                                placeholder="<%= dadosLogin.estado%>" name="estado">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Rua:</label>
@@ -248,7 +254,8 @@
     </div>
 
     <!--Modal adicionar foto na galeria-->
-    <div class="modal fade" id="modalAdicionarFoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalAdicionarFoto" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -259,7 +266,8 @@
                     <form method="POST" enctype="multipart/form-data" action="/adicionarFoto">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Adicionar nova foto a galeria:</label>
-                            <input accept="image/*" type="file" name="arquivoFoto" class="form-control-file" id="exampleFormControlFile1">
+                            <input accept="image/*" type="file" name="arquivoFoto" class="form-control-file"
+                                id="exampleFormControlFile1">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -267,7 +275,50 @@
                         </div>
                     </form>
                 </div>
-                
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalRemoverFoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Remover Foto:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Escolha fotos para remover galeria:</p>
+                    <div class="mb-3">
+                        <form>
+                            <img src="http://c.files.bbci.co.uk/16C46/production/_114945239_84ef2045-4fc8-4af7-bffb-61c3563de49c.jpg"
+                                class="img-fluid" alt="...">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Imagem 1</label>
+                            </div>
+                            <p></p>
+                            <img src="https://prefeitura.poa.br/sites/default/files/usu_img/noticias/2021/02/13/aglomera1.jpg"
+                                class="img-fluid" alt="...">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Imagem 2</label>
+                            </div>
+                            <p></p>
+                            <img src="https://ichef.bbci.co.uk/news/640/cpsprodpb/42C7/production/_113359071_festagettyimages-920382040.jpg"
+                                class="img-fluid" alt="...">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Imagem 3</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Remover</button>
+                </div>
+
             </div>
         </div>
     </div>
