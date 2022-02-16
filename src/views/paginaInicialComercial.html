@@ -56,6 +56,13 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container">
+        <% if(typeof alertas !='undefined' ) { %>
+            <% alertas.forEach(function(alerta){ %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <%= alerta.msg %>
+                </div>
+                <% }) %>
+        <% } %>
         <h1 class="display-5 text-center">Olá, <%= dadosLogin.nomeEstabelecimento %>
         </h1>
         <p class="lead text-center">Bem-vindo ao seu perfil Comercial:</p>
@@ -290,35 +297,24 @@
                 <div class="modal-body">
                     <p>Escolha fotos para remover galeria:</p>
                     <div class="mb-3">
-                        <form>
-                            <img src="http://c.files.bbci.co.uk/16C46/production/_114945239_84ef2045-4fc8-4af7-bffb-61c3563de49c.jpg"
+                        <form action="/removerFotos" method="post">
+                            <% pos = 1 %> 
+                            <% fotosGaleria.forEach((fotos)=> { %>
+                                <img src="data:image/png;base64,<%= fotos.foto %>"
                                 class="img-fluid" alt="...">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Imagem 1</label>
-                            </div>
-                            <p></p>
-                            <img src="https://prefeitura.poa.br/sites/default/files/usu_img/noticias/2021/02/13/aglomera1.jpg"
-                                class="img-fluid" alt="...">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Imagem 2</label>
-                            </div>
-                            <p></p>
-                            <img src="https://ichef.bbci.co.uk/news/640/cpsprodpb/42C7/production/_113359071_festagettyimages-920382040.jpg"
-                                class="img-fluid" alt="...">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Imagem 3</label>
-                            </div>
+                                <div class="form-group form-check">
+                                    <input name="<%= fotos.id %>" type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Imagem <%= pos++ %></label>
+                                </div>
+                                <p></p>
+                            <% }) %>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Remover</button>
+                            </div>   
                         </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Remover</button>
-                </div>
-
             </div>
         </div>
     </div>

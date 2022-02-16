@@ -198,10 +198,10 @@ router.get("/marcapresenca/:idEvento", verificaPessoaLogada,async (req, res) => 
     const idPessoaLogada = req.session.dadosLogin.id
 
     marcaPresencaEvento(idEvento, idPessoaLogada).then(() => {
-        res.redirect("/eventos")
+        res.redirect("/eventos");
     }).catch((error) => {
         res.send("ERRO")
-    });;
+    });
 });
 
 router.get("/desmarcapresenca/:idEvento", verificaPessoaLogada, async (req, res) => {

@@ -79,8 +79,10 @@ router.get("/deletarLembrete/:idLembrete", verificaUsuarioLogado, async (req, re
     if (tipoDeConta == 1) {
         Agenda.destroy({
             where: {
-                id: idLembrete,
-                idEstabelecimento: req.session.dadosLogin.id,
+                [Op.and]: [
+                    {id: idLembrete},
+                    {idEstabelecimento: req.session.dadosLogin.id},
+                ]
             }
         }).then(() => {
             res.redirect("/agenda");
@@ -90,8 +92,10 @@ router.get("/deletarLembrete/:idLembrete", verificaUsuarioLogado, async (req, re
     } else {
         Agenda.destroy({
             where: {
-                id: idLembrete,
-                idPessoa: req.session.dadosLogin.id,
+                [Op.and]: [
+                    {id: idLembrete},
+                    {idPessoa: req.session.dadosLogin.id},
+                ]
             }
         }).then(() => {
             res.redirect("/agenda");
