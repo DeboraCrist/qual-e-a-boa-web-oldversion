@@ -60,9 +60,11 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
         foto: image,
         idEstabelecimento: dadosLoginId.id,
     }).then(() => {
-        res.redirect("/usuarioEstabelecimento")
+        res.redirect("/usuarioEstabelecimento");
     }).catch((erro) => {
         console.log(erro);
+        alertas.push({msg: "Erro ao enviar a imagem"})
+        res.redirect("/usuarioEstabelecimento");
     });
 });
 
@@ -77,7 +79,6 @@ router.post("/removerFotos", verificaEstabelecimentoLogado, async (req, res) => 
             ]
         }
     }).then(() => {
-        alertas.push({msg: "Imagens deletadas com sucesso"});
         res.redirect("/usuarioEstabelecimento");
     }).catch((erro) => {
         alertas.push({msg: "ERRO ao tentar deletar as imagens"});
