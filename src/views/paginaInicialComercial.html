@@ -69,7 +69,7 @@
         <hr>
 
         <div class="text-center">
-            <img src="data:image/png;base64,<%=dadosLogin.urlImagemPerfil %>" class="img-thumbnail"
+            <img src="<%=dadosLogin.urlImagemPerfil %>" class="img-thumbnail"
                 alt="Foto do Usuário selecionada no 2° Cadastro">
         </div>
 
@@ -127,7 +127,7 @@
                     <% dadosEventos.forEach((evento)=> {%>
                         <div class="col-sm-3">
                             <div class="card border-warning">
-                                <img src="data:image/png;base64,<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                                <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
                                     style="height: 150px;" />
                                 <div class="card-body">
                                     <h5 class="card-title">
@@ -163,7 +163,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <img src="data:image/png;base64,<%=evento.urlImagem %>" class="card-img-top"
+                                            <img src="<%=evento.urlImagem %>" class="card-img-top"
                                                 alt="..." />
                                         </div>
                                         <h6 class="card-subtitle mb-2 text-muted">

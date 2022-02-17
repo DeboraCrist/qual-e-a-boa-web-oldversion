@@ -57,7 +57,7 @@
         <hr>
 
         <div class="text-center">
-            <img src="data:image/png;base64,<%= dadosLogin.urlImagem %>" class="img-thumbnail"
+            <img src="<%= dadosLogin.urlImagem %>" class="img-thumbnail"
                 alt="Foto do Usuário selecionada no 2° Cadastro" style="width: 30%;">
         </div>
 
@@ -164,7 +164,7 @@
                     <form action="/atualizarPassaporte"  enctype="multipart/form-data" method="post">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Meu Passaporte Sanitário:</label>
-                            <img src="data:image/png;base64,<%= dadosLogin.passaPorte %>"
+                            <img src="<%= dadosLogin.passaPorte %>"
                                 class="img-fluid" alt="Passaporte Sanitário do Usuário">
                         </div>
                         <hr>
