@@ -28,7 +28,7 @@ const Estabelecimento = db.sequelize.define("estabelecimentos", {
         type: db.Sequelize.TEXT
     },
     urlImagemPerfil: {
-        type: db.Sequelize.STRING
+        type: db.Sequelize.BLOB('long')
     },
     urlImagemLocal: {
         type: db.Sequelize.STRING

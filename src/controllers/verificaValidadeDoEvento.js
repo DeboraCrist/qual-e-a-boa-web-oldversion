@@ -28,9 +28,11 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
     }
     if (segundos < 10) {
         horaAtual = hora + ":" + minuto + ":0" + segundos;
-    } 
+    } else {
+        horaAtual = hora + ":" + minuto + ":" + segundos;
+    }
      
-    if (hora < 10 && minuto < 11 && segundos < 11) {
+    if (hora < 10 && minuto < 10 && segundos < 10) {
         horaAtual = "0" + hora + ":0" + minuto + ":0" + segundos;
     }
 
@@ -46,7 +48,7 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
     } else {
         for (var i = 0; i < eventos.length; i++) {
             console.log(eventos[i].horaDoEvento + " | " + horaAtual +"||||"+ eventos[i].dataDoEvento + " | " + hoje);
-            if (eventos[i].dataDoEvento == hoje && eventos[i].horaDoEvento <= horaAtual) {
+            if (eventos[i].dataDoEvento <= hoje && eventos[i].horaDoEvento <= horaAtual) {
                 //verifica se o evento ja passou da data e atualiza seu status para false indicando que o evento acabou
                 Evento.update(
                     {   
