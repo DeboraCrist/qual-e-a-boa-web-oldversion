@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const path = require("path");
+const reduzNomeImagem = require("../scripts/reduzNomeImagem")
 
 const {Pessoa} = require("../../models/Pessoa")
 const {RegistraPessoaNaTabela} = require("../controllers/registraPessoaNaTabela");
@@ -15,7 +17,17 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const upload = multer({storage:multer.memoryStorage()});
+const armazenamento = multer.diskStorage({
+    destination: (req, arquivo, cb) => {
+        cb(null, "src/enviadas/");
+    },
+    filename: (req, arquivo, cb) => {
+        console.log(arquivo);
+        cb(null, Date.now() + path.extname(arquivo.originalname));
+    }
+});
+
+const upload = multer({storage: armazenamento});
 
 let tempEmail;
 let tempSenha;
@@ -56,8 +68,13 @@ router.post("/adicionarPessoa", upload.fields([
         name: "passaPorte", maxCount: 1
     }
 ]),async (req, res) => {
-    const imagemPerfil = req.files["urlImagem"][0].buffer.toString('base64');
-    const passaporteSanitario = req.files["passaPorte"][0].buffer.toString('base64');
+    const imagemPerfil = req.files["urlImagem"][0].path;
+    const passaporteSanitario = req.files["passaPorte"][0].path;
+
+    nomeImagemPerfil = reduzNomeImagem(imagemPerfil);
+    nomeImagemPassaporte = reduzNomeImagem(passaporteSanitario);
+
+    console.log("Img1: "+ nomeImagemPerfil + " | Img2: "+ nomeImagemPassaporte);
 
     //quarda os dados de registro de pessoa em um objeto
     console.log(tempEmail);
@@ -66,8 +83,8 @@ router.post("/adicionarPessoa", upload.fields([
         sobreNome: req.body.sobreNome,
         email: tempEmail,
         senha: tempSenha,
-        urlImagem: imagemPerfil,
-        passaPorte: passaporteSanitario,
+        urlImagem: nomeImagemPerfil,
+        passaPorte: nomeImagemPassaporte,
         idadePessoa: req.body.idadePessoa,
         dataNasc: req.body.dataNasc,
         cidadePessoa: req.body.cidade,
@@ -87,10 +104,10 @@ router.post("/adicionarPessoa", upload.fields([
 });
 
 router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async (req, res) => {
-    //quarda os dados de registro de estabelecimento em um objeto
-    const image = req.file.buffer.toString("base64")
+    const image = req.file.path;
+    nomeImagem = reduzNomeImagem(image);
 
-    console.log(tempEmail);
+    console.log(">>>"+ nomeImagem +"|"+ aux);
     dadosEstabelecimento = {
         nomeDono: req.body.nomeDono,
         nomeEstabelecimento: req.body.nomeEstabelecimento,
@@ -109,11 +126,10 @@ router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async
     }
 
     //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
-    RegistraEstabelecimentoNaTabela(dadosEstabelecimento, image);
+    RegistraEstabelecimentoNaTabela(dadosEstabelecimento, nomeImagem);
     tempEmail = "";
     tempSenha = "";
     res.redirect("/login");
-
 });
 
 module.exports = router;

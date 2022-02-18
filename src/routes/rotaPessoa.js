@@ -1,13 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const path = require("path");
+const reduzNomeImagem = require("../scripts/reduzNomeImagem")
 
 const bodyParser = require("body-parser");
 const {Pessoa} = require("../../models/Pessoa");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const upload = multer({storage:multer.memoryStorage()});
+const armazenamento = multer.diskStorage({
+    destination: (req, arquivo, cb) => {
+        cb(null, "src/enviadas/");
+    },
+    filename: (req, arquivo, cb) => {
+        console.log(arquivo);
+        cb(null, Date.now() + path.extname(arquivo.originalname));
+    }
+});
+
+const upload = multer({storage: armazenamento});
 
 //meus middlewares
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
@@ -52,11 +64,12 @@ router.post("/atualizarPerfilUser",(req,res) => {
 });
 
 router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPassaporte'), (req, res) => {
-    const imagemPassaporte = req.file.buffer.toString("base64");
+    const imagemPassaporte = req.file.path;
+    const nomeImagemPassaporte = reduzNomeImagem(imagemPassaporte);
 
     Pessoa.update(
         {
-            passaPorte: imagemPassaporte,
+            passaPorte: nomeImagemPassaporte,
         }, {
             where: {id: req.session.dadosLogin.id}
         }

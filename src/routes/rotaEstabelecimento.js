@@ -12,8 +12,11 @@ router.use(bodyParser.json());
 
 const upload = multer({storage:multer.memoryStorage()});
 
+let alertas = [];
+
 //meus middlewares
 const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
+const { Op } = require("sequelize");
 
 router.get("/usuarioEstabelecimento", verificaEstabelecimentoLogado, async (req, res) => {
     const eventosDoEstabelecimento = await Evento.findAll({
@@ -35,7 +38,8 @@ router.get("/usuarioEstabelecimento", verificaEstabelecimentoLogado, async (req,
         }
     });
 
-    res.render('paginaInicialComercial.html', {dadosLogin: dadosLogin[0], dadosEventos: eventosDoEstabelecimento, fotosGaleria: fotosGaleria});
+    res.render('paginaInicialComercial.html', {dadosLogin: dadosLogin[0], dadosEventos: eventosDoEstabelecimento, fotosGaleria: fotosGaleria, alertas: alertas});
+    alertas = [];
 });
 
 router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) => {
@@ -56,10 +60,30 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
         foto: image,
         idEstabelecimento: dadosLoginId.id,
     }).then(() => {
-        res.redirect("/usuarioEstabelecimento")
+        res.redirect("/usuarioEstabelecimento");
     }).catch((erro) => {
         console.log(erro);
+        alertas.push({msg: "Erro ao enviar a imagem"})
+        res.redirect("/usuarioEstabelecimento");
     });
+});
+
+router.post("/removerFotos", verificaEstabelecimentoLogado, async (req, res) => {
+    const idFotos = Object.keys(req.body);
+
+    Galeria.destroy({
+        where: {
+            [Op.and]: [
+                {id: idFotos},
+                {idEstabelecimento: req.session.dadosLogin.id}
+            ]
+        }
+    }).then(() => {
+        res.redirect("/usuarioEstabelecimento");
+    }).catch((erro) => {
+        alertas.push({msg: "ERRO ao tentar deletar as imagens"});
+        res.redirect("/usuarioEstabelecimento");
+    })
 });
 
 module.exports = router;

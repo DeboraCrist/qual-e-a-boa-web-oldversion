@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" aria-current="page" href="/homePessoa">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/usuarioCliente">Meu perfil</a>
@@ -91,7 +91,7 @@
                     <% dadosEventos.forEach((evento)=> {%>
                         <div class="col-sm-3">
                             <div class="card border-warning">
-                                <img src="data:image/png;base64,<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                                <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
                                     style="height: 150px;" />
                                 <div class="card-body">
                                     <h5 class="card-title">
@@ -128,7 +128,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <img src="data:image/png;base64,<%= evento.urlImagem %>" class="card-img-top" alt="..." />
+                                            <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..." />
                                         </div>
                                         <h6 class="card-subtitle mb-2 text-muted">
                                             data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
@@ -149,41 +149,35 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <% if (pessoaEvento.length !=0) { %>
-                                            <%var teste=pessoaEvento.find( oEvento=> { %>
-                                                <% return oEvento.idEventos==evento.id %>
-                                                    <% }) %>
-
-                                                        <% if (teste !=undefined) { %>
-                                                            <a href="/desmarcapresenca/<%= evento.id %>">
-                                                                <button type="button" class="btn btn-primary">Remover
-                                                                    presença</button>
-                                                            </a>
-                                                            <% } else {%>
-                                                                <a href="/marcapresenca/<%= evento.id %>">
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">Confirmar
-                                                                        presença</button>
-                                                                </a>
-                                                                <% } %>
-                                                                    <% } else if
-                                                                        (evento.confirmacoes==evento.capacidade) { %>
-                                                                        <button disabled type="button"
-                                                                            class="btn btn-primary">EVENTO
-                                                                            LOTADO</button>
-                                                                        <% } else { %>
-                                                                            <a href="/marcapresenca/<%= evento.id %>">
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary">Confirmar
-                                                                                    presença</button>
-                                                                            </a>
-                                                                            <% } %>
+                                            <% if (pessoaEvento.length != 0) { %>
+                                                <%var teste = pessoaEvento.find( oEvento => { %>
+                                                    <% return oEvento.idEventos == evento.id %>
+                                                <% }) %>
+                                                
+                                                <% if (teste != undefined) { %>
+                                                    <a href="/desmarcapresenca/<%= evento.id %>">
+                                                        <button type="button" class="btn btn-primary">Remover presença</button>
+                                                    </a>
+                                                <% } else if (evento.confirmacoes == evento.capacidade) { %>
+                                                    <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
+                                                <% } else {%>
+                                                    <a href="/marcapresenca/<%= evento.id %>">
+                                                        <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                                    </a>
+                                                <% } %>
+                                            <% } else if (evento.confirmacoes == evento.capacidade) { %>
+                                                <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
+                                            <% } else { %>
+                                                <a href="/marcapresenca/<%= evento.id %>">
+                                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                                </a>
+                                            <% } %>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <% }) %>
-                            <% } %>
+                    <% } %>
         </div>
 
     </div>
