@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" aria-current="page" href="/homePessoa">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/usuarioCliente">Meu perfil</a>
@@ -49,7 +49,8 @@
     <p style="margin-top: 70px">
 
     <div class="container-fluid">
-        <h1 class="display-6">Olá, <%= dadosLogin.nomePessoa %></h1>
+        <h1 class="display-6">Olá, <%= dadosLogin.nomePessoa %>
+        </h1>
         <p class="lead">Qual é a boa de hoje?<br>Procurar eventos em:</p>
         <hr>
         <div class="row">
@@ -67,13 +68,18 @@
             <div class="col-4">
                 <label for="exampleFormControlSelect1">Selecione a Cidade:</label>
                 <select class="form-control" id="exampleFormControlSelect2">
-                    
+
                 </select>
             </div>
-            <div class="col-4 mt-4">
+            <div class="col-3 mt-4">
                 <a href="#" id="link-filtro">
                     <button type="button" class="btn btn-primary " id="botaoDeBusca">Buscar</button>
                 </a>
+            </div>
+            <div class="col-4 mt-4">
+                <form action="/surpreendame" method="get">
+                    <button type="submit" class="btn btn-primary " id="botaoDeBusca">Surpreenda-me</button>
+                </form>
             </div>
         </div>
         <p style="margin-top: 30px"></p>
@@ -81,93 +87,99 @@
         <p class="lead">Eventos Disponíveis:</p>
 
         <div class="row">
-            <% if (dadosEventos.length == 0) { %>
+            <% if (dadosEventos.length==0) { %>
                 <h6 class="display-6 text-center">Nenhum Evento Registrado</h6>
-            <% } else { %>
-                <% dadosEventos.forEach((evento) => {%>
-                    <div class="col-sm-3">
-                      <div class="card border-warning">
-                        <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
-                          style="height: 150px;" />
-                        <div class="card-body">
-                          <h5 class="card-title">
-                            <%= evento.titulo%>
-                          </h5>
-                          <h6 class="card-subtitle mb-2 text-muted">
-                            data: <%= evento.dataDoEvento %>
-                          </h6>
-                          <p class="card-text">Confirmações <%=evento.confirmacoes%>/
-                              <%=evento.capacidade%>
-                          </p>
-                          <p class="card-text">
-                            <%= evento.cidade %>, <%= evento.estado %>
-                          </p>
-                          <button id="saibaMais" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                              data-bs-target="#modalDadosDoEvento<%= evento.id %>">
-                              Saiba mais
-                          </button>
-                        </div>
-                      </div>
-                      <p class="mt-3"></p>
-                    </div>
-
-                    <!-- Modal- Dados do Evento -->
-                    <div class="modal fade" id="modalDadosDoEvento<%= evento.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Titulo: <%= evento.titulo %></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..." />
-                                    </div>
+                <% } else { %>
+                    <% dadosEventos.forEach((evento)=> {%>
+                        <div class="col-sm-3">
+                            <div class="card border-warning">
+                                <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..."
+                                    style="height: 150px;" />
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= evento.titulo%>
+                                    </h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
+                                        data: <%= evento.dataDoEvento %>
                                     </h6>
+                                    <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                            <%=evento.capacidade%>
+                                    </p>
                                     <p class="card-text">
                                         <%= evento.cidade %>, <%= evento.estado %>
                                     </p>
-                                    <p class="card-text">
-                                        Tipo de Evento: <%= evento.tipoDeEvento %>
-                                    </p>
-                                    <p class="card-text">
-                                        Valor da Entrada: <%= evento.valorEntrada %>R$
-                                    </p>
-                                    <p class="card-text">Confirmações <%=evento.confirmacoes%>/
-                                        <%=evento.capacidade%>
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                    <% if (pessoaEvento.length != 0) { %>
-                                        <%var teste = pessoaEvento.find( oEvento => { %>
-                                            <% return oEvento.idEventos == evento.id %>
-                                        <% }) %>
-                                        
-                                        <% if (teste != undefined) { %>
-                                            <a href="/desmarcapresenca/<%= evento.id %>">
-                                                <button type="button" class="btn btn-primary">Remover presença</button>
-                                            </a>
-                                        <% } else {%>
-                                            <a href="/marcapresenca/<%= evento.id %>">
-                                                <button type="button" class="btn btn-primary">Confirmar presença</button>
-                                            </a>
-                                        <% } %>
-                                    <% } else if (evento.confirmacoes == evento.capacidade) { %>
-                                        <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
-                                    <% } else { %>
-                                        <a href="/marcapresenca/<%= evento.id %>">
-                                            <button type="button" class="btn btn-primary">Confirmar presença</button>
-                                        </a>
-                                    <% } %>                                    
+                                    <button id="saibaMais" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalDadosDoEvento<%= evento.id %>">
+                                        Saiba mais
+                                    </button>
                                 </div>
                             </div>
-                          </div>
-                    </div>
-                  <% }) %>
-            <% } %>
+                            <p class="mt-3"></p>
+                        </div>
+
+                        <!-- Modal- Dados do Evento -->
+                        <div class="modal fade" id="modalDadosDoEvento<%= evento.id %>" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Titulo: <%= evento.titulo %>
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <img src="<%= evento.urlImagem %>" class="card-img-top" alt="..." />
+                                        </div>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            data: <%= evento.dataDoEvento %> as <%= evento.horaDoEvento %>
+                                        </h6>
+                                        <p class="card-text">
+                                            <%= evento.cidade %>, <%= evento.estado %>
+                                        </p>
+                                        <p class="card-text">
+                                            Tipo de Evento: <%= evento.tipoDeEvento %>
+                                        </p>
+                                        <p class="card-text">
+                                            Valor da Entrada: <%= evento.valorEntrada %>R$
+                                        </p>
+                                        <p class="card-text">Confirmações <%=evento.confirmacoes%>/
+                                                <%=evento.capacidade%>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                            <% if (pessoaEvento.length != 0) { %>
+                                                <%var teste = pessoaEvento.find( oEvento => { %>
+                                                    <% return oEvento.idEventos == evento.id %>
+                                                <% }) %>
+                                                
+                                                <% if (teste != undefined) { %>
+                                                    <a href="/desmarcapresenca/<%= evento.id %>">
+                                                        <button type="button" class="btn btn-primary">Remover presença</button>
+                                                    </a>
+                                                <% } else if (evento.confirmacoes == evento.capacidade) { %>
+                                                    <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
+                                                <% } else {%>
+                                                    <a href="/marcapresenca/<%= evento.id %>">
+                                                        <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                                    </a>
+                                                <% } %>
+                                            <% } else if (evento.confirmacoes == evento.capacidade) { %>
+                                                <button disabled type="button" class="btn btn-primary">EVENTO LOTADO</button>
+                                            <% } else { %>
+                                                <a href="/marcapresenca/<%= evento.id %>">
+                                                    <button type="button" class="btn btn-primary">Confirmar presença</button>
+                                                </a>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    <% } %>
         </div>
 
     </div>

@@ -24,10 +24,10 @@ const Pessoa = db.sequelize.define("pessoas", {
         allowNull: false
     },
     urlImagem: {
-        type: db.Sequelize.STRING
+        type: db.Sequelize.BLOB('long')
     },
     passaPorte: {
-        type: db.Sequelize.STRING
+        type: db.Sequelize.BLOB('long')
     },
     idadePessoa: {
         type: db.Sequelize.STRING(100),

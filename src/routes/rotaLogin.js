@@ -6,6 +6,8 @@ const session = require("express-session");
 const {Pessoa} = require("../../models/Pessoa")
 const {Estabelecimento} = require("../../models/Estabelecimento");
 
+let erros = [];
+
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
@@ -16,40 +18,38 @@ router.use(session({
     saveUninitialized: true,
 }));
 
+router.get("/login", (req, res) => {
+    res.render("login.html", {erros: erros});
+    erros.pop();
+});
+
 router.post("/login", async (req, res) => {
     const dadosLogin = await Estabelecimento.findOne({
         where: {
-            email: req.body.email
+            email: req.body.email,
+            senha: criptografia.criptografar(req.body.senha)
         }
     });
 
     const dadosLoginCliente = await Pessoa.findOne({
         where: {
-            email: req.body.email
+            email: req.body.email,
+            senha: criptografia.criptografar(req.body.senha)
         }
     });
 
+    console.log(dadosLogin + "|" + dadosLoginCliente );
     if (dadosLogin != null) {
-        var senhaDescriptografada = criptografia.descriptografar(dadosLogin.senha);
-        if (senhaDescriptografada == req.body.senha) {
-            req.session.dadosLogin = dadosLogin;
-            res.redirect("/usuarioEstabelecimento");
-        }
+        req.session.dadosLogin = dadosLogin;
+        res.redirect("/usuarioEstabelecimento");
     } else if (dadosLoginCliente != null) {
-        var senhaDescriptografada2 = criptografia.descriptografar(dadosLoginCliente.senha);
-
-        if (senhaDescriptografada2 == req.body.senha) {
-            req.session.dadosLogin = dadosLoginCliente;
-            res.redirect("/usuarioCliente");
-        }
+        req.session.dadosLogin = dadosLoginCliente;
+        res.redirect("/usuarioCliente");
     } else {
+        erros.push({msg: "Email ou Senha Incorretos"})
         console.log("Senha ou Email incorretos");
         res.redirect("/login");
     }
-});
-
-router.get("/login", (req, res) => {
-    res.render("login.html");
 });
 
 router.get("/logout", (req, res) => {

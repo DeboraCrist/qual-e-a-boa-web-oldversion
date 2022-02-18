@@ -10,6 +10,7 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install --save mysql2
 * npm install ejs
 * npm install dotenv
+* npm install multer
 * npm start
 
 ## Usando .env

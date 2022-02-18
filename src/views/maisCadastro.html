@@ -59,7 +59,7 @@
         <hr>
         <div id="formulario-pessoal">
             <p class="lead text-left">Conta Pessoal:</p>
-            <form action="/adicionarPessoa" method="post">
+            <form action="/adicionarPessoa" enctype="multipart/form-data" method="post">
                 <div class="mb-3">
                     <div class="row">
                         <div class="col">
@@ -85,7 +85,7 @@
                             <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
                                 nascimento</label>
                             <input type="date" name="dataNasc" class="form-control" placeholder="00/00/0000"
-                                min="1921-01-01" max="2021-01-01" enable required>
+                                min="1921-01-01" max="2002-31-12" enable required>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Selecione uma foto para seu perfil público</label>
-                    <input name="urlImagem" class="form-control" type="url" id="formFile" enable>
+                    <input accept="image/*" name="urlImagem" class="form-control" type="file" id="formFile" required enable>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="exampleFormControlSelect2">Vacinação</label>
@@ -125,7 +125,7 @@
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Adicione uma foto do seu Passaporte Sanitário</label>
-                    <input name="passaPorte" class="form-control" type="url" id="formFile" enable>
+                    <input accept="image/*" name="passaPorte" class="form-control" type="file" id="formFile" enable>
                 </div>
                 <div class="mb-3">
                     <div class="d-grid d-md-flex justify-content-md-end">
@@ -140,7 +140,7 @@
         </div>
         <div id="formulario_comercial" style="display: none;">
             <p class="lead text-left">Conta Comercial:</p>
-            <form action="/adicionarEstabelecimento" method="post">
+            <form action="/adicionarEstabelecimento" enctype="multipart/form-data" method="post">
                 <div class="mb-3">
 
                     <div class="row">
@@ -214,13 +214,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Url de uma foto para seu perfil comercial</label>
-                    <input name="urlImagemPerfil" class="form-control" type="url" id="formFile" enable>
-                </div>
-
-                <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">Url alguma foto do Local</label>
-                    <input name="urlImagemLocal" class="form-control" type="url" id="formFileMultiple" multiple enable>
+                    <label for="formFile" class="form-label">Foto para seu perfil comercial</label>
+                    <input accept="image/*" name="urlImagemPerfil" class="form-control" type="file" id="formFile" required enable>
                 </div>
 
                 <div class="mb-3">

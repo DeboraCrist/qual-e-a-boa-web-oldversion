@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" aria-current="page" href="/homePessoa">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/usuarioCliente">Meu perfil</a>
@@ -58,7 +58,7 @@
 
         <div class="text-center">
             <img src="<%= dadosLogin.urlImagem %>" class="img-thumbnail"
-                alt="Foto do Usuário selecionada no 2° Cadastro" style="width: 225px;">
+                alt="Foto do Usuário selecionada no 2° Cadastro" style="width: 30%;">
         </div>
 
         <p style="margin-top: 50px"></p>
@@ -161,7 +161,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/atualizarPassaporte"  enctype="multipart/form-data" method="post">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Meu Passaporte Sanitário:</label>
                             <img src="<%= dadosLogin.passaPorte %>"
@@ -170,14 +170,15 @@
                         <hr>
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Alterar Passaporte:</label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <input name="fotoPassaporte" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                </div>
+                
             </div>
         </div>
     </div>

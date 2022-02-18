@@ -37,7 +37,13 @@
 
                 <main class="form-signin">
                         <div class="container">
-
+                            <% if(typeof erros !='undefined' ) { %>
+                                <% erros.forEach(function(erro){ %>
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <%= erro.msg %>
+                                    </div>
+                                    <% }) %>
+                            <% } %>
                             <h1 class=" mb-3 fw-normal pt-5 text-light">Acesse sua conta</h1>
                             <form action="/login" method="POST">
                                 <div class="mb-3">
