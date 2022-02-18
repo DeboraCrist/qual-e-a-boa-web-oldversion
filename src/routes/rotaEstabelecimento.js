@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path")
 const multer = require("multer");
 
 const {Evento} = require("../../models/Evento");
@@ -10,7 +11,18 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const upload = multer({storage:multer.memoryStorage()});
+const armazenamento = multer.diskStorage({
+    destination: (req, arquivo, cb) => {
+        cb(null, "src/enviadas/");
+    },
+    filename: (req, arquivo, cb) => {
+        console.log(arquivo);
+        cb(null, Date.now() + path.extname(arquivo.originalname));
+    }
+});
+
+const upload = multer({storage: armazenamento});
+const reduzNomeImagem = require("../scripts/reduzNomeImagem");
 
 let alertas = [];
 
@@ -48,7 +60,8 @@ router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) =
 });
 
 router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arquivoFoto'), async (req, res) => {
-    const image = req.file.buffer.toString('base64');
+    const image = req.file.path;
+    nomeImagem = reduzNomeImagem(image);
 
     const dadosLoginId = await Estabelecimento.findOne({
         where: {
@@ -56,8 +69,9 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
         }
     });
 
+
     Galeria.create({
-        foto: image,
+        foto: nomeImagem,
         idEstabelecimento: dadosLoginId.id,
     }).then(() => {
         res.redirect("/usuarioEstabelecimento");
