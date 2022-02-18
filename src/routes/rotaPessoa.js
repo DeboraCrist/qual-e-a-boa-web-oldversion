@@ -26,7 +26,7 @@ router.get("/paginaInicialUsuario"),async (req, res) =>{
 
 
 router.post("/atualizarPerfilUser",(req,res) => {
-    dadoUser.AtualizarDadosUser(
+    Pessoa.update(
         {
             urlImagemUserPerfil: req.body.urlImagemUserPerfil,
             nomeUsuario: req.body.nomeUsuario,
@@ -38,12 +38,22 @@ router.post("/atualizarPerfilUser",(req,res) => {
             dataDeAniversario:req.body.dataDeAniversario,
             urlImagemVacinaçao:req.body.urlImagemVacinaçao,
              
-        },{
-            where: email = "testeEditar@gmail.com"
-        }
-    )
+        }).then(() => {
+            console.log("atualizado");
+            res.redirect("/PefilUser/");
+    }).catch((error) => {
+            console.log("Erro: "+ error);
+            res.redirect("/PefilUser/");
+    });
 });
+router.post("/editaPerfilUser/:idPessoa", (req, res) => {
+    const idPessoa = req.params.idPessoa;
 
+    const novosDadosUser = {urlImagemUserPerfil ,nomeUsuario, sobreNomeUser, email, senha, cidade, estado, dataDeAniversario, urlImagemVacinaçao} = req.body
+
+    atualizarPerfilUser(idPessoa, novosDadosUser);
+    res.redirect("/PerfilUser/");
+});
 
 module.exports = router;
 
