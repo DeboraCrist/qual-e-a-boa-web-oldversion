@@ -67,13 +67,12 @@ router.post("/atualizarPerfilUser",(req,res) => {
 });
 router.post("/editaPerfilUser/:idPessoa", (req, res) => {
     const idPessoa = req.params.idPessoa;
-
-<<<<<<< HEAD
     const novosDadosUser = {urlImagemUserPerfil ,nomeUsuario, sobreNomeUser, email, senha, cidade, estado, dataDeAniversario, urlImagemVacinaçao} = req.body
 
     atualizarPerfilUser(idPessoa, novosDadosUser);
     res.redirect("/PerfilUser/");
-=======
+});
+
 router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPassaporte'), (req, res) => {
     const imagemPassaporte = req.file.path;
     const nomeImagemPassaporte = reduzNomeImagem(imagemPassaporte);
@@ -90,8 +89,6 @@ router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPas
         console.log(erro);
         res.redirect("/usuarioCliente");
     })
->>>>>>> c6694dce392ece50868b98d573181f22187be619
 });
 
 module.exports = router;
-
