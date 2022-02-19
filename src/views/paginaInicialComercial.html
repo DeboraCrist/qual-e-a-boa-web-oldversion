@@ -98,6 +98,10 @@
                         data-bs-target="#modalFormUsuario">
                         Editar perfil
                     </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#modalEditarFotoPerfil">
+                        Editar Foto
+                    </button>
                 </a>
             </div>
         </div>
@@ -207,21 +211,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/estabelecimento/atualizarDados" enctype="multipart/form-data" method="post">
+                    <form action="/estabelecimento/atualizarDados" method="post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome Dono:</label>
-                            <input name="noem" required type="text" class="form-control" id="recipient-name"
+                            <input name="nome" required type="text" class="form-control" id="recipient-name"
                                 value="<%= dadosLogin.nomeDono %>">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome Estabelecimento:</label>
                             <input name="nomeEstabelecimento" required type="text" class="form-control" id="recipient-name"
                                 value="<%= dadosLogin.nomeEstabelecimento %>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Foto Perfil:</label>
-                            <input accept="image/*" type="file" name="fotoPerfil" class="form-control-file"
-                                id="exampleFormControlFile1" value="<%= dadosLogin.urlImagemPerfil %>" required>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">CEP:</label>
@@ -264,6 +263,33 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal editar foto do perfil-->
+    <div class="modal fade" id="modalEditarFotoPerfil" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Foto:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" action="/editarFoto">
+                        <div class="mb-3">
+                            <label for="exampleFormControlFile1">Adicionar nova foto:</label>
+                            <input accept="image/*" type="file" name="novaFoto" class="form-control-file"
+                                id="exampleFormControlFile1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

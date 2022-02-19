@@ -100,4 +100,46 @@ router.post("/removerFotos", verificaEstabelecimentoLogado, async (req, res) => 
     })
 });
 
+router.post("/estabelecimento/atualizarDados", verificaEstabelecimentoLogado, (req, res) => {
+    Estabelecimento.update(
+        {
+            nomeDono: req.body.nome,
+            nomeEstabelecimento: req.body.nomeEstabelecimento,
+            rua: req.body.rua,
+            bairro: req.body.bairro,
+            numero: req.body.numero,
+            cidade: req.body.cidade,
+            estado: req.body.estado,
+            cep: req.body.cep,
+            lotacaoMax: req.body.capacidade,
+        }, {
+            where: {id: req.session.dadosLogin.id}
+        }
+    ).then(() => {
+        console.log("atualizado")
+        res.redirect("/login");
+    }).catch((erro) => {
+        console.log(erro);
+        res.redirect("/usuarioEstabelecimento");
+    });
+}); 
+
+router.post("/editarFoto", verificaEstabelecimentoLogado, upload.single('novaFoto'), (req, res) => {
+    const image = req.file.path;
+    nomeImagem = reduzNomeImagem(image);
+
+    Estabelecimento.update(
+        {
+            urlImagemPerfil: nomeImagem
+        }, {
+            where: {id: req.session.dadosLogin.id}
+        }
+    ).then(() => {
+        res.redirect("/usuarioEstabelecimento");
+    }).catch((erro) => {
+        alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
+        res.redirect("/usuarioEstabelecimento");
+    });
+});
+
 module.exports = router;
