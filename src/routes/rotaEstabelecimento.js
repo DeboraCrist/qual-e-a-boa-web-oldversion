@@ -120,6 +120,7 @@ router.post("/estabelecimento/atualizarDados", verificaEstabelecimentoLogado, (r
         res.redirect("/login");
     }).catch((erro) => {
         console.log(erro);
+        alertas.push({msg: "Erro ao tentar atualizar os dados."})
         res.redirect("/usuarioEstabelecimento");
     });
 }); 

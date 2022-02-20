@@ -51,6 +51,13 @@
     <p style="margin-top: 70px"></p>
 
     <div class="container">
+        <% if(typeof alertas !='undefined' ) { %>
+            <% alertas.forEach(function(alerta){ %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <%= alerta.msg %>
+                </div>
+                <% }) %>
+        <% } %>
         <h1 class="display-5 text-center">Olá, <%= dadosLogin.nomePessoa %>
         </h1>
         <p class="lead text-center">Bem-vindo ao seu perfil de Usuário:</p>
@@ -77,7 +84,7 @@
                 </p>
                 <p class="card-text">Estado: <%= dadosLogin.estadoPessoa%>
                 </p>
-                <p class="card-text">Passaporte Sanitário: </p>
+                <p class="card-text">Passaporte Sanitário: <%= dadosLogin.vacinas %></p>
                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVisuPass">Visualizar
                     Passaporte Sanitário</a>
                 <a href="">
@@ -85,6 +92,10 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modalFormUsuario">
                             Editar perfil
+                        </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalEditarFotoPerfil">
+                            Editar Foto
                         </button>
                     </a>
 
@@ -101,54 +112,85 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Marcar data:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Atualizar Informações:</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/editaPerfilUser/<%=dadosLogin.id%>" method="post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nome:</label>
-                            <input type="text" class="form-control" id="recipient-name" placeholder="<%= dadosLogin.nomePessoa %>">
+                            <input name="nome" type="text" class="form-control" id="recipient-name" value="<%= dadosLogin.nomePessoa %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Sobrenome:</label>
+                            <input name="sobrenome" type="text" class="form-control" id="recipient-name" value="<%= dadosLogin.sobreNome %>" required>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Data do Aniversário:</label>
-                            <input type="date" class="form-control" id="recipient-name"
+                            <input name="dataNasc" type="date" class="form-control" id="recipient-name"
                                 value="<%= dadosLogin.dataNasc%>">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">CEP:</label>
-                            <input type="text" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.cepPessoa %>"
+                            <input name="cep" type="text" class="form-control" id="recipient-name"
+                                value="<%= dadosLogin.cepPessoa %>"
                                 onblur="consultarCEP(this.value)">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Cidade:</label>
                             <input type="text" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.cidadePessoa %>"
+                                value="<%= dadosLogin.cidadePessoa %>"
                                 name="cidade">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Estado:</label>
                             <input type="text" class="form-control" id="recipient-name"
-                                placeholder="<%= dadosLogin.estadoPessoa%>"
+                                value="<%= dadosLogin.estadoPessoa%>"
                                 name="estado">
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlSelect1">Select de exemplo</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>dose única</option>
-                                <option>1 dose de 2</option>
-                                <option>2 dose de 2, sem dose de reforço</option>
-                                <option>2 dose de 2, com dose de reforço</option>
-                                <option>Antivax</option>
+                            <select name="selecionaVacina" class="form-control" id="exampleFormControlSelect1">
+                                <option value="dose única">dose única</option>
+                                <option value="1 dose de 2">1 dose de 2</option>
+                                <option value="2 dose de 2, sem dose de reforço">2 dose de 2, sem dose de reforço</option>
+                                <option value="2 dose de 2, com dose de reforço">2 dose de 2, com dose de reforço</option>
+                                <option value="Antivax">Antivax</option>
                             </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button  id="salvarMudancas" type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal editar foto do perfil-->
+    <div class="modal fade" id="modalEditarFotoPerfil" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Foto:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" action="/editarFotoPessoa">
+                        <div class="mb-3">
+                            <label for="exampleFormControlFile1">Adicionar nova foto:</label>
+                            <input accept="image/*" type="file" name="novaFoto" class="form-control-file"
+                                id="exampleFormControlFile1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

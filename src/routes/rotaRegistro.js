@@ -74,8 +74,6 @@ router.post("/adicionarPessoa", upload.fields([
     nomeImagemPerfil = reduzNomeImagem(imagemPerfil);
     nomeImagemPassaporte = reduzNomeImagem(passaporteSanitario);
 
-    console.log("Img1: "+ nomeImagemPerfil + " | Img2: "+ nomeImagemPassaporte);
-
     //quarda os dados de registro de pessoa em um objeto
     console.log(tempEmail);
     dadosPessoa = {
@@ -90,11 +88,9 @@ router.post("/adicionarPessoa", upload.fields([
         cidadePessoa: req.body.cidade,
         estadoPessoa: req.body.estado,
         cepPessoa: req.body.cep,
-        tipoDeConta: 0
+        tipoDeConta: 0,
+        vacinas: req.body.selecionaVacina,
     }
-
-    console.log(req.body.cidade);
-    console.log(req.body.estado);
 
     //manda o objeto que foi criado a cima para uma função que vai registrar esses estabelecimento na tabela
     RegistraPessoaNaTabela(dadosPessoa);
@@ -107,7 +103,6 @@ router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async
     const image = req.file.path;
     nomeImagem = reduzNomeImagem(image);
 
-    console.log(">>>"+ nomeImagem +"|"+ aux);
     dadosEstabelecimento = {
         nomeDono: req.body.nomeDono,
         nomeEstabelecimento: req.body.nomeEstabelecimento,

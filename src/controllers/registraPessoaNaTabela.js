@@ -16,7 +16,8 @@ const RegistraPessoaNaTabela = (dadosPessoa) => {
         cidadePessoa: dadosPessoa.cidadePessoa,
         estadoPessoa: dadosPessoa.estadoPessoa,
         cepPessoa: dadosPessoa.cepPessoa,
-        tipoDeConta: dadosPessoa.tipoDeConta //Define 0 pois é um user de pessoa
+        tipoDeConta: dadosPessoa.tipoDeConta, //Define 0 pois é um user de pessoa
+        vacinas: dadosPessoa.vacinas,
     }).then(() => {
         console.log("deu bom");
     }).catch((error) => {
