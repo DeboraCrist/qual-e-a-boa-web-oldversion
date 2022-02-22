@@ -11,6 +11,10 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install ejs
 * npm install dotenv
 * npm install multer
+* npm install salted-md5
+* npm install firebase
+* npm install firebase-admin
+* PS: "npm install" instala todas as dependencias do package.json
 * npm start
 
 ## Usando .env
