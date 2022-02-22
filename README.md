@@ -11,6 +11,10 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install ejs
 * npm install dotenv
 * npm install multer
+* npm install salted-md5
+* npm install firebase
+* npm install firebase-admin
+* PS: "npm install" instala todas as dependencias do package.json
 * npm start
 
 ## Usando .env
@@ -23,4 +27,5 @@ DB_SENHA= Senha
 DB_HOST= nome da host
 DB_PORT= porta da host (3306) padrão do mysql
 DB_DIALECT= mysql
+BUCKET_URL=gs://imagens-36fc6.appspot.com/
 ```
