@@ -1,30 +1,30 @@
+require('dotenv').config()
 const express = require("express");
+const app = express();
+const saltedMd5 = require('salted-md5');
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const reduzNomeImagem = require("../scripts/reduzNomeImagem")
+const {getStorage, ref, getDownloadURL } = require("firebase/storage");
+const firebase = require("../services/firebase");
 
 const bodyParser = require("body-parser");
 const {Pessoa} = require("../../models/Pessoa");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const armazenamento = multer.diskStorage({
-    destination: (req, arquivo, cb) => {
-        cb(null, "src/enviadas/");
-    },
-    filename: (req, arquivo, cb) => {
-        console.log(arquivo);
-        cb(null, Date.now() + path.extname(arquivo.originalname));
-    }
-});
-
-const upload = multer({storage: armazenamento});
+var admin = require("firebase-admin");
+app.locals.bucket = admin.storage().bucket();
+const upload = multer({storage: multer.memoryStorage()});
 
 let alertas = [];
 
 //meus middlewares
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
+
+const delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 router.get("/usuarioCliente", verificaPessoaLogada,async (req, res) => {
     const dadosLogin = await Pessoa.findAll({
@@ -57,40 +57,60 @@ router.post("/editaPerfilUser/:idPessoa", verificaPessoaLogada, (req, res) => {
     });
 });
 
-router.post("/editarFotoPessoa", verificaPessoaLogada, upload.single('novaFoto'), (req, res) => {
-    const image = req.file.path;
-    nomeImagem = reduzNomeImagem(image);
+router.post("/editarFotoPessoa", verificaPessoaLogada, upload.single('novaFoto'), async (req, res) => {
+    const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
+    const nomeImg = img + path.extname(req.file.originalname);
+    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    Pessoa.update(
-        {
-            urlImagem: nomeImagem
-        }, {
-            where: {id: req.session.dadosLogin.id}
-        }
-    ).then(() => {
-        res.redirect("/usuarioCliente");
-    }).catch((erro) => {
-        alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
-        res.redirect("/usuarioCliente");
+    //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
+    await delay(3000);
+
+    const storage = getStorage();
+    getDownloadURL(ref(storage, nomeImg)).then((url) => {
+        Pessoa.update(
+            {
+                urlImagem: url
+            }, {
+                where: {id: req.session.dadosLogin.id}
+            }
+        ).then(() => {
+            res.redirect("/usuarioCliente");
+        }).catch((erro) => {
+            alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
+            res.redirect("/usuarioCliente");
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.send(error)
     });
 });
 
-router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPassaporte'), (req, res) => {
-    const imagemPassaporte = req.file.path;
-    const nomeImagemPassaporte = reduzNomeImagem(imagemPassaporte);
+router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPassaporte'),async (req, res) => {
+    const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
+    const nomeImg = img + path.extname(req.file.originalname);
+    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    Pessoa.update(
-        {
-            passaPorte: nomeImagemPassaporte,
-        }, {
-            where: {id: req.session.dadosLogin.id}
-        }
-    ).then(() => {
-        res.redirect("/usuarioCliente");
-    }).catch((erro) => {
-        alertas.push({msg: "Erro ao tentar atualizar imagem de Passaporte."})
-        res.redirect("/usuarioCliente");
-    })
+    //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
+    await delay(3000);
+
+    const storage = getStorage();
+    getDownloadURL(ref(storage, nomeImg)).then((url) => {
+        Pessoa.update(
+            {
+                passaPorte: url,
+            }, {
+                where: {id: req.session.dadosLogin.id}
+            }
+        ).then(() => {
+            res.redirect("/usuarioCliente");
+        }).catch((erro) => {
+            alertas.push({msg: "Erro ao tentar atualizar imagem de Passaporte."})
+            res.redirect("/usuarioCliente");
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send(error)
+    });
 });
 
 module.exports = router;

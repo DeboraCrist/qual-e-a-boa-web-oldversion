@@ -1,28 +1,28 @@
+require('dotenv').config()
 const express = require("express");
+const app = express();
+const saltedMd5 = require('salted-md5');
 const router = express.Router();
 const path = require("path")
 const multer = require("multer");
+const {getStorage, ref, getDownloadURL } = require("firebase/storage");
+const firebase = require("../services/firebase");
 
 const {Evento} = require("../../models/Evento");
 const Galeria = require("../../models/Galeria");
 const {Estabelecimento} = require("../../models/Estabelecimento");
 
+var admin = require("firebase-admin");
+app.locals.bucket = admin.storage().bucket();
+const upload = multer({storage: multer.memoryStorage()});
+
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const armazenamento = multer.diskStorage({
-    destination: (req, arquivo, cb) => {
-        cb(null, "src/enviadas/");
-    },
-    filename: (req, arquivo, cb) => {
-        console.log(arquivo);
-        cb(null, Date.now() + path.extname(arquivo.originalname));
-    }
-});
-
-const upload = multer({storage: armazenamento});
-const reduzNomeImagem = require("../scripts/reduzNomeImagem");
+const delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 let alertas = [];
 
@@ -60,8 +60,9 @@ router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) =
 });
 
 router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arquivoFoto'), async (req, res) => {
-    const image = req.file.path;
-    nomeImagem = reduzNomeImagem(image);
+    const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
+    const nomeImg = img + path.extname(req.file.originalname);
+    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
     const dadosLoginId = await Estabelecimento.findOne({
         where: {
@@ -69,16 +70,23 @@ router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arqu
         }
     });
 
+    await delay(2000);
 
-    Galeria.create({
-        foto: nomeImagem,
-        idEstabelecimento: dadosLoginId.id,
-    }).then(() => {
-        res.redirect("/usuarioEstabelecimento");
-    }).catch((erro) => {
-        console.log(erro);
-        alertas.push({msg: "Erro ao enviar a imagem"})
-        res.redirect("/usuarioEstabelecimento");
+    const storage = getStorage();
+    getDownloadURL(ref(storage, nomeImg)).then((url) => {
+        Galeria.create({
+            foto: url,
+            idEstabelecimento: dadosLoginId.id,
+        }).then(() => {
+            res.redirect("/usuarioEstabelecimento");
+        }).catch((erro) => {
+            console.log(erro);
+            alertas.push({msg: "Erro ao enviar a imagem"})
+            res.redirect("/usuarioEstabelecimento");
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.send(error)
     });
 });
 
@@ -125,21 +133,30 @@ router.post("/estabelecimento/atualizarDados", verificaEstabelecimentoLogado, (r
     });
 }); 
 
-router.post("/editarFoto", verificaEstabelecimentoLogado, upload.single('novaFoto'), (req, res) => {
-    const image = req.file.path;
-    nomeImagem = reduzNomeImagem(image);
+router.post("/editarFoto", verificaEstabelecimentoLogado, upload.single('novaFoto'), async (req, res) => {
+    const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
+    const nomeImg = img + path.extname(req.file.originalname);
+    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    Estabelecimento.update(
+    await delay(2000);
+
+    const storage = getStorage();
+    getDownloadURL(ref(storage, nomeImg)).then((url) => {
+        Estabelecimento.update(
         {
-            urlImagemPerfil: nomeImagem
+            urlImagemPerfil: url
         }, {
             where: {id: req.session.dadosLogin.id}
         }
-    ).then(() => {
-        res.redirect("/usuarioEstabelecimento");
-    }).catch((erro) => {
-        alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
-        res.redirect("/usuarioEstabelecimento");
+        ).then(() => {
+            res.redirect("/usuarioEstabelecimento");
+        }).catch((erro) => {
+            alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
+            res.redirect("/usuarioEstabelecimento");
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.send(error)
     });
 });
 
