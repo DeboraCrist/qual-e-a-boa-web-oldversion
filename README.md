@@ -27,4 +27,5 @@ DB_SENHA= Senha
 DB_HOST= nome da host
 DB_PORT= porta da host (3306) padrão do mysql
 DB_DIALECT= mysql
+BUCKET_URL=gs://imagens-36fc6.appspot.com/
 ```
