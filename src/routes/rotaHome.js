@@ -10,7 +10,6 @@ router.use(bodyParser.json());
 
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
 const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
-const res = require("express/lib/response");
 
 router.get("/homePessoa", verificaPessoaLogada, (req, res) => {
     res.render("homeUsuario.html", {dadosLogin: req.session.dadosLogin});

@@ -74,10 +74,10 @@ router.post("/adicionarPessoa", upload.fields([
     }
 ]),async (req, res) => {
     const imgPerfil = saltedMd5(req.files["urlImagem"][0].originalname, 'SUPER-S@LT!');
-    const nomeImgPerfil = imgPerfil + path.extname(req.files["urlImagem"][0].originalname);
+    const nomeImgPerfil = imgPerfil + "PerfilUser" + path.extname(req.files["urlImagem"][0].originalname);
 
     const imgPassaporteSanitario = saltedMd5(req.files["passaPorte"][0].originalname, 'SUPER-S@LT!');
-    const nomeImgPassaporteSanitario = imgPassaporteSanitario + path.extname(req.files["passaPorte"][0].originalname);
+    const nomeImgPassaporteSanitario = imgPassaporteSanitario + "PassaporteSanitario" + path.extname(req.files["passaPorte"][0].originalname);
 
     app.locals.bucket.file(nomeImgPerfil).createWriteStream().end(req.files["urlImagem"][0].buffer);
     app.locals.bucket.file(nomeImgPassaporteSanitario).createWriteStream().end(req.files["passaPorte"][0].buffer);
@@ -86,22 +86,28 @@ router.post("/adicionarPessoa", upload.fields([
     var urls = [];
 
     await delay(2000);
-
+    var urlPerfil = "";
+    var urlPassaporteSanitario = "";
     //PS VOU REMOVER O ADICIONAR DO PASSAPORTE SANITARIO DO REGISTRO E ADICIONAR NO PERFIL DO USER
     imagens.forEach((img) => {
         const storage = getStorage();
         getDownloadURL(ref(storage, img)).then((url) => {
             urls.push(url);
             if (urls.length == 2) {
-                console.log(urls[0]);
-                console.log(urls[1]);
+                if (urls[0].search("PerfilUser")) {
+                    urlPerfil = urls[0];
+                    urlPassaporteSanitario = urls[1];
+                } else {
+                    urlPerfil = urls[1];
+                    urlPassaporteSanitario = urls[0];
+                }
                 dadosPessoa = {
                     nomePessoa: req.body.nomePessoa,
                     sobreNome: req.body.sobreNome,
                     email: tempEmail,
                     senha: tempSenha,
-                    urlImagem: urls[0],
-                    passaPorte: urls[1],
+                    urlImagem: urlPerfil,
+                    passaPorte: urlPassaporteSanitario,
                     idadePessoa: req.body.idadePessoa,
                     dataNasc: req.body.dataNasc,
                     cidadePessoa: req.body.cidade,
