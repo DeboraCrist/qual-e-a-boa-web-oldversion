@@ -61,33 +61,40 @@ router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) =
 
 router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arquivoFoto'), async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
-    const dadosLoginId = await Estabelecimento.findOne({
-        where: {
-            id: req.session.dadosLogin.id
-        }
-    });
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect("/usuarioEstabelecimento");
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    await delay(2000);
-
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        Galeria.create({
-            foto: url,
-            idEstabelecimento: dadosLoginId.id,
-        }).then(() => {
-            res.redirect("/usuarioEstabelecimento");
-        }).catch((erro) => {
-            console.log(erro);
-            alertas.push({msg: "Erro ao enviar a imagem"})
-            res.redirect("/usuarioEstabelecimento");
+        const dadosLoginId = await Estabelecimento.findOne({
+            where: {
+                id: req.session.dadosLogin.id
+            }
         });
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+    
+        await delay(2000);
+    
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            Galeria.create({
+                foto: url,
+                idEstabelecimento: dadosLoginId.id,
+            }).then(() => {
+                res.redirect("/usuarioEstabelecimento");
+            }).catch((erro) => {
+                console.log(erro);
+                alertas.push({msg: "Erro ao enviar a imagem"})
+                res.redirect("/usuarioEstabelecimento");
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
+        });
+    }
 });
 
 router.post("/removerFotos", verificaEstabelecimentoLogado, async (req, res) => {
@@ -135,29 +142,36 @@ router.post("/estabelecimento/atualizarDados", verificaEstabelecimentoLogado, (r
 
 router.post("/editarFoto", verificaEstabelecimentoLogado, upload.single('novaFoto'), async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
-    await delay(2000);
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect("/usuarioEstabelecimento");
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        Estabelecimento.update(
-        {
-            urlImagemPerfil: url
-        }, {
-            where: {id: req.session.dadosLogin.id}
-        }
-        ).then(() => {
-            res.redirect("/usuarioEstabelecimento");
-        }).catch((erro) => {
-            alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
-            res.redirect("/usuarioEstabelecimento");
+        await delay(2000);
+
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            Estabelecimento.update(
+            {
+                urlImagemPerfil: url
+            }, {
+                where: {id: req.session.dadosLogin.id}
+            }
+            ).then(() => {
+                res.redirect("/usuarioEstabelecimento");
+            }).catch((erro) => {
+                alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
+                res.redirect("/usuarioEstabelecimento");
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
         });
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+    }
 });
 
 module.exports = router;

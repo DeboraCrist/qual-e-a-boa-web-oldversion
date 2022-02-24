@@ -59,58 +59,72 @@ router.post("/editaPerfilUser/:idPessoa", verificaPessoaLogada, (req, res) => {
 
 router.post("/editarFotoPessoa", verificaPessoaLogada, upload.single('novaFoto'), async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
-    //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
-    await delay(3000);
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect("/usuarioCliente");
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        Pessoa.update(
-            {
-                urlImagem: url
-            }, {
-                where: {id: req.session.dadosLogin.id}
-            }
-        ).then(() => {
-            res.redirect("/usuarioCliente");
-        }).catch((erro) => {
-            alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
-            res.redirect("/usuarioCliente");
+        //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
+        await delay(3000);
+
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            Pessoa.update(
+                {
+                    urlImagem: url
+                }, {
+                    where: {id: req.session.dadosLogin.id}
+                }
+            ).then(() => {
+                res.redirect("/usuarioCliente");
+            }).catch((erro) => {
+                alertas.push({msg: "Erro ao tentar atualizar a foto de perfil"});
+                res.redirect("/usuarioCliente");
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
         });
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+    }
 });
 
 router.post("/atualizarPassaporte", verificaPessoaLogada, upload.single('fotoPassaporte'),async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
-    //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
-    await delay(3000);
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect("/usuarioCliente");
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        Pessoa.update(
-            {
-                passaPorte: url,
-            }, {
-                where: {id: req.session.dadosLogin.id}
-            }
-        ).then(() => {
-            res.redirect("/usuarioCliente");
-        }).catch((erro) => {
-            alertas.push({msg: "Erro ao tentar atualizar imagem de Passaporte."})
-            res.redirect("/usuarioCliente");
-        })
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+        //delay para dar tempo da imagem ser sincronizanda dentro do firebase storage
+        await delay(3000);
+
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            Pessoa.update(
+                {
+                    passaPorte: url,
+                }, {
+                    where: {id: req.session.dadosLogin.id}
+                }
+            ).then(() => {
+                res.redirect("/usuarioCliente");
+            }).catch((erro) => {
+                alertas.push({msg: "Erro ao tentar atualizar imagem de Passaporte."})
+                res.redirect("/usuarioCliente");
+            })
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
+        });
+    }
 });
 
 module.exports = router;

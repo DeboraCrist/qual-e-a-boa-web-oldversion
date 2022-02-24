@@ -181,8 +181,8 @@
                     <form method="POST" enctype="multipart/form-data" action="/editarFotoPessoa">
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Adicionar nova foto:</label>
-                            <input accept="image/*" type="file" name="novaFoto" class="form-control-file"
-                                id="exampleFormControlFile1">
+                            <input accept="image/png, image/jpeg" type="file" name="novaFoto" class="form-control-file"
+                                id="exampleFormControlFile1" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -212,7 +212,7 @@
                         <hr>
                         <div class="mb-3">
                             <label for="exampleFormControlFile1">Alterar Passaporte:</label>
-                            <input name="fotoPassaporte" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                            <input name="fotoPassaporte" type="file" accept="image/png, image/jpeg" class="form-control-file" id="exampleFormControlFile1" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -232,9 +232,7 @@
 
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2021-2022 Grupo A:
-        <a class="text-dark" href="termosDeUso.html"> Termos de Uso</a>,
-        <a class="text-dark" href="#"> Sobre nós</a> e
-        <a class="text-dark" href="politicaDePrivacidade.html">Politica de Privacidade</a>
+        <a class="text-dark" href="#"> Termos de Uso</a>
     </div>
 
     <!--JS-->

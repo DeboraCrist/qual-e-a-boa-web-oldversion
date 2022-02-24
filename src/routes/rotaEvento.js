@@ -38,6 +38,8 @@ const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabeleci
 const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
 const atualizaEvento = require("../controllers/atualizaEvento");
 
+let alertas = [];
+
 router.get("/eventos", verificaPessoaLogada, async (req, res) => {
     verificaValidadeEvento(req.session.dadosLogin.id);
     console.log("OK AQ ZZZ")
@@ -106,70 +108,84 @@ router.get("/eventos/ativos", verificaEstabelecimentoLogado, async (req, res) =>
         }
     });
 
-    res.render("criarevento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosDoEstabelecimento});
+    res.render("criarevento.html", {dadosLogin: req.session.dadosLogin, dadosEventos: eventosDoEstabelecimento, alertas});
+    alertas = [];
 });
 
 router.post("/registraEvento", verificaEstabelecimentoLogado, upload.single('urlImagemLocal'), async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect("/eventos/ativos");
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
 
-    const dadosLoginId = await Estabelecimento.findOne({
-        where: {
-            id: req.session.dadosLogin.id
-        }
-    });
-
-    await delay(2000);
-
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        Evento.create({
-            idEstabelecimento: dadosLoginId.id,
-            titulo: req.body.nomeEvento, 
-            urlImagem: url, 
-            cidade:req.body.cidade, 
-            estado:req.body.estado, 
-            cep:req.body.cep, 
-            tipoDeEvento:req.body.tipoEvento, 
-            valorEntrada:req.body.valor,
-            confirmacoes: 0,
-            capacidade:req.body.capacidadePessoa, 
-            dataDoEvento:req.body.dataEvento, 
-            horaDoEvento:req.body.Horario,
-            statusEvento:true
-        }).then(() => {
-                console.log("criado");
-                res.redirect("/eventos/ativos");
-        }).catch((error) => {
-                console.log("Erro: "+ error);
-                res.redirect("/eventos/ativos");
+        const dadosLoginId = await Estabelecimento.findOne({
+            where: {
+                id: req.session.dadosLogin.id
+            }
         });
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+    
+        await delay(2000);
+    
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            Evento.create({
+                idEstabelecimento: dadosLoginId.id,
+                titulo: req.body.nomeEvento, 
+                urlImagem: url, 
+                cidade:req.body.cidade, 
+                estado:req.body.estado, 
+                cep:req.body.cep, 
+                tipoDeEvento:req.body.tipoEvento, 
+                valorEntrada:req.body.valor,
+                confirmacoes: 0,
+                capacidade:req.body.capacidadePessoa, 
+                dataDoEvento:req.body.dataEvento, 
+                horaDoEvento:req.body.Horario,
+                statusEvento:true
+            }).then(() => {
+                    console.log("criado");
+                    res.redirect("/eventos/ativos");
+            }).catch((error) => {
+                    console.log("Erro: "+ error);
+                    res.redirect("/eventos/ativos");
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
+        });
+    }
 });
 
 router.post("/editaEvento/:idEvento", verificaEstabelecimentoLogado, upload.single('urlImagemLocal'), async (req, res) => {
     const idEvento = req.params.idEvento;
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-    const nomeImg = img + path.extname(req.file.originalname);
-    app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+    const formatoDoArquivo = path.extname(req.file.originalname);
 
-    const novosDadosEvento = {nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, novoValor, novaData} = req.body
-
-    await delay(2000);
-
-    const storage = getStorage();
-    getDownloadURL(ref(storage, nomeImg)).then((url) => {
-        atualizaEvento(idEvento, novosDadosEvento, url);
+    if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
+        alertas.push({msg: "Erro ao tentar atualizar o evento"});
         res.redirect("/eventos/ativos");
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    });
+    } else {
+        const nomeImg = img + formatoDoArquivo;
+        app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
+
+        const novosDadosEvento = {nomeEvento, tipoEvento, horario, cidade, estado, cep, capacidadePessoa, novoValor, novaData} = req.body
+
+        await delay(2000);
+
+        const storage = getStorage();
+        getDownloadURL(ref(storage, nomeImg)).then((url) => {
+            atualizaEvento(idEvento, novosDadosEvento, url);
+            res.redirect("/eventos/ativos");
+        }).catch((error) => {
+            console.log(error);
+            res.send(error)
+        });   
+    }
 });
 
 router.get("/eventos/encerrados", verificaEstabelecimentoLogado, async (req, res) => {
