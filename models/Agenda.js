@@ -64,34 +64,6 @@ Pessoa.associate = (models) => {
     });
 }
 
-//Agenda.sync({force: true});
-
-/*const registraNaAgendaPessoa = (dadosEvento, idCriador) => {
-    Agenda.create({
-        nome: dadosEvento.nome,
-        data: dadosEvento.data,
-        bio: dadosEvento.bio,
-        idPessoa: idCriador.id
-    }).then(() => {
-        console.log("Registrado");
-    }).catch((error) => {
-        console.log("Erro: "+ error);
-    })
-}
-
-const registraNaAgendaEstabelecimento = (dadosEvento, idCriador) => {
-    Agenda.create({
-        nome: dadosEvento.nome,
-        data: dadosEvento.data,
-        bio: dadosEvento.bio,
-        idEstabelecimento: idCriador.id
-    }).then(() => {
-        console.log("Registrado");
-    }).catch((error) => {
-        console.log("Erro: "+ error);
-    })
-}*/
-
 module.exports = {
     Agenda: Agenda,
 }

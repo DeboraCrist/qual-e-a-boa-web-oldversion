@@ -74,8 +74,6 @@ Estabelecimento.associate = (models) => {
     });
 }
 
-//Evento.sync({force:true});
-
 module.exports = {
     Evento : Evento,
 }
