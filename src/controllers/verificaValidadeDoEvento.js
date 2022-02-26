@@ -5,10 +5,7 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
     var dia = hoje.getDate();
     var mes = hoje.getMonth()+1;
     var ano = hoje.getFullYear();
-    var hora = hoje.getHours();
-    var minuto = hoje.getMinutes();
-    var segundos = hoje.getSeconds();
-    var horaAtual;
+    var horaAtual = new Date(new Date().getTime() + 4*60*60*1000).toLocaleTimeString();
 
     if (mes < 10) {
         hoje = ano + "-0" + mes + "-" + dia;
@@ -18,52 +15,27 @@ const verificaValidadeEvento = async (idEstabelecimento) => {
     } 
     if (dia < 10 && mes < 10) {
         hoje = ano + "-0" + mes + "-0" + dia;
-    } 
-
-    if (hora < 10) {
-        horaAtual = "0"+ hora + ":" + minuto + ":" + segundos;
     }
-    if (minuto < 10) {
-        horaAtual = hora + ":0" + minuto + ":" + segundos;
-    }
-    if (segundos < 10) {
-        horaAtual = hora + ":" + minuto + ":0" + segundos;
-    } else {
-        horaAtual = hora + ":" + minuto + ":" + segundos;
-    }
-     
-    if (hora < 10 && minuto < 10 && segundos < 10) {
-        horaAtual = "0" + hora + ":0" + minuto + ":0" + segundos;
-    }
-
-    console.log(hoje);
-    console.log(">"+horaAtual);
 
     const eventos = await Evento.findAll({});
-
-    console.log("ATE AQ OK")
     if (eventos.length == 0) {
-        console.log("OII")
         return false;
     } else {
         for (var i = 0; i < eventos.length; i++) {
-            console.log(eventos[i].horaDoEvento + " | " + horaAtual +"||||"+ eventos[i].dataDoEvento + " | " + hoje);
-            if (eventos[i].dataDoEvento <= hoje && eventos[i].horaDoEvento <= horaAtual) {
+            console.log("Nome: "+ eventos[i].titulo + eventos[i].horaDoEvento + " | " + horaAtual +"||||"+ eventos[i].dataDoEvento + " | " + hoje);
+            if (eventos[i].dataDoEvento <= hoje) {
                 //verifica se o evento ja passou da data e atualiza seu status para false indicando que o evento acabou
+                console.log(">>>Nome: "+ eventos[i].titulo);
                 Evento.update(
                     {   
                         statusEvento: false,
                     },
                     {where: {id: eventos[i].id}}
                 ).then(() => {
-                    //att deu certo
-                    return true;
+                    console.log("OK");
                 }).catch((error) => {
-                    //att deu errado
-                    return false
+                    console.log("ERRO: "+ error);
                 });
-
-                return true;
             }
         }
     }
