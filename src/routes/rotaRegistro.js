@@ -11,7 +11,6 @@ const firebase = require("../services/firebase");
 
 const {Pessoa} = require("../../models/Pessoa");
 const {RegistraPessoaNaTabela} = require("../controllers/registraPessoaNaTabela");
-
 const {Estabelecimento} = require("../../models/Estabelecimento");
 const {RegistraEstabelecimentoNaTabela} = require("../controllers/registraEstabelecimento")
 
@@ -97,7 +96,7 @@ router.post("/adicionarPessoa", upload.fields([
     await delay(2000);
     var urlPerfil = "";
     var urlPassaporteSanitario = "";
-    //PS VOU REMOVER O ADICIONAR DO PASSAPORTE SANITARIO DO REGISTRO E ADICIONAR NO PERFIL DO USER
+
     imagens.forEach((img) => {
         const storage = getStorage();
         getDownloadURL(ref(storage, img)).then((url) => {

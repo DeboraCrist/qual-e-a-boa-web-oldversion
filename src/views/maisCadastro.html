@@ -78,14 +78,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Digite sua Idade</label>
-                            <input type="number" name="idadePessoa" class="form-control" placeholder="Idade" enable
+                            <input type="number" name="idadePessoa" id="idade" class="form-control" placeholder="Idade" enable
                                 required>
                         </div>
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Digite a data do seu
                                 nascimento</label>
                             <input type="date" name="dataNasc" class="form-control" placeholder="00/00/0000"
-                                min="1921-01-01" max="2002-31-12" enable required>
+                                min="1921-01-01" max="2002-31-12" onblur="validaIdade(this.value)" enable required>
                         </div>
                     </div>
                 </div>
@@ -245,6 +245,7 @@
         crossorigin="anonymous"></script>
     <script src="/mudaTipoDeRegistro.js"></script>
     <script src="/consultaCEP.js"></script>
+    <script src="/validaIdade.js"></script>
 </footer>
 
 <footer class="bg-light text-center text-lg-start">
