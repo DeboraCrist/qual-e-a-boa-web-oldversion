@@ -14,6 +14,9 @@ projeto desenvolvido para obtenção da nota de Engenharia de Software
 * npm install salted-md5
 * npm install firebase
 * npm install firebase-admin
+* npm install mocha
+* npm install selenium-webdriver
+* npm install --save-dev chromedriver
 * PS: "npm install" instala todas as dependencias do package.json
 * npm start
 
