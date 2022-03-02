@@ -136,9 +136,10 @@ router.get("/eventos/encerrados/buscaNome/:nome", verificaEstabelecimentoLogado,
 router.get("/marcapresenca/:idEvento", verificaPessoaLogada,async (req, res) => {
     const idEvento = req.params.idEvento;
     const idPessoaLogada = req.session.dadosLogin.id
+    const paginaAnterior = req.header("Referer") || "/";
 
     marcaPresencaEvento(idEvento, idPessoaLogada).then(() => {
-        res.redirect("/eventos");
+        res.redirect(paginaAnterior);
     }).catch((error) => {
         res.send("ERRO")
     });
@@ -146,9 +147,10 @@ router.get("/marcapresenca/:idEvento", verificaPessoaLogada,async (req, res) => 
 
 router.get("/desmarcapresenca/:idEvento", verificaPessoaLogada, async (req, res) => {
     const idEvento = req.params.idEvento;
+    const paginaAnterior = req.header("Referer") || "/";
 
     desmarcapresenca(idEvento).then(() => {
-        res.redirect("/eventos")
+        res.redirect(paginaAnterior)
     }).catch((error) => {
         res.send("ERRO")
     });

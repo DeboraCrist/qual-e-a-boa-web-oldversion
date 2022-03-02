@@ -4,19 +4,30 @@ const router = express.Router();
 const {Pessoa} = require("../../models/Pessoa");
 const {Estabelecimento} = require("../../models/Estabelecimento");
 
+const {Evento} = require("../../models/Evento");
+const {PessoaEvento} = require("../../models/pessoaEvento");
+const top10Eventos = require("../controllers/top10");
+
 const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
-const verificaPessoaLogada = require("../middlewares/confirmaPessoaLogada");
-const verificaEstabelecimentoLogado = require("../middlewares/confirmaEstabelecimentoLogado");
+const verificaClienteLogado = require("../middlewares/confirmaClienteLogado");
 
-router.get("/homePessoa", verificaPessoaLogada, (req, res) => {
-    res.render("homeUsuario.html", {dadosLogin: req.session.dadosLogin});
-});
+router.get("/home", verificaClienteLogado, async (req, res) => {
+    const todosEventos = await Evento.findAll({
+        where: {statusEvento: true}
+    });
 
-router.get("/homeEstabelecimento", verificaEstabelecimentoLogado, (req, res) => {
-    res.render("homeComercial.html", {dadosLogin: req.session.dadosLogin});
+    const pessoaEvento = await PessoaEvento.findAll({
+        where: {
+            idPessoa: req.session.dadosLogin.id,
+        }
+    });
+
+    var top10 = top10Eventos(todosEventos);
+
+    res.render("home.html", {dadosLogin: req.session.dadosLogin, dadosEventos: top10, pessoaEvento: pessoaEvento});
 });
 
 module.exports = router;

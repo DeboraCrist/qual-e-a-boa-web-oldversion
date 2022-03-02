@@ -24,43 +24,62 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/homeEstabelecimento">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/usuarioEstabelecimento">Meu Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/agenda">Agenda</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Meus Eventos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/eventos/ativos">Eventos Ativos</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
+            <% if (typeof dadosLogin != "undefined") { %>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/usuarioEstabelecimento">Meu Perfil</a>
+                        </li>
+                        <% if (dadosLogin.tipoDeConta == 0) { %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/eventos">Eventos</a>
                             </li>
-                            <li><a class="dropdown-item" href="/eventos/encerrados">Eventos Encerrados</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <a href="/logout">
-                    <button type="button" class="btn btn-dark">Sair</button>
-                </a>
+                          <% } %> 
+                          <li class="nav-item">
+                              <a class="nav-link" aria-current="page" href="/agenda">Agenda</a>
+                          </li>
+                          <% if (dadosLogin.tipoDeConta == 1) { %>
+                              <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                      Meus Eventos
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                      <li><a class="dropdown-item" href="/eventos/ativos">Eventos Ativos</a></li>
+                                      <li>
+                                          <hr class="dropdown-divider">
+                                      </li>
+                                      <li><a class="dropdown-item" href="/eventos/encerrados">Eventos Encerrados</a></li>
+                                  </ul>
+                              </li>
+                          <% } %>
+                    </ul>
+                    <a href="/logout">
+                        <button type="button" class="btn btn-dark">Sair</button>
+                    </a>
+                </div>
             </div>
-        </div>
+            <% } else { %>
+                <a href="/login">
+                    <button type="button" class="btn btn-dark">Login</button>
+                </a>
+            <% } %>
     </nav>
 
 
 
     <div class="container">
         <p style="margin-top: 55px"></p>
-        <h1 class="display-5 text-center pt-3">Olá, <%= dadosLogin.nomeDono %>
+        <% if (typeof dadosLogin != "undefined") { %>
+            <% if (dadosLogin.tipoDeConta == 1 ) { %>
+                <h1 class="display-5 text-center pt-3">Olá, <%= dadosLogin.nomeDono %>
+            <% } else { %>
+                <h1 class="display-5 text-center pt-3">Olá, <%= dadosLogin.nomePessoa %>
+            <% } %>
+        <% } %>
         </h1>
         <p class="lead text-center">Bem-vindo ao site: "Qual é a boa"</p>
         <hr>
@@ -485,7 +504,7 @@
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2021-2022 Grupo A:
         <a class="text-dark" href="termosDeUso.html"> Termos de Uso</a>,
-        <a class="text-dark" href="#"> Sobre nós</a> e
+        <a class="text-dark" href="sobrenos"> Sobre nós</a> e
         <a class="text-dark" href="politicaDePrivacidade.html">Politica de Privacidade</a>
     </div>
 
