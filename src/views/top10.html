@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>Top 10</title>
+    <title>Home</title>
     <meta charset="utf-8" />
 
     <!-- CSS -->
@@ -11,8 +11,6 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-
-    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
 
   <body>
@@ -64,51 +62,58 @@
     </header>
     <section>
       <div
-        id="carouselExampleFade"
-        class="carousel slide carousel-fade"
-        data-bs-ride="carousel"
+        class="bg-image"
+        style="
+          background-image: linear-gradient(
+              rgba(0, 0, 0, 0.9),
+              rgba(0, 0, 0, 0.6)
+            ),
+            url('https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1460&q=80');
+          height: 100vh;
+          -webkit-backdrop-size: cover;
+          background-size: cover;
+          background-position: center;
+        "
       >
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="https://source.unsplash.com/1400x500/?show"
-              class="d-block w-100"
-              alt="..."
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://source.unsplash.com/1400x500/?show"
-              class="d-block w-100"
-              alt="..."
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://source.unsplash.com/1400x500/?show"
-              class="d-block w-100"
-              alt="..."
-            />
+        >
+        <div class="container">
+          <div
+            class="pt-5"
+            style="
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+            "
+          >
+            <h1 class="font-size60px" style="color:#ffb950; font-size:50px; text-transform: uppercase; margin-bottom:15px;">Procurando eventos?</h1>
+            <p class="font-size50px text-light">
+              Agora ficou fácil !  Basta você informar a localização desejada
+               e aparecerá todos os eventos para curtir e as informações necessárias.
+            </p>
+            <form action="/" method="post">
+              <div class="mb-3">
+                <p class = "banner-btn">
+                  <a href="#" class="active" style="border: 1px solid #fff; border-radius: 50px;
+                  text-transform: uppercase;
+                  text-decoration: none;
+                  padding: 10px 50px;
+                  display: inline-block;
+                  margin-top: 15px; color: #fff;background: #ffb950;border-color: #ffb950;">Clique  aqui</a>
+                  <a href="#" style="border: 1px solid #fff; border-radius: 50px;
+                  text-transform: uppercase;
+                  text-decoration: none;
+                  padding: 10px 50px;
+                  display: inline-block;
+                  margin-top:15px;
+                  color: #fff;">Surpreenda-me</a>
+                </p>
+                </a>
+              </div>
+            </form>
           </div>
         </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleFade"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleFade"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
     </section>
     <section>
@@ -175,12 +180,58 @@
         </div>
       </div>
     </section>
-
-    <p style="margin-top: 70px"></p>
+    <section>
+      <div
+        id="carouselExampleFade"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="https://source.unsplash.com/700x100/?show"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://source.unsplash.com/700x100/?show"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://source.unsplash.com/700x100/?show"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
   </body>
 
-  <footer class="bg-light fixed-bottom text center text-lg-start">
-    <!-- Copyright -->
+  <footer class="bg-light text center text-lg-start">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
       © 2021-2022 Grupo A:
       <a class="text-dark" href="termosDeUso.html"> Termos de Uso</a>,
