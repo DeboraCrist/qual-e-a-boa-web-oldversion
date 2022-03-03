@@ -29,6 +29,8 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
 
+let erros = [];
+
 const delay = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -37,12 +39,11 @@ let tempEmail;
 let tempSenha;
 
 router.get("/", (req, res) => {
-    res.render("cadastro.html");
+    res.render("cadastro.html", {erros});
+    erros = [];
 });
 
 router.post("/", async (req, res) => {
-    let erros = [];
-
     tempEmail = req.body.email;
     tempSenha = req.body.senha;
 
@@ -144,10 +145,11 @@ router.post("/adicionarPessoa", upload.fields([
 router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
     const formatoDoArquivo = path.extname(req.file.originalname);
+    const paginaAnterior = req.header("Referer") || "/";
 
     if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
-        alertas.push({msg: "Não Aceitamos esse formato de arquivo"});
-        res.redirect("/");
+        erros.push({msg: "Não Aceitamos esse formato de arquivo"});
+        res.redirect(paginaAnterior);
     } else {
         const nomeImg = img + formatoDoArquivo;
         app.locals.bucket.file(nomeImg).createWriteStream().end(req.file.buffer);
