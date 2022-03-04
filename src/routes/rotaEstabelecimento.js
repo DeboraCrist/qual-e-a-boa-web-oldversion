@@ -54,11 +54,6 @@ router.get("/usuarioEstabelecimento", verificaEstabelecimentoLogado, async (req,
     alertas = [];
 });
 
-router.get("/editarEstabelecimento", verificaEstabelecimentoLogado, (req, res) => {
-    res.render('editaEstabelecimento.html', {dadosLogin: req.session.dadosLogin});
-    res.redirect("/login");
-});
-
 router.post("/adicionarFoto", verificaEstabelecimentoLogado, upload.single('arquivoFoto'), async (req, res) => {
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
     const formatoDoArquivo = path.extname(req.file.originalname);
@@ -132,7 +127,7 @@ router.post("/estabelecimento/atualizarDados", verificaEstabelecimentoLogado, (r
         }
     ).then(() => {
         console.log("atualizado")
-        res.redirect("/login");
+        res.redirect("/usuarioEstabelecimento");
     }).catch((erro) => {
         console.log(erro);
         alertas.push({msg: "Erro ao tentar atualizar os dados."})

@@ -4,7 +4,7 @@ const chrome = require('selenium-webdriver/chrome');
 const chromedriver = require('chromedriver');
 const assert = require('assert')
 
-describe('testaCadastroPt1', function() {
+describe('testaFormatoDeEmailCerto', function() {
   this.timeout(30000)
   let driver
   let vars
@@ -15,19 +15,19 @@ describe('testaCadastroPt1', function() {
   afterEach(async function() {
     await driver.quit();
   })
-  it('testeCadastroFormatoErradoDeEmail', async function() {
+  it('testaFormatoDeEmailCerto', async function() {
     await driver.get("http://localhost:3000/")
     await driver.manage().window().setRect({ width: 1050, height: 748 })
     await driver.findElement(By.id("exampleFormControlInput1")).click()
-    await driver.findElement(By.id("exampleFormControlInput1")).sendKeys("testando@testando.com")
-    await driver.findElement(By.id("exampleFormControlInput2")).click()
+    await driver.findElement(By.id("exampleFormControlInput1")).sendKeys("testandooemail@gmail.com")
     await driver.findElement(By.id("exampleFormControlInput2")).sendKeys("123456")
     await driver.findElement(By.id("gridCheck")).click()
     await driver.findElement(By.id("botaoCadastrar")).click()
-    await driver.findElement(By.css(".alert")).click()
+    await driver.findElement(By.css(".display-5")).click()
     {
-      const elements = await driver.findElements(By.css(".alert"))
+      const elements = await driver.findElements(By.css(".display-5"))
       assert(elements.length)
     }
-  });
+    await driver.close()
+  })
 })

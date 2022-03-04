@@ -35,6 +35,14 @@ const delay = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+const validaCidadeEstado = (cidade, estado) => {
+    if (cidade == "..." || estado == "...") {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 let tempEmail;
 let tempSenha;
 
@@ -73,6 +81,7 @@ router.post("/adicionarPessoa", upload.fields([
         name: "passaPorte", maxCount: 1
     }
 ]),async (req, res) => {
+    const paginaAnterior = req.header("Referer") || "/";
     var nomeImgPassaporteSanitario = "";
     var temPassaporte = false;
     const imagens = [];
@@ -97,6 +106,11 @@ router.post("/adicionarPessoa", upload.fields([
     await delay(2000);
     var urlPerfil = "";
     var urlPassaporteSanitario = "";
+
+    if (!validaCidadeEstado(req.body.cidade, req.body.estado)) {
+        erros.push({msg: "ERRO ao registrar conta: CIDADE ou Estado invalido"});
+        res.redirect(paginaAnterior);
+    }
 
     imagens.forEach((img) => {
         const storage = getStorage();
@@ -146,6 +160,11 @@ router.post("/adicionarEstabelecimento", upload.single("urlImagemPerfil") ,async
     const img = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
     const formatoDoArquivo = path.extname(req.file.originalname);
     const paginaAnterior = req.header("Referer") || "/";
+
+    if (!validaCidadeEstado(req.body.cidade, req.body.estado)) {
+        erros.push({msg: "ERRO ao registrar conta: CIDADE ou Estado invalido"});
+        res.redirect(paginaAnterior);
+    }
 
     if (formatoDoArquivo != ".png" && formatoDoArquivo != ".jpeg" && formatoDoArquivo != ".jpg") {
         erros.push({msg: "Não Aceitamos esse formato de arquivo"});

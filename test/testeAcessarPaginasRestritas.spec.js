@@ -4,7 +4,7 @@ const chrome = require('selenium-webdriver/chrome');
 const chromedriver = require('chromedriver');
 const assert = require('assert')
 
-describe('testeAcessarPaginasRestritas', function() {
+describe('testeAcessarPaginasRestritasDESLOGADO', function() {
   this.timeout(30000)
   let driver
   let vars

@@ -49,7 +49,7 @@ router.post("/editaPerfilUser/:idPessoa", verificaPessoaLogada, (req, res) => {
         }
     ).then(() => {
         console.log("atualizado")
-        res.redirect("/login");
+        res.redirect("/usuarioCliente");
     }).catch((erro) => {
         console.log(erro);
         alertas.push({msg: "Erro ao tentar atualizar os dados."})

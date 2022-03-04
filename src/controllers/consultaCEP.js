@@ -1,5 +1,6 @@
 let estado = document.getElementsByName("estado");
 let cidade = document.getElementsByName("cidade");
+let cep = document.getElementsByName("cep");
 let index = 0;
 
 const retornadadosCEP = (conteudo) => {
@@ -7,7 +8,8 @@ const retornadadosCEP = (conteudo) => {
         alert("CEP INVALIDO")
         for (index = 0; index < estado.length; index++) {
             estado[index].value=("...");
-            cidade[index].value=("...");   
+            cidade[index].value=("...");  
+            cep[index].value=("");   
         }
         
     } else {
@@ -32,15 +34,18 @@ const consultarCEP = (cep) => {
 
             document.body.appendChild(script);
         } else {
+            alert("CEP INVALIDO")
             for (index = 0; index < estado.length; index++) {
                 estado[index].value=("...");
-                cidade[index].value=("...");   
+                cidade[index].value=("...");
+                cep[index].value=(""); 
             } 
         }
     } else {
         for (index = 0; index < estado.length; index++) {
             estado[index].value=("...");
             cidade[index].value=("...");   
+            cep[index].value=(""); 
         }
     }
 }
